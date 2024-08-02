@@ -23,10 +23,19 @@ public class Movimento2 : MonoBehaviour
     public float GroundCheckSize;
     public Vector3 GroundCheckPosition;
 
+    //colocar o id do banco
+    [SerializeField] private int id;
+
+    private void Awake()
+    {
+        BancoDeDados bancoDeDados = new BancoDeDados(); //instanciando o banco
+        bancoDeDados.CriarBanco();
+    }
+
     void Start()
     {
-
         Velocidade = veloAndando;
+        Carregar(id); // Carregar a posição ao iniciar
     }
 
     void Update()
@@ -49,18 +58,15 @@ public class Movimento2 : MonoBehaviour
         //correr
         if (Input.GetKeyDown(KeyCode.LeftShift) && Direcao != Vector3.zero)
         {
-           
-                Velocidade = veloCorrendo;
-                anim.SetBool("correndo", true);
-                anim.SetBool("andando", false);
-            
+            Velocidade = veloCorrendo;
+            anim.SetBool("correndo", true);
+            anim.SetBool("andando", false);
         }
         if (Input.GetKeyUp(KeyCode.LeftShift) || Direcao == Vector3.zero)
-            {
-                Velocidade = veloAndando;
-                anim.SetBool("correndo", false);
-
-            }
+        {
+            Velocidade = veloAndando;
+            anim.SetBool("correndo", false);
+        }
 
         //Pular e verificar se está no chão
         var groundcheck = Physics.OverlapSphere(transform.position + GroundCheckPosition, GroundCheckSize, Layermask);
@@ -84,6 +90,12 @@ public class Movimento2 : MonoBehaviour
             anim.SetTrigger("emote1");
         }
 
+        //Salvar
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Salvar(id);
+            Debug.Log("Salvou");
+        }
     }
 
     //Desenhar bola de colisão
@@ -94,11 +106,30 @@ public class Movimento2 : MonoBehaviour
     }
 
     //Voltar par vila do brejo
-     private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("voltar"))
             SceneManager.LoadScene("CenaInicial");
-    
     }
 
+    private void Salvar(int id)
+    {
+        BancoDeDados bancoDeDados = new BancoDeDados();
+        bancoDeDados.InserirPosicao(id, transform.position.x, transform.position.y, transform.position.z);
+    }
+
+    private void Carregar(int id)
+    {
+        BancoDeDados bancoDeDados = new BancoDeDados();
+        var Leitura = bancoDeDados.LerPosicao(id);
+        if (Leitura != null)
+        {
+            while (Leitura.Read())
+            {
+                transform.position = new Vector3(Leitura.GetFloat(1), Leitura.GetFloat(2), Leitura.GetFloat(3));
+            }
+        }
+        Leitura.Close(); // fechar o IDataReader após a leitura
+        bancoDeDados.FecharConexao();
+    }
 }
