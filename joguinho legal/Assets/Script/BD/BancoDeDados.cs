@@ -4,33 +4,40 @@ using UnityEngine;
 using System.Data;
 using Mono.Data.Sqlite;
 using System.Globalization;
+using System.IO;
 
-public class BancoDeDados //Classe do Meu BD
+public class BancoDeDados // Classe do Meu BD
 {
     private IDbConnection BancoDados;
 
+    private string GetDatabasePath()
+    {
+        string folderPath = Path.Combine(Application.persistentDataPath, "Database");
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+        return Path.Combine(folderPath, "BancoDeDados.Sqlite");
+    }
+
     private IDbConnection criarEAbrirBancoDeDados()
     {
-        string idburi = "URI=file:BancoDeDados.Sqlite"; // variável que armazena a localização do banco de dados dentro da pasta do projeto
+        string dbPath = GetDatabasePath();
+        string idburi = $"URI=file:{dbPath}"; // Variável que armazena a localização do banco de dados dentro da pasta do projeto
         IDbConnection ConexaoBanco = new SqliteConnection(idburi);
-        // caso o banco já exista, a conexão será feita, se o banco não existir ele irá criar um novo.
 
         ConexaoBanco.Open(); // ".Open()" é o comando do Sqlite que inicializa/abre o banco de dados.
 
-        using (var cmdCriarTB = ConexaoBanco.CreateCommand()) //".CreateCommand()" utilizado para criar os objetos do banco
+        using (var cmdCriarTB = ConexaoBanco.CreateCommand()) // ".CreateCommand()" utilizado para criar os objetos do banco
         {
-            // Deleta a tabela se ela já existir
-            cmdCriarTB.CommandText = "DROP TABLE IF EXISTS POSICOES;";
-            cmdCriarTB.ExecuteNonQuery();
-
-            // Cria a tabela com a estrutura correta
             cmdCriarTB.CommandText = "CREATE TABLE IF NOT EXISTS POSICOES(" +
                 "id INTEGER PRIMARY KEY NOT NULL, " +
-                "x REAL, " +  //inserindo a tabela de posicoes no bd
+                "x REAL, " +
                 "y REAL, " +
                 "z REAL" +
                 ");";
             cmdCriarTB.ExecuteNonQuery();
+            Debug.Log("Tabela POSICOES criada/verificada.");
         }
 
         return ConexaoBanco;
@@ -43,8 +50,8 @@ public class BancoDeDados //Classe do Meu BD
         IDbCommand InserDados = BancoDados.CreateCommand();
         InserDados.CommandText = $"INSERT OR REPLACE INTO POSICOES(id, x, y, z) " +
                                  $"VALUES({id}, {x.ToString(cultura)}, {y.ToString(cultura)}, {z.ToString(cultura)})";
-
         InserDados.ExecuteNonQuery();
+        Debug.Log($"Posição inserida/atualizada: ID={id}, x={x}, y={y}, z={z}");
         BancoDados.Close();
     }
 
@@ -52,28 +59,32 @@ public class BancoDeDados //Classe do Meu BD
     {
         BancoDados = criarEAbrirBancoDeDados();
         IDbCommand ComandoLerPosicao = BancoDados.CreateCommand();
-        ComandoLerPosicao.CommandText = $"SELECT * FROM POSICOES WHERE ID = {id};";
+        ComandoLerPosicao.CommandText = $"SELECT * FROM POSICOES WHERE id={id};";
         IDataReader Leitura = ComandoLerPosicao.ExecuteReader();
+        Debug.Log("Leitura de posição executada.");
         return Leitura;
     }
 
     public void FecharConexao()
     {
         BancoDados.Close();
+        Debug.Log("Conexão com banco de dados fechada.");
     }
 
     public void CriarBanco()
     {
         BancoDados = criarEAbrirBancoDeDados();
         BancoDados.Close();
+        Debug.Log("Banco de dados criado/aberto.");
     }
 
     public void NovoJogo()
     {
         BancoDados = criarEAbrirBancoDeDados();
         IDbCommand DeletarTudo = BancoDados.CreateCommand();
-        DeletarTudo.CommandText = "DELETE FROM POSICOES"; //Alerta de perigo 
+        DeletarTudo.CommandText = "DELETE FROM POSICOES"; // Alerta de perigo 
         DeletarTudo.ExecuteNonQuery();
         BancoDados.Close();
+        Debug.Log("Todos os dados da tabela POSICOES foram deletados.");
     }
 }
