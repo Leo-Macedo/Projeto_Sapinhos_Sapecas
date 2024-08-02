@@ -40,6 +40,32 @@ public class Movimento2 : MonoBehaviour
 
     void Update()
     {
+        andar(); 
+
+        correr();       
+
+        pular();
+
+        farpar();
+
+        
+
+        //Salvar
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Salvar(id);
+            Debug.Log("Salvou");
+        }
+
+         //deletar
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            deletar(id);
+            Debug.Log("Deletou");
+        }
+    }
+
+    public void andar(){
         //Movimentar Personagem
         InputX = Input.GetAxis("Horizontal");
         InputZ = Input.GetAxis("Vertical");
@@ -54,7 +80,9 @@ public class Movimento2 : MonoBehaviour
         {
             anim.SetBool("andando", false);
         }
+    }
 
+    public void correr(){
         //correr
         if (Input.GetKeyDown(KeyCode.LeftShift) && Direcao != Vector3.zero)
         {
@@ -67,8 +95,10 @@ public class Movimento2 : MonoBehaviour
             Velocidade = veloAndando;
             anim.SetBool("correndo", false);
         }
+    }
 
-        //Pular e verificar se está no chão
+    public void pular(){
+         //Pular e verificar se está no chão
         var groundcheck = Physics.OverlapSphere(transform.position + GroundCheckPosition, GroundCheckSize, Layermask);
         if (groundcheck.Length != 0)
         {
@@ -83,18 +113,12 @@ public class Movimento2 : MonoBehaviour
         {
             rb.AddForce(transform.up * forcaPulo, ForceMode.Impulse);
         }
-
-        //Farpar Inimigo
+    }
+    public void farpar(){
+    //Farpar Inimigo
         if (Input.GetKeyDown(KeyCode.E))
         {
             anim.SetTrigger("emote1");
-        }
-
-        //Salvar
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Salvar(id);
-            Debug.Log("Salvou");
         }
     }
 
@@ -116,6 +140,11 @@ public class Movimento2 : MonoBehaviour
     {
         BancoDeDados bancoDeDados = new BancoDeDados();
         bancoDeDados.InserirPosicao(id, transform.position.x, transform.position.y, transform.position.z);
+    }
+
+    private void deletar(int id){
+        BancoDeDados bancoDeDados = new BancoDeDados();
+        bancoDeDados.NovoJogo();
     }
 
     private void Carregar(int id)

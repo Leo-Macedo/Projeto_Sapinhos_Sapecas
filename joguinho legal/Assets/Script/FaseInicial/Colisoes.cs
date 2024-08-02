@@ -18,18 +18,13 @@ public class Colisoes : MonoBehaviour
     //Só poder mover após acabar CutScene
     void Start()
     {
-        Invoke("PodeMover", 19.5f);
         AcenderLuz();
-    }
-
-    public void PodeMover()
-    {
-        script.enabled = true;
     }
 
     //Colisões para trocar de cena
     public void OnCollisionEnter(Collision other)
     {
+        
         //Ir para fase prédio
         if (other.gameObject.CompareTag("predio"))
             SceneManager.LoadScene("Predio");
@@ -62,6 +57,7 @@ public class Colisoes : MonoBehaviour
 
 
     }
+    
 
     void DesativarTxt()
     {
