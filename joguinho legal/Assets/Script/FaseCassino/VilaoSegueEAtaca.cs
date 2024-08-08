@@ -62,17 +62,14 @@ public class VilaoSegueEAtaca : MonoBehaviour
 
     void Update()
     {
-        //Animações de andar e parar
+        Seguiranimar();
 
-        if (navMeshAgent.velocity != Vector3.zero)
-        {
-            animator.SetBool("andando", true);
-        }
-        else
-        {
-            animator.SetBool("andando", false);
-        }
+        AtacarOJogador();
 
+    }
+
+    private void AtacarOJogador()
+    {
         //Atacar o jogador
         float distancia = Vector3.Distance(transform.position, player.position);
         if (!vidaPersonagemScript.acabouojogo)
@@ -87,8 +84,20 @@ public class VilaoSegueEAtaca : MonoBehaviour
                     Invoke("NãoPodeAtacar", 1);
                 }
             }
-        
+    }
 
+    private void Seguiranimar()
+    {
+        //Animações de andar e parar
+
+        if (navMeshAgent.velocity != Vector3.zero)
+        {
+            animator.SetBool("andando", true);
+        }
+        else
+        {
+            animator.SetBool("andando", false);
+        }
     }
 
     //Verifica se o jogador desviou do golpe

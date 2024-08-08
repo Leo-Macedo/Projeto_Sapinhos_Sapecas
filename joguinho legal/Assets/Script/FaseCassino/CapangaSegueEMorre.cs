@@ -32,17 +32,7 @@ public class CapangaSegueEMorre : MonoBehaviour
     }
     void Update()
     {
-        //Seguir e animação
-        navMeshAgent.SetDestination(player.position);
-
-        if (navMeshAgent.velocity != Vector3.zero)
-        {
-            animator.SetBool("andando", true);
-        }
-        else
-        {
-            animator.SetBool("andando", false);
-        }
+        SeguirEanimar();
 
         //Vericação para saber se tomou nocaute
         if (Input.GetKeyDown(KeyCode.R))
@@ -51,6 +41,11 @@ public class CapangaSegueEMorre : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
             tPressed = false;
 
+        VericarNocauteCapanga();
+    }
+
+    private void VericarNocauteCapanga()
+    {
         //Tomar Nocaute e ficar parado
         float distancia = Vector3.Distance(transform.position, player.position);
         if (distancia <= distAtaque)
@@ -63,6 +58,21 @@ public class CapangaSegueEMorre : MonoBehaviour
                 tPressed = true;
                 navMeshAgent.speed = 0f;
             }
+        }
+    }
+
+    private void SeguirEanimar()
+    {
+        //Seguir e animação
+        navMeshAgent.SetDestination(player.position);
+
+        if (navMeshAgent.velocity != Vector3.zero)
+        {
+            animator.SetBool("andando", true);
+        }
+        else
+        {
+            animator.SetBool("andando", false);
         }
     }
 }

@@ -27,6 +27,7 @@ public class MatarVilao : MonoBehaviour
 
     //ScriptVidaVilao
     private VidaVilao vidaVilao;
+    
 
     void Start()
     {
@@ -35,6 +36,8 @@ public class MatarVilao : MonoBehaviour
         animatorvilao = vilao.GetComponent<Animator>();
         vidaVilao = vilao.GetComponent<VidaVilao>();
         agentvilao = vilao.GetComponent<NavMeshAgent>();
+
+
     }
 
     void Update()
@@ -42,15 +45,21 @@ public class MatarVilao : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             rPressed = false;
-            Invoke("ResetaGolpe",1);
+            Invoke("ResetaGolpe", 1);
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
             tPressed = false;
-            Invoke("ResetaGolpe",1);
+            Invoke("ResetaGolpe", 1);
 
         }
+        DarDanoNoVilao();
+
+    }
+
+    private void DarDanoNoVilao()
+    {
         float distancia = Vector3.Distance(transform.position, posicaovilao.position);
         if (distancia <= distAtaque && podeatacar)
         {
@@ -65,7 +74,6 @@ public class MatarVilao : MonoBehaviour
                 Invoke("PodeAtacar", 3);
             }
         }
-
     }
 
     //Resetar animação de tomar soco

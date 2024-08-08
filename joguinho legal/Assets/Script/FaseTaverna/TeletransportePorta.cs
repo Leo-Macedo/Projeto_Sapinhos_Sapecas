@@ -46,16 +46,21 @@ public class TeletransportePorta : MonoBehaviour
         //Entrar na porta
         if (other.gameObject.CompareTag("porta"))
         {
-            txtcapangasmortos1.SetActive(true);
-            player.transform.position = new Vector3(tp.transform.position.x, tp.transform.position.y, tp.transform.position.z);
-            Debug.Log("Entrou na porta");
-            NascerCapanga.SetActive(true);
-            nascerCapangaFase2.ComecarNascer();
-            txtmate10capanga.SetActive(true);
-            Invoke("DesativarTxt", 3);
+            EntrarNaPortaEIrParaSala();
 
         }
 
+    }
+
+    private void EntrarNaPortaEIrParaSala()
+    {
+        txtcapangasmortos1.SetActive(true);
+        player.transform.position = new Vector3(tp.transform.position.x, tp.transform.position.y, tp.transform.position.z);
+        Debug.Log("Entrou na porta");
+        NascerCapanga.SetActive(true);
+        nascerCapangaFase2.ComecarNascer();
+        txtmate10capanga.SetActive(true);
+        Invoke("DesativarTxt", 3);
     }
 
     //desativa txt

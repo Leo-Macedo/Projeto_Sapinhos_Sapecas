@@ -40,21 +40,31 @@ public class MatarVilaoFase1 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("cabeca") && podepular)
         {
-            animatorvilao.SetBool("caiu", true);
-            vidaVilao -= 1;
-            podepular = false;
-            Invoke("PodePular", 2f);
-            Debug.Log("VilaoMorreu" + vidaVilao);
+            DarDanoPulandoNaCabeca();
         }
 
         if (vidaVilao <= 0)
         {
-            animatorvilao.SetTrigger("nocaute");
-            animatorvilao.SetBool("caiu", false);
-            Debug.Log("VilaoMorreu");
-            portalvoltar.SetActive(true);
+            VilaoMorreu();
 
         }
+    }
+
+    private void VilaoMorreu()
+    {
+        animatorvilao.SetTrigger("nocaute");
+        animatorvilao.SetBool("caiu", false);
+        Debug.Log("VilaoMorreu");
+        portalvoltar.SetActive(true);
+    }
+
+    private void DarDanoPulandoNaCabeca()
+    {
+        animatorvilao.SetBool("caiu", true);
+        vidaVilao -= 1;
+        podepular = false;
+        Invoke("PodePular", 2f);
+        Debug.Log("VilaoMorreu" + vidaVilao);
     }
 
     public void PodePular()

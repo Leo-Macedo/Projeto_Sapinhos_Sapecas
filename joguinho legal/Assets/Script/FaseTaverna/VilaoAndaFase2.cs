@@ -16,8 +16,13 @@ public class VilaoAndaFase2 : MonoBehaviour
 
     void Update()
     {
+        AnimaçãoAndando();
+    }
+
+    private void AnimaçãoAndando()
+    {
         movimento = transform.position - ultimaPosicao;
-        
+
         ultimaPosicao = transform.position;
 
         if (movimento != Vector3.zero)

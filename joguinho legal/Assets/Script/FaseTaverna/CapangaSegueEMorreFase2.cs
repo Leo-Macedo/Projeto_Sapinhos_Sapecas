@@ -41,44 +41,53 @@ public class CapangaSegueEMorreFase2 : MonoBehaviour
     }
     void Update()
     {
-        
-            //Seguir e animação
-            navMeshAgent.SetDestination(player.position);
+        SeguirEAnimar();
 
-            if (navMeshAgent.velocity != Vector3.zero)
+        //Vericação para saber se tomou nocaute
+        if (Input.GetKeyDown(KeyCode.R))
+            rPressed = false;
+
+        if (Input.GetKeyDown(KeyCode.T))
+            tPressed = false;
+
+        TomarNocauteEParar();
+
+    }
+
+    private void TomarNocauteEParar()
+    {
+        //Tomar Nocaute e ficar parado
+        float distancia = Vector3.Distance(transform.position, player.position);
+        if (podemorrer)
+            if (distancia <= distAtaque)
             {
-                animator.SetBool("andando", true);
-            }
-            else
-            {
-                animator.SetBool("andando", false);
-            }
-
-            //Vericação para saber se tomou nocaute
-            if (Input.GetKeyDown(KeyCode.R))
-                rPressed = false;
-
-            if (Input.GetKeyDown(KeyCode.T))
-                tPressed = false;
-
-            //Tomar Nocaute e ficar parado
-            float distancia = Vector3.Distance(transform.position, player.position);
-            if (podemorrer)
-                if (distancia <= distAtaque)
+                if (!rPressed || !tPressed)
                 {
-                    if (!rPressed || !tPressed)
-                    {
-                        podemorrer = false;
-                        Invoke("ResetaPodeMorrer", 1.5f);
-                        animator.SetTrigger("nocaute");
-                        navMeshAgent.isStopped = true;
-                        rPressed = true;
-                        tPressed = true;
-                        navMeshAgent.speed = 0f;
-                        teletransportePorta.ContarCapngasMortos();
-                    }
+                    podemorrer = false;
+                    Invoke("ResetaPodeMorrer", 1.5f);
+                    animator.SetTrigger("nocaute");
+                    navMeshAgent.isStopped = true;
+                    rPressed = true;
+                    tPressed = true;
+                    navMeshAgent.speed = 0f;
+                    teletransportePorta.ContarCapngasMortos();
                 }
-        
+            }
+    }
+
+    private void SeguirEAnimar()
+    {
+        //Seguir e animação
+        navMeshAgent.SetDestination(player.position);
+
+        if (navMeshAgent.velocity != Vector3.zero)
+        {
+            animator.SetBool("andando", true);
+        }
+        else
+        {
+            animator.SetBool("andando", false);
+        }
     }
 
     //Reseta pode morrer

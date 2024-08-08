@@ -13,6 +13,7 @@ public class NascerCapanga : MonoBehaviour
     public GameObject player;
     private VidaPersonagem vidaPersonagem;
     private VidaVilao vidaVilao;
+
     private void Start()
     {
         vidaVilao = vilao.GetComponent<VidaVilao>();
