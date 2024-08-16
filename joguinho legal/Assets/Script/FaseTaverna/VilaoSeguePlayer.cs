@@ -4,81 +4,67 @@ using UnityEngine;
 
 public class VilaoSeguePlayer : MonoBehaviour
 {
-    private Animator animator;
-    private Vector3 ultimaPosicao;
-    private Vector3 movimento;
+    public Transform player;          // Referência para o transform do jogador
+    public float chargeForce = 10f;   // Velocidade de investida
+    public float chargeDuration = 2f; // Duração da investida
+    private Vector3 targetPosition;   // Posição alvo para a investida
+    public bool isCharging = false;  // Flag para verificar se está na investida
+    private Rigidbody rb;             // Referência ao Rigidbody
 
-    public Transform player; // Referência ao transform do jogador
-    public float speed = 5f; // Velocidade de movimento do vilão
-    public float detectionRange = 10f; // Distância de detecção do jogador
-    public float zMinLimit = -4f; // Limite inferior do movimento no eixo Z
-    public float zMaxLimit = 4f; // Limite superior do movimento no eixo Z
-    private bool isChasing = false; // Flag para verificar se o vilão está correndo em linha reta
-
-    private Rigidbody rb;
-
-    void Start()
+    private void Start()
     {
-        ultimaPosicao = transform.position;
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>(); // Obtém o Rigidbody anexado ao vilão
+    }
+    private void Update()
+    {
+        /*if (isCharging)
+        {
+            // Move o inimigo em direção à posição alvo
+            float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+            if (distanceToTarget > 0.1f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, chargeSpeed * Time.deltaTime);
+            }
+            else
+            {
+                // Para a investida quando atinge o alvo
+                isCharging = false;
+                // Execute outras ações aqui, se necessário (e.g., aplicar dano)
+            }
+        }*/
     }
 
-    void FixedUpdate()
+    // Método para iniciar a investida
+    public void StartCharge()
     {
-        //AnimacaoEAndando();
-
-        // Se o vilão está perseguindo o jogador
-        if (isChasing)
+         if (player != null && rb != null )
         {
-            Vector3 direction = (player.position - transform.position).normalized;
-        Vector3 newPosition = Vector3.MoveTowards(transform.position, player.position, speed * Time.fixedDeltaTime);
-        rb.MovePosition(newPosition);
 
-        // Seguir o jogador e iniciar a perseguição
-        SeguirEBater();
-         }
-    }
+          // Define a posição alvo como a posição atual do jogador
+            targetPosition = player.position;
+            // Calcula a direção da investida
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            // Aplica a força na direção do alvo
+            rb.AddForce(direction * chargeForce, ForceMode.Impulse);
+            isCharging = true;
+             Debug.Log("Investida iniciada. Direção: " + direction + " Força: " + chargeForce);
 
-    private void AnimacaoEAndando()
-    {
-        movimento = transform.position - ultimaPosicao;
-        ultimaPosicao = transform.position;
-
-        if (movimento != Vector3.zero)
-        {
-            animator.SetBool("andando", true);
-        }
-        else
-        {
-            animator.SetBool("andando", false);
         }
     }
 
-    public void SeguirEBater()
+    private void StopCharge()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-    Debug.Log("Distância para o jogador: " + distanceToPlayer);
-
-    if (distanceToPlayer < detectionRange)
+          isCharging = false;
+        // Opcionalmente, você pode zerar a velocidade do Rigidbody aqui
+        rb.velocity = Vector3.zero;
+        Debug.Log("Investida parada.");
+    }
+private void OnCollisionEnter(Collision other) {
+    if (other.gameObject.CompareTag("parede"))
     {
-        Debug.Log("Jogador detectado, iniciando perseguição");
-        Vector3 direction = (player.position - transform.position).normalized;
-        Vector3 newPosition = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-        rb.MovePosition(newPosition);
-        isChasing = true;
+        StopCharge();
+           Debug.Log("Colidiu com a parede. Investida parada.");
     }
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        // Se o vilão colidir com uma parede ou obstáculo, ele para
-        if (other.gameObject.CompareTag("parede"))
-        {
-            Debug.Log("Não está andando");
-            rb.velocity = Vector3.zero;
-            isChasing = false;
-        }
-    }
+}
 }
 
