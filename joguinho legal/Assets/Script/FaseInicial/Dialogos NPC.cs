@@ -23,9 +23,7 @@ public class DialogosNPC : MonoBehaviour
     public float segundosletras;
     public string nameNpcString;
 
-    //Referencia cutscene
-    public PlayableDirector cutscene;
-    private bool tocoucutscene;
+   
     void Start()
     {
         
@@ -38,7 +36,7 @@ public class DialogosNPC : MonoBehaviour
             if (!startDialogue)
             {
                 StartDialogue();
-                PlayCutscene();
+               
             }
             else if (dialogueText.text == dialogueNpc[dialogueIndex])
             {
@@ -99,14 +97,5 @@ public class DialogosNPC : MonoBehaviour
         }
     }
 
-     void PlayCutscene()
-    {
-        if (tocoucutscene)
-            return;
-
-        tocoucutscene = true;
-        cutscene.Play();
-
-
-    }
+  
 }

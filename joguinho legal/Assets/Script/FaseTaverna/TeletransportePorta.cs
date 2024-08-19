@@ -83,6 +83,9 @@ public class TeletransportePorta : MonoBehaviour
             Debug.Log("PASSOU DE FASE");
             portalvoltar.SetActive(true);
 
+            //Fase Completa
+            PlayerPrefs.SetInt("Taverna Completada", 1);
+
         }
     }
 

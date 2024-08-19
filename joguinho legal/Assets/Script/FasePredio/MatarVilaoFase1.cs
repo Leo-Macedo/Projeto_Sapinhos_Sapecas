@@ -56,6 +56,10 @@ public class MatarVilaoFase1 : MonoBehaviour
         animatorvilao.SetBool("caiu", false);
         Debug.Log("VilaoMorreu");
         portalvoltar.SetActive(true);
+
+        //Fase completa
+        PlayerPrefs.SetInt("PredioCompletado", 1);
+        PlayerPrefs.SetInt("TavernaDesbloqueada", 1);
     }
 
     private void DarDanoPulandoNaCabeca()

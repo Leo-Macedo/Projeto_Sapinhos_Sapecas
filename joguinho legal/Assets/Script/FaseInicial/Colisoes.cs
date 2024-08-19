@@ -10,7 +10,7 @@ public class Colisoes : MonoBehaviour
     //Texto porta trancada
     public GameObject txtportatrancada;
     public PlayableDirector cutscene;
-    public GameObject luz;
+   
 
     //Camera da CutScene
     public Movimento2 script;
@@ -18,7 +18,7 @@ public class Colisoes : MonoBehaviour
     //Só poder mover após acabar CutScene
     void Start()
     {
-        AcenderLuz();
+        
     }
 
     //Colisões para trocar de cena
@@ -70,15 +70,5 @@ public class Colisoes : MonoBehaviour
 
     }
 
-    void AcenderLuz()
-    {
-        luz.SetActive(true);
-        Invoke("ApagarLuz", 0.1f);
-    }
-
-      void ApagarLuz()
-    {
-        luz.SetActive(false);
-        Invoke("AcenderLuz", 0.1f);
-    }
+    
 }
