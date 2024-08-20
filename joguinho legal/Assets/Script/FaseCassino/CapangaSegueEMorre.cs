@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public class CapangaSegueEMorre : MonoBehaviour
 {
-    //Seguir persoagem e animação de nocaute
-    private Transform player;
+    //Seguir personagem e animação de nocaute
     private NavMeshAgent navMeshAgent;
     public Animator animator;
 
@@ -16,25 +15,17 @@ public class CapangaSegueEMorre : MonoBehaviour
 
     void Start()
     {
-        //Procura o jogador com a tag player para seguir
+        // Inicializa o NavMeshAgent
         navMeshAgent = GetComponent<NavMeshAgent>();
-
-        GameObject jogador = GameObject.FindGameObjectWithTag("Player");
-        if (jogador != null)
-        {
-            player = jogador.transform;
-        }
-        else
-        {
-            Debug.LogError("Jogador não encontrado na cena!");
-        }
- 
     }
+
     void Update()
     {
+        // Encontrar e seguir o jogador mais próximo
+        EncontrarPlayerMaisProximo();
         SeguirEanimar();
 
-        //Vericação para saber se tomou nocaute
+        // Verificação para saber se tomou nocaute
         if (Input.GetKeyDown(KeyCode.R))
             rPressed = false;
 
@@ -44,11 +35,32 @@ public class CapangaSegueEMorre : MonoBehaviour
         VericarNocauteCapanga();
     }
 
+    private void EncontrarPlayerMaisProximo()
+    {
+        GameObject[] jogadores = GameObject.FindGameObjectsWithTag("Player");
+        Transform jogadorMaisProximo = null;
+        float menorDistancia = Mathf.Infinity;
+
+        foreach (GameObject jogador in jogadores)
+        {
+            float distancia = Vector3.Distance(transform.position, jogador.transform.position);
+            if (distancia < menorDistancia)
+            {
+                menorDistancia = distancia;
+                jogadorMaisProximo = jogador.transform;
+            }
+        }
+
+        if (jogadorMaisProximo != null)
+        {
+            navMeshAgent.SetDestination(jogadorMaisProximo.position);
+        }
+    }
+
     private void VericarNocauteCapanga()
     {
-        //Tomar Nocaute e ficar parado
-        float distancia = Vector3.Distance(transform.position, player.position);
-        if (distancia <= distAtaque)
+        // Tomar Nocaute e ficar parado
+        if (navMeshAgent.remainingDistance <= distAtaque)
         {
             if (!rPressed || !tPressed)
             {
@@ -63,9 +75,7 @@ public class CapangaSegueEMorre : MonoBehaviour
 
     private void SeguirEanimar()
     {
-        //Seguir e animação
-        navMeshAgent.SetDestination(player.position);
-
+        // Animação de andar/parar
         if (navMeshAgent.velocity != Vector3.zero)
         {
             animator.SetBool("andando", true);

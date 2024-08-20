@@ -28,7 +28,7 @@ public class NascerCapanga : MonoBehaviour
         Quaternion valorRotacao = Quaternion.Euler(0f, 90f, 0f);
         int r = Random.Range(0, spawnpoints.Length);
         GameObject Capanga = Instantiate(capanga, spawnpoints[r].position, valorRotacao);
-        Capanga.tag = "capangamelo";
+        Capanga.tag = "capanga";
      }
      else
      Debug.Log("CHEGA DE NASCER CAPANGA");

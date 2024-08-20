@@ -7,7 +7,7 @@ public class AnimarSapos : MonoBehaviour
     private Animator animator;
     private Vector3 ultimaPosicao;
     private Vector3 movimento;
-    public Movimento2 movimento2;
+    
 
     void Start()
     {
