@@ -27,6 +27,7 @@ public class MatarVilao : MonoBehaviour
 
     //ScriptVidaVilao
     private VidaVilao vidaVilao;
+    public bool socoExecutado = false; 
     
 
     void Start()
@@ -58,23 +59,32 @@ public class MatarVilao : MonoBehaviour
 
     }
 
-    private void DarDanoNoVilao()
+   public void DarDanoNoVilao()
+{
+    if (socoExecutado)  // Executa o código apenas se o evento foi acionado pela animação
     {
         float distancia = Vector3.Distance(transform.position, posicaovilao.position);
         if (distancia <= distAtaque && podeatacar)
         {
-            if (!rPressed || !tPressed)
-            {
-                vidaVilao.ReceberDanoVilao(1);
-                animatorvilao.SetBool("caiu", true);
-                Invoke("Resetou", 2);
-                rPressed = true;
-                tPressed = true;
-                podeatacar = false;
-                Invoke("PodeAtacar", 3);
-            }
+            Debug.Log("Chamo evento pela animação");
+            vidaVilao.ReceberDanoVilao(1);
+            animatorvilao.SetBool("caiu", true);
+            Invoke("Resetou", 2);
+            rPressed = true;
+            tPressed = true;
+            podeatacar = false;
+            Invoke("PodeAtacar", 3);
         }
+
+        socoExecutado = false;  // Reseta a variável para evitar dano contínuo
     }
+}
+
+// Esta função deve ser chamada pelo AnimationEvent
+public void AcionarSoco()
+{
+    socoExecutado = true;  // Ativa o trigger quando a animação de soco acontece
+}
 
     //Resetar animação de tomar soco
     public void Resetou()
