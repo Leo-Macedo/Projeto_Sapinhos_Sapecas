@@ -1,7 +1,6 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using Cinemachine; // Certifique-se de que o Cinemachine está no topo
 
 public class Movimento2 : MonoBehaviour
 {
@@ -15,13 +14,16 @@ public class Movimento2 : MonoBehaviour
     float InputZ;
     Vector3 Direcao;
 
-    //Puar e verificar colisão com chão
+    //Pular e verificar colisão com chão
     public float forcaPulo = 10f;
     public Rigidbody rb;
     public LayerMask Layermask;
     public bool IsGrounded;
     public float GroundCheckSize;
     public Vector3 GroundCheckPosition;
+
+    // Referência para a câmera
+    public CinemachineFreeLook cinemachineCamera;
 
     //colocar o id do banco
     [SerializeField] private int id;
@@ -41,14 +43,9 @@ public class Movimento2 : MonoBehaviour
     void Update()
     {
         andar(); 
-
         correr();       
-
         pular();
-
         farpar();
-
-        
 
         //Salvar
         if (Input.GetKeyDown(KeyCode.L))
@@ -57,7 +54,7 @@ public class Movimento2 : MonoBehaviour
             Debug.Log("Salvou");
         }
 
-         //deletar
+        //Deletar
         if (Input.GetKeyDown(KeyCode.O))
         {
             deletar(id);
@@ -65,16 +62,29 @@ public class Movimento2 : MonoBehaviour
         }
     }
 
-    public void andar(){
+    public void andar()
+    {
         //Movimentar Personagem
         InputX = Input.GetAxis("Horizontal");
         InputZ = Input.GetAxis("Vertical");
-        Direcao = new Vector3(InputX, 0, InputZ);
-        if (InputX != 0 || InputZ != 0)
+
+        Vector3 forward = cinemachineCamera.transform.forward;
+        forward.y = 0; // Mantenha o movimento no plano horizontal
+        forward.Normalize();
+
+        Vector3 right = cinemachineCamera.transform.right;
+        right.y = 0;
+        right.Normalize();
+
+        Direcao = (forward * InputZ + right * InputX).normalized;
+
+        if (Direcao.magnitude >= 0.1f)
         {
-            transform.Translate(0, 0, Velocidade * Time.deltaTime);
+            transform.Translate(Direcao * Velocidade * Time.deltaTime, Space.World);
             anim.SetBool("andando", true);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Direcao), 5 * Time.deltaTime);
+
+            Quaternion toRotation = Quaternion.LookRotation(Direcao, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 5 * Time.deltaTime);
         }
         else
         {
@@ -82,8 +92,9 @@ public class Movimento2 : MonoBehaviour
         }
     }
 
-    public void correr(){
-        //correr
+    public void correr()
+    {
+        //Correr
         if (Input.GetKeyDown(KeyCode.LeftShift) && Direcao != Vector3.zero)
         {
             Velocidade = veloCorrendo;
@@ -97,25 +108,22 @@ public class Movimento2 : MonoBehaviour
         }
     }
 
-    public void pular(){
-         //Pular e verificar se está no chão
+    public void pular()
+    {
+        //Pular e verificar se está no chão
         var groundcheck = Physics.OverlapSphere(transform.position + GroundCheckPosition, GroundCheckSize, Layermask);
-        if (groundcheck.Length != 0)
-        {
-            IsGrounded = true;
-        }
-        else
-        {
-            IsGrounded = false;
-        }
+        IsGrounded = groundcheck.Length != 0;
+
         anim.SetBool("pulo", !IsGrounded);
-        if (IsGrounded == true && Input.GetButtonDown("Jump"))
+        if (IsGrounded && Input.GetButtonDown("Jump"))
         {
             rb.AddForce(transform.up * forcaPulo, ForceMode.Impulse);
         }
     }
-    public void farpar(){
-    //Farpar Inimigo
+
+    public void farpar()
+    {
+        //Farpar Inimigo
         if (Input.GetKeyDown(KeyCode.E))
         {
             anim.SetTrigger("emote1");
@@ -142,7 +150,8 @@ public class Movimento2 : MonoBehaviour
         bancoDeDados.InserirPosicao(id, transform.position.x, transform.position.y, transform.position.z);
     }
 
-    private void deletar(int id){
+    private void deletar(int id)
+    {
         BancoDeDados bancoDeDados = new BancoDeDados();
         bancoDeDados.NovoJogo();
     }
