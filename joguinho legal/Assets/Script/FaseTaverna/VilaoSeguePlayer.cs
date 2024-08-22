@@ -12,9 +12,14 @@ public class VilaoSeguePlayer : MonoBehaviour
     private Rigidbody rb;             // Referência ao Rigidbody
     public float rotationSpeed = 2f;
 
+    public VidaVilao vidaVilao;
+
+    private bool PodeTomarDano = true;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>(); // Obtém o Rigidbody anexado ao vilão
+        vidaVilao = GetComponent<VidaVilao>();
     }
 
     private void FixedUpdate()
@@ -47,12 +52,13 @@ public class VilaoSeguePlayer : MonoBehaviour
     }
 
  
-    private void StopCharge()
+    private void StopChargeNaParede()
     {
         // Zera a velocidade do Rigidbody
         rb.velocity = Vector3.zero;
         Debug.Log("Investida parada.");
         Invoke("IniciarInvestidaNovamente", 3.2f);
+        Invoke("PodeTomarDan", 5f);
     }
 
     private void IniciarInvestidaNovamente()
@@ -65,8 +71,18 @@ public class VilaoSeguePlayer : MonoBehaviour
     {
         if (other.gameObject.CompareTag("parede"))
         {
-            StopCharge();
-            Debug.Log("Colidiu com a parede. Investida parada.");
+            if (PodeTomarDano)
+            {
+                vidaVilao.ReceberDanoVilao(1);
+                StopChargeNaParede();
+                Debug.Log("Colidiu com a parede. Investida parada.");
+                PodeTomarDano = false;
+            }
         }
+    }
+
+    private void PodeTomarDan()
+    {
+        PodeTomarDano = true;
     }
 }

@@ -27,9 +27,6 @@ public class TeletransportePorta : MonoBehaviour
     public GameObject NascerCapanga;
     private NascerCapangaFase2 nascerCapangaFase2;
 
-    //Referencia cutscene
-    public PlayableDirector cutscene;
-    private bool tocoucutscene;
     void Start()
     {
         nascerCapangaFase2 = NascerCapanga.GetComponent<NascerCapangaFase2>();
@@ -79,7 +76,7 @@ public class TeletransportePorta : MonoBehaviour
         {
             player.transform.position = new Vector3(tpp.transform.position.x,
             tpp.transform.position.y, tpp.transform.position.z);
-            PlayCutscene();
+        
             Debug.Log("PASSOU DE FASE");
             portalvoltar.SetActive(true);
 
@@ -89,16 +86,6 @@ public class TeletransportePorta : MonoBehaviour
         }
     }
 
-    void PlayCutscene()
-    {
-        if (tocoucutscene)
-            return;
-
-        tocoucutscene = true;
-        cutscene.Play();
-
-
-    }
 
 
 }

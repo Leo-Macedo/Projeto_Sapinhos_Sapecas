@@ -12,7 +12,7 @@ public class VidaVilao : MonoBehaviour
     public int vidavilao;
     public Slider slidervidavilao;
     private Animator animatorvilao;
-    public NavMeshAgent agentvilao;
+    private NavMeshAgent agentvilao;
     public GameObject portalvoltar;
 
     //Script VidaPersonagem
@@ -27,6 +27,7 @@ public class VidaVilao : MonoBehaviour
         animatorvilao = GetComponent<Animator>();
 
         vidaPersonagem = player.GetComponent<VidaPersonagem>();
+        agentvilao = GetComponent<NavMeshAgent>();
     }
 
     //Receber dano e morrer
