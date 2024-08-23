@@ -1,6 +1,6 @@
+using Cinemachine; // Certifique-se de que o Cinemachine está no topo
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Cinemachine; // Certifique-se de que o Cinemachine está no topo
 
 public class Movimento2 : MonoBehaviour
 {
@@ -26,7 +26,8 @@ public class Movimento2 : MonoBehaviour
     public CinemachineFreeLook cinemachineCamera;
 
     //colocar o id do banco
-    [SerializeField] private int id;
+    [SerializeField]
+    private int id;
 
     private void Awake()
     {
@@ -42,8 +43,8 @@ public class Movimento2 : MonoBehaviour
 
     void Update()
     {
-        andar(); 
-        correr();       
+        andar();
+        correr();
         pular();
         farpar();
 
@@ -60,7 +61,10 @@ public class Movimento2 : MonoBehaviour
             deletar(id);
             Debug.Log("Deletou");
         }
+       
     }
+
+    
 
     public void andar()
     {
@@ -84,7 +88,11 @@ public class Movimento2 : MonoBehaviour
             anim.SetBool("andando", true);
 
             Quaternion toRotation = Quaternion.LookRotation(Direcao, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 5 * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(
+                transform.rotation,
+                toRotation,
+                5 * Time.deltaTime
+            );
         }
         else
         {
@@ -111,7 +119,11 @@ public class Movimento2 : MonoBehaviour
     public void pular()
     {
         //Pular e verificar se está no chão
-        var groundcheck = Physics.OverlapSphere(transform.position + GroundCheckPosition, GroundCheckSize, Layermask);
+        var groundcheck = Physics.OverlapSphere(
+            transform.position + GroundCheckPosition,
+            GroundCheckSize,
+            Layermask
+        );
         IsGrounded = groundcheck.Length != 0;
 
         anim.SetBool("pulo", !IsGrounded);
@@ -147,7 +159,12 @@ public class Movimento2 : MonoBehaviour
     private void Salvar(int id)
     {
         BancoDeDados bancoDeDados = new BancoDeDados();
-        bancoDeDados.InserirPosicao(id, transform.position.x, transform.position.y, transform.position.z);
+        bancoDeDados.InserirPosicao(
+            id,
+            transform.position.x,
+            transform.position.y,
+            transform.position.z
+        );
     }
 
     private void deletar(int id)
@@ -164,7 +181,11 @@ public class Movimento2 : MonoBehaviour
         {
             while (Leitura.Read())
             {
-                transform.position = new Vector3(Leitura.GetFloat(1), Leitura.GetFloat(2), Leitura.GetFloat(3));
+                transform.position = new Vector3(
+                    Leitura.GetFloat(1),
+                    Leitura.GetFloat(2),
+                    Leitura.GetFloat(3)
+                );
             }
         }
         Leitura.Close(); // fechar o IDataReader após a leitura

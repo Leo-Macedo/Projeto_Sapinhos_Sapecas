@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class VilaoSeguePlayer : MonoBehaviour
 {
-    public Transform player;          // Referência para o transform do jogador
-    public float chargeForce = 10f;   // Velocidade de investida
+    public Transform player; // Referência para o transform do jogador
+    public float chargeForce = 10f; // Velocidade de investida
     public float chargeDuration = 2f; // Duração da investida
-    private Vector3 direction;        // Direção da investida
-    public bool isCharging = false;   // Flag para verificar se está na investida
-    private Rigidbody rb;             // Referência ao Rigidbody
+    private Vector3 direction; // Direção da investida
+    public bool isCharging = false; // Flag para verificar se está na investida
+    private Rigidbody rb; // Referência ao Rigidbody
     public float rotationSpeed = 2f;
 
     public VidaVilao vidaVilao;
 
     private bool PodeTomarDano = true;
+
+    public GameObject particulaPrefab;
+    public AudioSource audioSource;
 
     private void Start()
     {
@@ -31,7 +34,11 @@ public class VilaoSeguePlayer : MonoBehaviour
 
             // Rotaciona suavemente para a direção da investida
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRotation,
+                rotationSpeed * Time.deltaTime
+            );
         }
     }
 
@@ -46,12 +53,9 @@ public class VilaoSeguePlayer : MonoBehaviour
             rb.velocity = direction * chargeForce;
             isCharging = true;
             Debug.Log("Investida iniciada. Direção: " + direction + " Força: " + chargeForce);
-
-          
         }
     }
 
- 
     private void StopChargeNaParede()
     {
         // Zera a velocidade do Rigidbody
@@ -64,7 +68,6 @@ public class VilaoSeguePlayer : MonoBehaviour
     private void IniciarInvestidaNovamente()
     {
         isCharging = false;
-
     }
 
     private void OnCollisionEnter(Collision other)
@@ -73,11 +76,23 @@ public class VilaoSeguePlayer : MonoBehaviour
         {
             if (PodeTomarDano)
             {
-                vidaVilao.ReceberDanoVilao(1);
-                StopChargeNaParede();
-                Debug.Log("Colidiu com a parede. Investida parada.");
-                PodeTomarDano = false;
+                TomarDano(other);
             }
+        }
+
+        void TomarDano(Collision other)
+        {
+            vidaVilao.ReceberDanoVilao(1);
+            StopChargeNaParede();
+            Debug.Log("Colidiu com a parede. Investida parada.");
+            PodeTomarDano = false;
+
+            // Instancia a partícula na posição da parede
+            Instantiate(particulaPrefab, other.transform.position, Quaternion.identity);
+
+            // Destroi a parede
+            Destroy(other.gameObject);
+            audioSource.Play();
         }
     }
 
