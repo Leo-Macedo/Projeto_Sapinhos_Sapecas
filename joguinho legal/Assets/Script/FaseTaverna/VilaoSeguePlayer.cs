@@ -13,6 +13,7 @@ public class VilaoSeguePlayer : MonoBehaviour
     public float rotationSpeed = 2f;
 
     public VidaVilao vidaVilao;
+    public VidaPersonagem vidaPersonagem;
 
     private bool PodeTomarDano = true;
 
@@ -70,7 +71,7 @@ public class VilaoSeguePlayer : MonoBehaviour
         isCharging = false;
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("caixa"))
         {
@@ -87,7 +88,13 @@ public class VilaoSeguePlayer : MonoBehaviour
             }
         }
 
-        void TomarDano(Collision other)
+        if (other.gameObject.CompareTag("Player"))
+        {
+            vidaPersonagem.ReceberDano(1);
+            StopChargeNaParede();
+        }
+
+        void TomarDano(Collider other)
         {
             vidaVilao.ReceberDanoVilao(1);
             StopChargeNaParede();

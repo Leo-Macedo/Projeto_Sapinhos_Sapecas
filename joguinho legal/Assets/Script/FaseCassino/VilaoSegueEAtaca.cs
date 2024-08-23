@@ -80,16 +80,18 @@ public class VilaoSegueEAtaca : MonoBehaviour
     public void AtacarOJogador()
     {
         //Atacar o jogador
-       
-           
-                if (podeatacar)
-                {
-                    podeatacar = false;
-              
-                    VerificarDesvio();
-                    Invoke("PodeAtacar", 5);
-                    
-                }
+        float distancia = Vector3.Distance(transform.position, player.position);
+        if (distancia <= distAtaque)
+        {
+            if (podeatacar)
+            {
+                podeatacar = false;
+
+                VerificarDesvio();
+                Invoke("PodeAtacar", 5);
+
+            }
+        }
             
     }
 
