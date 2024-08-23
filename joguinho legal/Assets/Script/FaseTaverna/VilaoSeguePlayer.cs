@@ -72,11 +72,18 @@ public class VilaoSeguePlayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("parede"))
+        if (other.gameObject.CompareTag("caixa"))
         {
             if (PodeTomarDano)
             {
                 TomarDano(other);
+            }
+        }
+        if (other.gameObject.CompareTag("parede"))
+        {
+            if (PodeTomarDano)
+            {
+                StopChargeNaParede();
             }
         }
 

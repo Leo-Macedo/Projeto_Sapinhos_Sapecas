@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -63,27 +64,33 @@ public class VilaoSegueEAtaca : MonoBehaviour
     void Update()
     {
         Seguiranimar();
+        
 
-        AtacarOJogador();
-
-    }
-
-    private void AtacarOJogador()
-    {
-        //Atacar o jogador
         float distancia = Vector3.Distance(transform.position, player.position);
         if (!vidaPersonagemScript.acabouojogo)
+        {
             if (distancia <= distAtaque)
             {
+                animator.SetBool("ataque", true);
+                Invoke("NãoPodeAtacar", 1);
+            }
+        }
+
+    }
+    public void AtacarOJogador()
+    {
+        //Atacar o jogador
+       
+           
                 if (podeatacar)
                 {
                     podeatacar = false;
-                    animator.SetBool("ataque", true);
+              
                     VerificarDesvio();
                     Invoke("PodeAtacar", 5);
-                    Invoke("NãoPodeAtacar", 1);
+                    
                 }
-            }
+            
     }
 
     private void Seguiranimar()

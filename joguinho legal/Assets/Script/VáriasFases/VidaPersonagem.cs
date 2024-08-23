@@ -12,10 +12,48 @@ public class VidaPersonagem : MonoBehaviour
     private Animator animator;
     public bool acabouojogo = false;
     public GameObject txtPerdeu;
+
+    //Corações
+    public int numOfHearts;
+    public Image[] hearts;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
     void Start()
     {
         //Pegar animator 
         animator = GetComponent<Animator>();
+        
+    }
+
+     void Update()
+    {
+        for (int i = 0; i < hearts.Length; i++)
+        {
+
+            if (vida > numOfHearts)
+            {
+                vida = numOfHearts;
+            }
+
+            if (i < vida)
+            {
+                hearts[i].sprite = fullHeart;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+            if (i < numOfHearts)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+            {
+                hearts[i].enabled = false;
+
+            }
+        }
+
     }
 
     //Receber dano e morrer
