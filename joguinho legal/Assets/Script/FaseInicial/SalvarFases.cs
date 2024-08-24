@@ -30,9 +30,5 @@ public class SalvarFases : MonoBehaviour
             }
         }
 
-        if (PlayerPrefs.GetInt("Taverna Completada", 0) == 1)
-        {
-           
-        }
     }
 }

@@ -20,10 +20,15 @@ public class VilaoSeguePlayer : MonoBehaviour
     public GameObject particulaPrefab;
     public AudioSource audioSource;
 
+    public GameObject portalvoltar;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>(); // Obtém o Rigidbody anexado ao vilão
         vidaVilao = GetComponent<VidaVilao>();
+
+        // Modifica a vida diretamente (pode ser útil para cura ou outros efeitos)
+        vidaVilao.Vida = 5;
     }
 
     private void FixedUpdate()
@@ -40,6 +45,11 @@ public class VilaoSeguePlayer : MonoBehaviour
                 targetRotation,
                 rotationSpeed * Time.deltaTime
             );
+        }
+
+        if(vidaVilao.Vida == 0)
+        {
+            portalvoltar.SetActive(true);
         }
     }
 
@@ -59,8 +69,8 @@ public class VilaoSeguePlayer : MonoBehaviour
 
     private void StopChargeNaParede()
     {
-        // Zera a velocidade do Rigidbody
-        rb.velocity = Vector3.zero;
+        // Congela o movimento do Rigidbody
+        rb.constraints = RigidbodyConstraints.FreezePosition;
         Debug.Log("Investida parada.");
         Invoke("IniciarInvestidaNovamente", 3.2f);
         Invoke("PodeTomarDan", 5f);
@@ -68,10 +78,14 @@ public class VilaoSeguePlayer : MonoBehaviour
 
     private void IniciarInvestidaNovamente()
     {
+        rb.constraints = RigidbodyConstraints.None;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        Debug.Log("Investida Retomada.");
+        rb.WakeUp();
         isCharging = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("caixa"))
         {
@@ -94,7 +108,7 @@ public class VilaoSeguePlayer : MonoBehaviour
             StopChargeNaParede();
         }
 
-        void TomarDano(Collider other)
+        void TomarDano(Collision other)
         {
             vidaVilao.ReceberDanoVilao(1);
             StopChargeNaParede();
@@ -108,6 +122,8 @@ public class VilaoSeguePlayer : MonoBehaviour
             Destroy(other.gameObject);
             audioSource.Play();
         }
+
+        
     }
 
     private void PodeTomarDan()

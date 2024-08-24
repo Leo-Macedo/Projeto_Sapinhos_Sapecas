@@ -37,6 +37,8 @@ public class Movimento2 : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Velocidade = veloAndando;
         Carregar(id); // Carregar a posição ao iniciar
     }

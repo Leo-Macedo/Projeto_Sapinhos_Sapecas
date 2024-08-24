@@ -1,7 +1,7 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Senha : MonoBehaviour
@@ -14,14 +14,12 @@ public class Senha : MonoBehaviour
     //Botões
     public Button[] numberButtons; // Array de botões numéricos
 
-    //Objetos para ativar 
+    //Objetos para ativar
     public GameObject txtsenhacorreta;
     public GameObject txtsenhaincorreta;
     public GameObject painelsenha;
     public GameObject cliqueaqui;
     public GameObject porta;
-
-
 
     void Start()
     {
@@ -33,10 +31,7 @@ public class Senha : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-
-    }
+    void Update() { }
 
     //Adiciona o número clicado na senha e mostra na tela
     public void OnNumberButtonClick(int number)
@@ -58,7 +53,6 @@ public class Senha : MonoBehaviour
             senhainserida = "";
             telasenha.text = senhainserida;
             porta.SetActive(true);
-
         }
         else
         {
@@ -69,18 +63,21 @@ public class Senha : MonoBehaviour
             Invoke("TxtSenhaDesativar", 2);
         }
     }
+
     //Desativa a msg de senha incorreta
     public void TxtSenhaDesativar()
     {
         txtsenhaincorreta.SetActive(false);
-
     }
 
     //Fecha o painel de senha
     public void Fechar()
     {
         painelsenha.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
+
     //Verifica se o jogador está dentro da área de colisão para ativar a msg de interagir
     public void OnTriggerStay(Collider other)
     {
@@ -88,15 +85,16 @@ public class Senha : MonoBehaviour
             cliqueaqui.SetActive(true);
         //Interagir com a Senha
         if (Input.GetKeyDown(KeyCode.F))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             painelsenha.SetActive(true);
+        }
     }
+
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
             cliqueaqui.SetActive(false);
-
     }
-
-
-
 }
