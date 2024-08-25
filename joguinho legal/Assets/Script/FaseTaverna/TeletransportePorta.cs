@@ -7,10 +7,10 @@ using UnityEngine.UI;
 
 public class TeletransportePorta : MonoBehaviour
 {
-    //Teletransporte
-    public GameObject player;
-    public Transform tp;
-    public Transform tpsalazida;
+    [Header("Teletransporte")]
+    public GameObject player; // Referência ao jogador
+    public Transform tp; // Ponto de teletransporte para a sala principal
+    public Transform tpsalazida; // Ponto de teletransporte para a sala de trás
 
     void Start() { }
 
@@ -18,29 +18,35 @@ public class TeletransportePorta : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Entrar na porta
+        // Verifica se o objeto colidido é a porta para a sala principal
         if (other.gameObject.CompareTag("porta"))
         {
-            EntrarNaPortaEIrParaSala();
+            EntrarNaPortaEIrParaSala(); // Teletransporta o jogador para a sala principal
         }
-        if (other.gameObject.CompareTag("porta2"))
+        // Verifica se o objeto colidido é a porta para a sala de trás
+        else if (other.gameObject.CompareTag("porta2"))
         {
-             player.transform.position = new Vector3(
-            tpsalazida.transform.position.x,
-            tpsalazida.transform.position.y,
-            tpsalazida.transform.position.z
-        );
+            TeletransportarParaSalaZida(); // Teletransporta o jogador para a sala de trás
         }
     }
 
     private void EntrarNaPortaEIrParaSala()
     {
-        player.transform.position = new Vector3(
-            tp.transform.position.x,
-            tp.transform.position.y,
-            tp.transform.position.z
-        );
-        Debug.Log("Entrou na porta");
-        Invoke("DesativarTxt", 3);
+        // Teletransporta o jogador para a sala principal
+        player.transform.position = tp.position; // Atualiza a posição do jogador
+        Debug.Log("Entrou na porta"); // Mensagem no console
+        Invoke("DesativarTxt", 3); // Desativa uma mensagem após 3 segundos
+    }
+
+    private void TeletransportarParaSalaZida()
+    {
+        // Teletransporta o jogador para a sala de trás
+        player.transform.position = tpsalazida.position; // Atualiza a posição do jogador
+    }
+
+    private void DesativarTxt()
+    {
+        // Implementar lógica para desativar a mensagem se necessário
+        // Exemplo: texto de "Entrou na porta" ou algo relacionado
     }
 }

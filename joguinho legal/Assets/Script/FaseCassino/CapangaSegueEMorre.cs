@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public class CapangaSegueEMorre : MonoBehaviour
 {
-    //Seguir personagem e animação de nocaute
-    private NavMeshAgent navMeshAgent;
-    public Animator animator;
-    public float distAtaque;
+    [Header("Referências")]
+    private NavMeshAgent navMeshAgent; // Agente de navegação para o capanga
+    public Animator animator; // Controlador de animação do capanga
+    public float distAtaque; // Distância para verificar o nocaute
 
     void Start()
     {
@@ -18,15 +18,14 @@ public class CapangaSegueEMorre : MonoBehaviour
 
     void Update()
     {
-        // Encontrar e seguir o jogador mais próximo
+        // Encontrar o jogador mais próximo e seguir
         EncontrarPlayerMaisProximo();
         SeguirEanimar();
-
-
     }
 
     private void EncontrarPlayerMaisProximo()
     {
+        // Encontra o jogador mais próximo e define o destino do NavMeshAgent
         GameObject[] jogadores = GameObject.FindGameObjectsWithTag("Player");
         Transform jogadorMaisProximo = null;
         float menorDistancia = Mathf.Infinity;
@@ -49,27 +48,25 @@ public class CapangaSegueEMorre : MonoBehaviour
 
     public void VericarNocauteCapanga()
     {
-        // Tomar Nocaute e ficar parado
+        // Verifica se o capanga está dentro da distância de ataque e aplica o nocaute
         if (navMeshAgent.remainingDistance <= distAtaque)
         {
-            
-                animator.SetTrigger("nocaute");
-                navMeshAgent.isStopped = true;
-                 navMeshAgent.speed = 0f;
-            
+            animator.SetTrigger("nocaute"); // Aciona a animação de nocaute
+            navMeshAgent.isStopped = true; // Para o movimento do NavMeshAgent
+            navMeshAgent.speed = 0f; // Define a velocidade como 0
         }
     }
 
     private void SeguirEanimar()
     {
-        // Animação de andar/parar
+        // Controla a animação de andar/parar com base na velocidade do NavMeshAgent
         if (navMeshAgent.velocity != Vector3.zero)
         {
-            animator.SetBool("andando", true);
+            animator.SetBool("andando", true); // Define o parâmetro "andando" como true
         }
         else
         {
-            animator.SetBool("andando", false);
+            animator.SetBool("andando", false); // Define o parâmetro "andando" como false
         }
     }
 }

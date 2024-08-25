@@ -228,11 +228,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddaae50a2319d7b4b87b99509bddbc48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _vidaVilao: 0
   slidervidavilao: {fileID: 1702028971}
-  portalvoltar: {fileID: 1535240878}
   player: {fileID: 2018230877}
   morreuvilao: 1
-  txtganhou: {fileID: 1749300387}
+  txtGanhou: {fileID: 0}
 --- !u!54 &42298068
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -258,7 +258,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &81590991
 GameObject:
@@ -410,8 +410,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141358728}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000007450581, y: -0.00000008940697, z: -0.000000007450581, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.05033552, y: -0, z: -0.000000029802322, w: 0.99873245}
+  m_LocalPosition: {x: -0.00000044694303, y: -0.00000079758934, z: 0.00000052290346}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -732,8 +732,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 350705753}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10546674, y: 0.692232, z: -0.10335043, w: 0.70640665}
-  m_LocalPosition: {x: -45.211563, y: 12.285, z: 0.2891418}
+  m_LocalRotation: {x: 0.20108885, y: 0.6715923, z: -0.1970538, w: 0.6853444}
+  m_LocalPosition: {x: -40.6625, y: 14.684999, z: 0.3813575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -816,7 +816,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.5
+    Value: 1
     m_SpeedMode: 0
     m_MaxSpeed: 1.5
     m_AccelTime: 0.2
@@ -870,11 +870,11 @@ MonoBehaviour:
   m_BindingMode: 5
   m_SplineCurvature: 0.2
   m_Orbits:
-  - m_Height: 17.3
-    m_Radius: 28.9
+  - m_Height: 12.2
+    m_Radius: 19
   - m_Height: 9.8
-    m_Radius: 23.55
-  - m_Height: 2.35
+    m_Radius: 17.8
+  - m_Height: 5.97
     m_Radius: 11.7
   m_LegacyHeadingBias: 3.4028235e+38
   m_Rigs:
@@ -1628,8 +1628,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008112641}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.012630543, y: -0.00000008940696, z: -0, w: 0.99992025}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.036324963, y: -0, z: 0.000000044703484, w: 0.9993401}
+  m_LocalPosition: {x: -0.00000044694303, y: -0.00000079758934, z: 0.00000052290346}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1997,7 +1997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 9.8, z: -23.55}
+  m_FollowOffset: {x: 0, y: 12.2, z: -19}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -2196,7 +2196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 9.8, z: -23.55}
+  m_FollowOffset: {x: 0, y: 12.2, z: -19}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -3536,8 +3536,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875024036}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.048944287, y: -0.00000008940697, z: -0.000000007450581, w: 0.9988016}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.000000029802322, z: -0.000000029802322, w: 1}
+  m_LocalPosition: {x: -0.00000044694303, y: -0.00000079758934, z: 0.00000052290346}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3664,7 +3664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 9.8, z: -23.55}
+  m_FollowOffset: {x: 0, y: 12.2, z: -19}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -4864,18 +4864,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf387c4a7539d343b1d5ce7195b1dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Velocidade: 0
+  velocidade: 0
   veloAndando: 2
   veloCorrendo: 4
   anim: {fileID: 2018230882}
   forcaPulo: 7
   rb: {fileID: 2018230884}
-  Layermask:
+  layermask:
     serializedVersion: 2
     m_Bits: 1
-  IsGrounded: 0
-  GroundCheckSize: 0.35
-  GroundCheckPosition: {x: 0, y: 0.28, z: 0}
+  groundCheckSize: 0.4
+  groundCheckPosition: {x: 0, y: 0.31, z: 0}
   cinemachineCamera: {fileID: 350705759}
   id: 0
 --- !u!114 &2018230880
@@ -4890,6 +4889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6739dcac77f684986e7089e5dee744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portalvoltar: {fileID: 1535240878}
   animatorvilao: {fileID: 42298065}
   vilao: {fileID: 42298059}
   posicaovilao: {fileID: 42298066}
@@ -4910,17 +4910,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d0bddf757f5b84e98e1175423accae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vida: 3
-  sliderVida: {fileID: 126235389}
+  vidaAtual: 3
   acabouojogo: 0
   txtPerdeu: {fileID: 542001770}
-  numOfHearts: 3
-  hearts:
+  "numMaximoCora\xE7\xF5es": 3
+  "cora\xE7\xF5es":
   - {fileID: 955725518}
   - {fileID: 192180343}
   - {fileID: 579407929}
-  fullHeart: {fileID: 21300000, guid: 897f770b17fc5aa4ea2836c02e31e822, type: 3}
-  emptyHeart: {fileID: 21300000, guid: efdb06a0c970d4c45a37b4fb69fa72e9, type: 3}
+  "cora\xE7\xE3oCheio": {fileID: 21300000, guid: 897f770b17fc5aa4ea2836c02e31e822, type: 3}
+  "cora\xE7\xE3oVazio": {fileID: 21300000, guid: efdb06a0c970d4c45a37b4fb69fa72e9, type: 3}
 --- !u!95 &2018230882
 Animator:
   serializedVersion: 7

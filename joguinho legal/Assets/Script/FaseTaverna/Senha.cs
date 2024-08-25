@@ -6,95 +6,96 @@ using UnityEngine.UI;
 
 public class Senha : MonoBehaviour
 {
-    //Senha
-    public TextMeshProUGUI telasenha;
-    public string senhacorreta = "1234";
-    private string senhainserida = "";
+    [Header("Senha")]
+    public TextMeshProUGUI telasenha; // Texto que mostra a senha inserida
+    public string senhacorreta = "1234"; // Senha correta
+    private string senhainserida = ""; // Senha inserida pelo jogador
 
-    //Botões
+    [Header("Botões")]
     public Button[] numberButtons; // Array de botões numéricos
 
-    //Objetos para ativar
-    public GameObject txtsenhacorreta;
-    public GameObject txtsenhaincorreta;
-    public GameObject painelsenha;
-    public GameObject cliqueaqui;
-    public GameObject porta;
+    [Header("Objetos para Ativar")]
+    public GameObject txtsenhacorreta; // Mensagem de senha correta
+    public GameObject txtsenhaincorreta; // Mensagem de senha incorreta
+    public GameObject painelsenha; // Painel da senha
+    public GameObject cliqueaqui; // Mensagem para interagir com a senha
+    public GameObject porta; // Porta a ser desbloqueada
 
     void Start()
     {
-        //Pega o indice do array para sabe que numero foi clicado
+        // Adiciona um ouvinte de clique a cada botão numérico
         for (int i = 0; i < numberButtons.Length; i++)
         {
-            int number = i + 1;
+            int number = i + 1; // Define o número correspondente ao botão
             numberButtons[i].onClick.AddListener(() => OnNumberButtonClick(number));
         }
     }
 
     void Update() { }
 
-    //Adiciona o número clicado na senha e mostra na tela
+    // Adiciona o número clicado à senha inserida e atualiza a exibição
     public void OnNumberButtonClick(int number)
     {
-        if (senhainserida.Length < 4)
+        if (senhainserida.Length < 4) // Verifica se a senha inserida tem menos de 4 dígitos
         {
-            senhainserida += number.ToString();
-            telasenha.text = senhainserida;
+            senhainserida += number.ToString(); // Adiciona o número à senha inserida
+            telasenha.text = senhainserida; // Atualiza o texto da senha
         }
     }
 
-    //Verifica se a senha esta correta e limpa a tela ao clicar enter
+    // Verifica se a senha inserida está correta e realiza ações apropriadas
     public void CheckPassword()
     {
-        if (senhainserida == senhacorreta)
+        if (senhainserida == senhacorreta) // Verifica se a senha inserida é a correta
         {
-            Debug.Log("Senha correta!");
-            txtsenhacorreta.SetActive(true);
-            senhainserida = "";
-            telasenha.text = senhainserida;
-            porta.SetActive(true);
+            Debug.Log("Senha correta!"); // Mensagem de sucesso no console
+            txtsenhacorreta.SetActive(true); // Ativa a mensagem de senha correta
+            senhainserida = ""; // Limpa a senha inserida
+            telasenha.text = senhainserida; // Atualiza o texto da senha
+            porta.SetActive(true); // Ativa a porta
         }
         else
         {
-            Debug.Log("Senha incorreta!");
-            senhainserida = "";
-            telasenha.text = senhainserida;
-            txtsenhaincorreta.SetActive(true);
-            Invoke("TxtSenhaDesativar", 2);
+            Debug.Log("Senha incorreta!"); // Mensagem de erro no console
+            senhainserida = ""; // Limpa a senha inserida
+            telasenha.text = senhainserida; // Atualiza o texto da senha
+            txtsenhaincorreta.SetActive(true); // Ativa a mensagem de senha incorreta
+            Invoke("TxtSenhaDesativar", 2); // Desativa a mensagem de senha incorreta após 2 segundos
         }
     }
 
-    //Desativa a msg de senha incorreta
+    // Desativa a mensagem de senha incorreta
     public void TxtSenhaDesativar()
     {
         txtsenhaincorreta.SetActive(false);
     }
 
-    //Fecha o painel de senha
+    // Fecha o painel da senha e altera o estado do cursor
     public void Fechar()
     {
-        painelsenha.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        painelsenha.SetActive(false); // Desativa o painel da senha
+        Cursor.lockState = CursorLockMode.Locked; // Trava o cursor
+        Cursor.visible = false; // Torna o cursor invisível
     }
 
-    //Verifica se o jogador está dentro da área de colisão para ativar a msg de interagir
+    // Ativa a mensagem de interagir com a senha e abre o painel quando a tecla F é pressionada
     public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-            cliqueaqui.SetActive(true);
-        //Interagir com a Senha
-        if (Input.GetKeyDown(KeyCode.F))
+            cliqueaqui.SetActive(true); // Ativa a mensagem de interagir
+
+        if (Input.GetKeyDown(KeyCode.F)) // Verifica se a tecla F foi pressionada
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            painelsenha.SetActive(true);
+            Cursor.lockState = CursorLockMode.None; // Destrava o cursor
+            Cursor.visible = true; // Torna o cursor visível
+            painelsenha.SetActive(true); // Ativa o painel da senha
         }
     }
 
+    // Desativa a mensagem de interagir quando o jogador sai da área de colisão
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-            cliqueaqui.SetActive(false);
+            cliqueaqui.SetActive(false); // Desativa a mensagem de interagir
     }
 }

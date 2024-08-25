@@ -8,60 +8,57 @@ using UnityEngine.UI;
 public class VidaVilao : MonoBehaviour
 {
     // Vida do vilão (campo privado)
-    private int _vidavilao;
+    [SerializeField]
+    private int _vidaVilao;
 
     // Propriedade pública para acessar e modificar a vida do vilão
     public int Vida
     {
-        get { return _vidavilao; }
+        get { return _vidaVilao; }
         set
         {
-            _vidavilao = Mathf.Max(0, value); // Garante que a vida não seja negativa
-            slidervidavilao.value = _vidavilao; // Atualiza o slider
-            Debug.Log("Vida do Vilão: " + _vidavilao);
+            _vidaVilao = Mathf.Max(0, value); // Garante que a vida não seja negativa
+            slidervidavilao.value = _vidaVilao; // Atualiza o slider
+            Debug.Log("Vida do Vilão: " + _vidaVilao);
 
-            if (_vidavilao <= 0)
+            if (_vidaVilao <= 0)
             {
                 VilaoMorreu();
             }
         }
     }
 
-    //Vida e o slider dela
+    // Vida e o slider dela
     public Slider slidervidavilao;
     private Animator animatorvilao;
     private NavMeshAgent agentvilao;
-    public GameObject portalvoltar;
     private Rigidbody rb;
 
-    //Script VidaPersonagem
+    // Script VidaPersonagem
     public GameObject player;
     private VidaPersonagem vidaPersonagem;
     public bool morreuvilao = false;
-    public GameObject txtganhou;
+    public GameObject txtGanhou; // Nome atualizado para PascalCase
 
     void Start()
     {
-        //Pegar animator
-        agentvilao = GetComponent<NavMeshAgent>();
+        // Pegar animator e outros componentes
         animatorvilao = GetComponent<Animator>();
+        agentvilao = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
 
         vidaPersonagem = player.GetComponent<VidaPersonagem>();
-        agentvilao = GetComponent<NavMeshAgent>();
 
-        // Configura o slider para o valor máximo da vida do vilão
-        // Inicializa a vida do vilão
+        // Inicializa a vida do vilão e configura o slider
         Vida = 5; // Defina o valor inicial da vida aqui
         slidervidavilao.maxValue = Vida;
         slidervidavilao.value = Vida;
     }
 
-    //Receber dano e morrer
+    // Receber dano e atualizar o slider
     public void ReceberDanoVilao(int dano)
     {
         Vida -= dano;
-        slidervidavilao.value = Vida;
 
         if (vidaPersonagem.acabouojogo)
         {
@@ -69,6 +66,7 @@ public class VidaVilao : MonoBehaviour
         }
     }
 
+    // Lógica quando o vilão morre
     public void VilaoMorreu()
     {
         if (agentvilao != null)
@@ -81,7 +79,6 @@ public class VidaVilao : MonoBehaviour
         animatorvilao.SetBool("nocaute", true);
         rb.constraints = RigidbodyConstraints.FreezeAll;
         vidaPersonagem.acabouojogo = true;
-        txtganhou.SetActive(true);
-        portalvoltar.SetActive(true);
+        txtGanhou.SetActive(true);
     }
 }

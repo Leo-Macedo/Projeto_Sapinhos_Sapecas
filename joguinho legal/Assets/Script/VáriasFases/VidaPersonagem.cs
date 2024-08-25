@@ -6,65 +6,54 @@ using UnityEngine.UI;
 
 public class VidaPersonagem : MonoBehaviour
 {
-    //Vida e o slider dela
-    public int vida;
-    public Slider sliderVida;
+    [Header("Vida e Slider")]
+    public int vidaAtual;
     private Animator animator;
     public bool acabouojogo = false;
     public GameObject txtPerdeu;
 
-    //Cora��es
-    public int numOfHearts;
-    public Image[] hearts;
-    public Sprite fullHeart;
-    public Sprite emptyHeart;
+    [Header("Corações")]
+    public int numMaximoCorações;
+    public Image[] corações;
+    public Sprite coraçãoCheio;
+    public Sprite coraçãoVazio;
+
     void Start()
     {
-        //Pegar animator 
         animator = GetComponent<Animator>();
-        
     }
 
-     void Update()
+    void Update()
     {
-        for (int i = 0; i < hearts.Length; i++)
+        AtualizarCorações();
+    }
+
+    private void AtualizarCorações()
+    {
+        for (int i = 0; i < corações.Length; i++)
         {
-
-            if (vida > numOfHearts)
+            if (i < numMaximoCorações)
             {
-                vida = numOfHearts;
-            }
-
-            if (i < vida)
-            {
-                hearts[i].sprite = fullHeart;
+                corações[i].sprite = (i < vidaAtual) ? coraçãoCheio : coraçãoVazio;
+                corações[i].enabled = true;
             }
             else
             {
-                hearts[i].sprite = emptyHeart;
-            }
-            if (i < numOfHearts)
-            {
-                hearts[i].enabled = true;
-            }
-            else
-            {
-                hearts[i].enabled = false;
-
+                corações[i].enabled = false;
             }
         }
-
     }
 
-    //Receber dano e morrer
     public void ReceberDano(int dano)
     {
-        vida -= dano;
-        sliderVida.value = vida;
-        Debug.Log("Vida do personagem: " + vida);
+        vidaAtual -= dano;
+        vidaAtual = Mathf.Clamp(vidaAtual, 0, numMaximoCorações); // Garante que a vida esteja dentro dos limites
+      
+        Debug.Log("Vida do personagem: " + vidaAtual);
 
-        if (vida <= 0)
-        {   animator.SetTrigger("nocaute");
+        if (vidaAtual <= 0)
+        {
+            animator.SetTrigger("nocaute");
             txtPerdeu.SetActive(true);
             acabouojogo = true;
         }

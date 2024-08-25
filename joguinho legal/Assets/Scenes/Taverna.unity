@@ -396,7 +396,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20955554}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000014901159, y: 0.000000059604638, z: -0.000000029802319, w: 1}
+  m_LocalRotation: {x: 0.0000000372529, y: -0.000000029802319, z: 0.000000014901159, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -969,6 +969,10 @@ PrefabInstance:
     - target: {fileID: 7787397676770705715, guid: 66812b37a32b06a41b2eb4b5a871a484, type: 3}
       propertyPath: m_Name
       value: CapangaZida (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7787397676770705715, guid: 66812b37a32b06a41b2eb4b5a871a484, type: 3}
+      propertyPath: m_TagString
+      value: capanga
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1667,6 +1671,10 @@ PrefabInstance:
     - target: {fileID: 7787397676770705715, guid: 66812b37a32b06a41b2eb4b5a871a484, type: 3}
       propertyPath: m_Name
       value: CapangaZida
+      objectReference: {fileID: 0}
+    - target: {fileID: 7787397676770705715, guid: 66812b37a32b06a41b2eb4b5a871a484, type: 3}
+      propertyPath: m_TagString
+      value: capanga
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3062,7 +3070,7 @@ Transform:
   m_GameObject: {fileID: 580450471}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 21.002895}
+  m_LocalPosition: {x: 3.9, y: 1, z: 18.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3300,7 +3308,7 @@ MonoBehaviour:
     m_MaxSpeed: 1.5
     m_AccelTime: 0.2
     m_DecelTime: 0.1
-    m_InputAxisName: Mouse Y
+    m_InputAxisName: 
     m_InputAxisValue: 0
     m_InvertInput: 0
     m_MinValue: 0
@@ -3461,8 +3469,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595339510}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14831655, y: -0.62381434, z: 0.122126676, w: 0.7575903}
-  m_LocalPosition: {x: -55.816208, y: 18.487345, z: 1.3766149}
+  m_LocalRotation: {x: 0.13444072, y: -0.47359398, z: 0.07341034, w: 0.8673208}
+  m_LocalPosition: {x: -56.71448, y: 18.488173, z: 1.3766346}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5428,7 +5436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 134914a31f5fcc54087172999906a947, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -70.00126
+      value: -72
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 134914a31f5fcc54087172999906a947, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5436,7 +5444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 134914a31f5fcc54087172999906a947, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.15
+      value: 11.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 134914a31f5fcc54087172999906a947, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6054,7 +6062,7 @@ MonoBehaviour:
   vidaPersonagem: {fileID: 1836821606}
   particulaPrefab: {fileID: 4303916902906854774, guid: cc53b40567bec674e8d566ec89f25282, type: 3}
   audioSource: {fileID: 1836821612}
-  portalvoltar: {fileID: 0}
+  portalvoltar: {fileID: 1832441028}
 --- !u!136 &1134590965
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6153,11 +6161,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddaae50a2319d7b4b87b99509bddbc48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _vidaVilao: 5
   slidervidavilao: {fileID: 621256633}
-  portalvoltar: {fileID: 1832441028}
   player: {fileID: 1836821603}
   morreuvilao: 0
-  txtganhou: {fileID: 26046584}
+  txtGanhou: {fileID: 26046584}
 --- !u!1 &1137810371
 GameObject:
   m_ObjectHideFlags: 0
@@ -7084,8 +7092,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291047978}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06379719, y: 0.0000018775461, z: -0.0000008791684, w: 0.99796295}
-  m_LocalPosition: {x: 0.0000003509825, y: 0.000000025877098, z: 0.00000006355609}
+  m_LocalRotation: {x: 0.05232188, y: -0.008131414, z: 0.0030598934, w: 0.9985925}
+  m_LocalPosition: {x: -0.00000040114145, y: -0.000000078045396, z: -0.0000002456993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7456,7 +7464,7 @@ Transform:
   m_GameObject: {fileID: 1405336397}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.07037449, y: 1, z: 30.705791}
+  m_LocalPosition: {x: -7, y: 1, z: 21.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8200,6 +8208,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CapangaZida (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7787397676770705715, guid: 66812b37a32b06a41b2eb4b5a871a484, type: 3}
+      propertyPath: m_TagString
+      value: capanga
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8694,7 +8706,7 @@ Transform:
   m_GameObject: {fileID: 1532753282}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.929626, y: 1, z: 30.705791}
+  m_LocalPosition: {x: -17.6, y: 1, z: 38.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10093,7 +10105,7 @@ Transform:
   m_GameObject: {fileID: 1799091089}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.929626, y: 1, z: 21.002895}
+  m_LocalPosition: {x: -5.5, y: 1, z: 37.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11537,17 +11549,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d0bddf757f5b84e98e1175423accae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vida: 3
-  sliderVida: {fileID: 1115057205}
+  vidaAtual: 3
   acabouojogo: 0
   txtPerdeu: {fileID: 1746051951}
-  numOfHearts: 3
-  hearts:
+  "numMaximoCora\xE7\xF5es": 3
+  "cora\xE7\xF5es":
   - {fileID: 1866005047}
   - {fileID: 380051690}
   - {fileID: 1424171590}
-  fullHeart: {fileID: 21300000, guid: 897f770b17fc5aa4ea2836c02e31e822, type: 3}
-  emptyHeart: {fileID: 21300000, guid: efdb06a0c970d4c45a37b4fb69fa72e9, type: 3}
+  "cora\xE7\xE3oCheio": {fileID: 21300000, guid: 897f770b17fc5aa4ea2836c02e31e822, type: 3}
+  "cora\xE7\xE3oVazio": {fileID: 21300000, guid: efdb06a0c970d4c45a37b4fb69fa72e9, type: 3}
 --- !u!114 &1836821607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11560,6 +11571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ca62358885679408bda47e37017b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distAtaque: 0
 --- !u!114 &1836821608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11572,18 +11584,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf387c4a7539d343b1d5ce7195b1dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Velocidade: 0
+  velocidade: 0
   veloAndando: 2
   veloCorrendo: 4
   anim: {fileID: 1836821609}
   forcaPulo: 7
   rb: {fileID: 1836821611}
-  Layermask:
+  layermask:
     serializedVersion: 2
     m_Bits: 1
-  IsGrounded: 0
-  GroundCheckSize: 0.36
-  GroundCheckPosition: {x: 0, y: 0.28, z: 0}
+  groundCheckSize: 0.4
+  groundCheckPosition: {x: 0, y: 0.31, z: 0}
   cinemachineCamera: {fileID: 595339512}
   id: 0
 --- !u!95 &1836821609
@@ -12351,6 +12362,10 @@ PrefabInstance:
     - target: {fileID: 7787397676770705715, guid: 66812b37a32b06a41b2eb4b5a871a484, type: 3}
       propertyPath: m_Name
       value: CapangaZida (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7787397676770705715, guid: 66812b37a32b06a41b2eb4b5a871a484, type: 3}
+      propertyPath: m_TagString
+      value: capanga
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13482,7 +13497,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2122388433}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.027504139, y: 0.000001937151, z: -0.0000008493662, w: 0.99962175}
+  m_LocalRotation: {x: 0.016013548, y: -0.008237243, z: 0.0027625114, w: 0.99983406}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
