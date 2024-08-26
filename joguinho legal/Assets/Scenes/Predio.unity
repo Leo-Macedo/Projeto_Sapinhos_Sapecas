@@ -360,8 +360,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244774751}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10004872, y: 0.72741884, z: -0.108603835, w: 0.67011744}
-  m_LocalPosition: {x: -45.24095, y: 12.4800005, z: 0.50794494}
+  m_LocalRotation: {x: 0.10273328, y: 0.7104338, z: -0.10606799, w: 0.6880983}
+  m_LocalPosition: {x: -34.357986, y: 28.46, z: -0.22796786}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -941,12 +941,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1194541789}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1194541792}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1194541791}
   m_SourcePrefab: {fileID: 100100000, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
 --- !u!1 &417833021
 GameObject:
@@ -1207,7 +1201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499028223}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000014901161, y: 0.000000059604645, z: -0.000000014901161, w: 1}
+  m_LocalRotation: {x: -0.000000014901161, y: 0.00000008940697, z: -0.000000007450581, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1920,7 +1914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vilao: {fileID: 1194541786}
-  vidaVilao: 3
+  vidaVilao: 1
   portalvoltar: {fileID: 2025968569}
 --- !u!81 &776115333
 AudioListener:
@@ -2017,9 +2011,7 @@ MonoBehaviour:
   velocidade: 0
   veloAndando: 4
   veloCorrendo: 8
-  anim: {fileID: 776115334}
   forcaPulo: 7
-  rb: {fileID: 776115336}
   layermask:
     serializedVersion: 2
     m_Bits: 1
@@ -2164,7 +2156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904715247}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.048944287, y: 0.00000008940696, z: -0.0000000372529, w: 0.9988016}
+  m_LocalRotation: {x: 0.048944235, y: 0.00000008940697, z: -0, w: 0.9988016}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2512,78 +2504,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1194541791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194541786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f00c48fa1661e84c98700b205b26ac3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1194541792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194541786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Spline:
-    m_EditModeType: 1
-    m_Knots: []
-    m_MetaData: []
-    m_Closed: 0
-    m_IntData:
-      m_Data: []
-    m_FloatData:
-      m_Data: []
-    m_Float4Data:
-      m_Data: []
-    m_ObjectData:
-      m_Data: []
-  m_Splines:
-  - m_EditModeType: 1
-    m_Knots:
-    - Position:
-        x: -0.000000029802322
-        y: 0
-        z: 0
-      TangentIn:
-        x: 0
-        y: 0
-        z: -1
-      TangentOut:
-        x: 0
-        y: 0
-        z: 1
-      Rotation:
-        value:
-          x: 0
-          y: 0.7071069
-          z: 0
-          w: 0.70710665
-    m_MetaData:
-    - Mode: 2
-      Tension: 0.5
-    m_Closed: 0
-    m_IntData:
-      m_Data: []
-    m_FloatData:
-      m_Data: []
-    m_Float4Data:
-      m_Data: []
-    m_ObjectData:
-      m_Data: []
-  m_Knots:
-    m_KnotsLink: []
 --- !u!1 &1196635211
 GameObject:
   m_ObjectHideFlags: 0
@@ -2717,15 +2637,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 74f178ff643eeac438be62ec383375eb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.77
+      value: -10.82
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 74f178ff643eeac438be62ec383375eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.68
+      value: 18.66
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 74f178ff643eeac438be62ec383375eb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.42
+      value: -0.98
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 74f178ff643eeac438be62ec383375eb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2972,7 +2892,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1423184704}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.012630552, y: 0.00000008940697, z: -0.000000029802322, w: 0.99992025}
+  m_LocalRotation: {x: 0.01263053, y: 0.00000020861626, z: -0.000000037252903, w: 0.9999203}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

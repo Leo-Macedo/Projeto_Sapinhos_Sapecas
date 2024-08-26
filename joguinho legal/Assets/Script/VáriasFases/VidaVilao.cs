@@ -50,7 +50,6 @@ public class VidaVilao : MonoBehaviour
         vidaPersonagem = player.GetComponent<VidaPersonagem>();
 
         // Inicializa a vida do vilão e configura o slider
-        Vida = 5; // Defina o valor inicial da vida aqui
         slidervidavilao.maxValue = Vida;
         slidervidavilao.value = Vida;
     }

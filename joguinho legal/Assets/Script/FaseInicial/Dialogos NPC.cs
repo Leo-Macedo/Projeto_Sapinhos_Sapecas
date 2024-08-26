@@ -7,6 +7,8 @@ public class DialogosNPC : MonoBehaviour
     [Header("Diálogo")]
     public string[] dialogueNpc; // Array de strings contendo o diálogo do NPC
     public int dialogueIndex; // Índice atual do diálogo
+    public GameObject seta;
+    public GameObject txtFParaInteragir;
 
     [Header("Interface de Diálogo")]
     public GameObject dialoguePanel; // Painel onde o diálogo é exibido
@@ -14,6 +16,7 @@ public class DialogosNPC : MonoBehaviour
     public Text nameNpc; // Texto que exibe o nome do NPC
     public Image imageNpc; // Imagem do NPC
     public Sprite spriteNpc; // Sprite do NPC
+    public Animator animator;
 
     [Header("Controle de Diálogo")]
     public bool readyToSpeak; // Verifica se o jogador está perto o suficiente para falar com o NPC
@@ -22,10 +25,7 @@ public class DialogosNPC : MonoBehaviour
     public float segundosletras; // Tempo entre cada letra exibida
     public string nameNpcString; // Nome do NPC a ser exibido
 
-    void Start()
-    {
-        // Inicializa o script
-    }
+    void Start() { }
 
     void Update()
     {
@@ -53,14 +53,17 @@ public class DialogosNPC : MonoBehaviour
         else
         {
             // Fecha o painel de diálogo e reseta o estado
-            dialoguePanel.SetActive(false);
-            startDialogue = false;
+            animator.SetTrigger("fechou");
+            startDialogue = true;
             dialogueIndex = 0;
         }
     }
 
     public void StartDialogue()
     {
+        seta.SetActive(false);
+        txtFParaInteragir.SetActive(false);
+
         nameNpc.text = nameNpcString; // Define o nome do NPC
         imageNpc.sprite = spriteNpc; // Define a imagem do NPC
         startDialogue = true; // Marca o diálogo como iniciado
@@ -86,6 +89,11 @@ public class DialogosNPC : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             readyToSpeak = true; // Permite que o jogador fale com o NPC
+
+            if (!startDialogue)
+            {
+                txtFParaInteragir.SetActive(true);
+            }
         }
     }
 
@@ -94,6 +102,11 @@ public class DialogosNPC : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             readyToSpeak = false; // Impede que o jogador fale com o NPC
+
+            if (!startDialogue)
+            {
+                txtFParaInteragir.SetActive(false);
+            }
         }
     }
 }

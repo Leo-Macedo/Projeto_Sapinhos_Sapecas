@@ -8,7 +8,7 @@ public class Movimento2 : MonoBehaviour
     [SerializeField] private float velocidade; // Velocidade atual do personagem
     [SerializeField] private float veloAndando; // Velocidade ao andar
     [SerializeField] private float veloCorrendo; // Velocidade ao correr
-    [SerializeField] private Animator anim; // Referência ao Animator para controle de animações
+    private Animator anim; // Referência ao Animator para controle de animações
 
     private float inputX; // Entrada do eixo horizontal (A/D ou setas esquerda/direita)
     private float inputZ; // Entrada do eixo vertical (W/S ou setas cima/baixo)
@@ -16,7 +16,7 @@ public class Movimento2 : MonoBehaviour
 
     // Pular e verificar colisão com chão
     [SerializeField] private float forcaPulo = 10f; // Força do pulo
-    [SerializeField] private Rigidbody rb; // Referência ao Rigidbody para física
+    private Rigidbody rb; // Referência ao Rigidbody para física
     [SerializeField] private LayerMask layermask; // Máscara de camada para detectar o chão
     [SerializeField] private float groundCheckSize; // Tamanho da esfera de verificação de chão
     [SerializeField] private Vector3 groundCheckPosition; // Posição relativa da verificação de chão
@@ -37,6 +37,8 @@ public class Movimento2 : MonoBehaviour
 
     void Start()
     {
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked; // Trava o cursor no meio da tela
         Cursor.visible = false; // Torna o cursor invisível
         velocidade = veloAndando; // Define a velocidade inicial como a de andar

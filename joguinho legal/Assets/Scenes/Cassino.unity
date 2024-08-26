@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddaae50a2319d7b4b87b99509bddbc48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vidaVilao: 0
+  _vidaVilao: 1
   slidervidavilao: {fileID: 1702028971}
   player: {fileID: 2018230877}
   morreuvilao: 1
@@ -410,8 +410,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141358728}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.05033552, y: -0, z: -0.000000029802322, w: 0.99873245}
-  m_LocalPosition: {x: -0.00000044694303, y: -0.00000079758934, z: 0.00000052290346}
+  m_LocalRotation: {x: -0.05033552, y: 0.000000059604645, z: -0.000000029802322, w: 0.99873245}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -732,7 +732,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 350705753}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.20108885, y: 0.6715923, z: -0.1970538, w: 0.6853444}
+  m_LocalRotation: {x: 0.20108883, y: 0.6715923, z: -0.19705382, w: 0.68534434}
   m_LocalPosition: {x: -40.6625, y: 14.684999, z: 0.3813575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1629,7 +1629,7 @@ Transform:
   m_GameObject: {fileID: 1008112641}
   serializedVersion: 2
   m_LocalRotation: {x: -0.036324963, y: -0, z: 0.000000044703484, w: 0.9993401}
-  m_LocalPosition: {x: -0.00000044694303, y: -0.00000079758934, z: 0.00000052290346}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3536,8 +3536,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875024036}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.000000029802322, z: -0.000000029802322, w: 1}
-  m_LocalPosition: {x: -0.00000044694303, y: -0.00000079758934, z: 0.00000052290346}
+  m_LocalRotation: {x: 0.000000029802319, y: -0, z: 0.000000029802319, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4867,9 +4867,7 @@ MonoBehaviour:
   velocidade: 0
   veloAndando: 2
   veloCorrendo: 4
-  anim: {fileID: 2018230882}
   forcaPulo: 7
-  rb: {fileID: 2018230884}
   layermask:
     serializedVersion: 2
     m_Bits: 1
