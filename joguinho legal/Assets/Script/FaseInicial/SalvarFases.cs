@@ -39,12 +39,16 @@ public class SalvarFases : MonoBehaviour
     private Movimento2 movimento2RV;
     private Movimento2 movimento2RM;
 
+    [Header("Telas HUD")]
+    public GameObject telaRonaldinho;
+    public GameObject telaRivaldinho;
+    public GameObject telaRomarinho;
+    public GameObject telaTodos;
+
     // Start is called before the first frame update
     void Start()
     {
         VerificarProgresso();
-
-       
     }
 
     // Verifica o progresso do jogador e desbloqueia as fases correspondentes
@@ -75,7 +79,6 @@ public class SalvarFases : MonoBehaviour
     // Inicia o jogo com a cutscene
     public void InicioJogo()
     {
-       
         Invoke("PodeAndar", (float)cutsceneInicial.duration);
         Debug.Log("Metodo chamado InicioJogo e não completou fases");
         martinha1.SetActive(true);
@@ -89,6 +92,7 @@ public class SalvarFases : MonoBehaviour
 
         taverna.SetActive(true);
         martinha2.SetActive(true);
+        telaRivaldinho.SetActive(true);
         rivaldinhoAnda.SetActive(true);
         rivaldinhoAtor.SetActive(false);
         freeLookCamera.Follow = rivaldinhoAnda.transform;
@@ -103,6 +107,7 @@ public class SalvarFases : MonoBehaviour
         cassino.SetActive(true);
         taverna.SetActive(true);
         martinha3.SetActive(true);
+        telaRomarinho.SetActive(true);
         romarinhoAnda.SetActive(true);
         romarinhoAtor.SetActive(false);
         freeLookCamera.Follow = romarinhoAnda.transform;
@@ -118,6 +123,7 @@ public class SalvarFases : MonoBehaviour
         taverna.SetActive(true);
         cassino.SetActive(true);
         martinha4.SetActive(true);
+        telaTodos.SetActive(true);
         ronaldinhoAnda.SetActive(true);
         ronaldinhoAtor.SetActive(false);
         freeLookCamera.Follow = ronaldinhoAnda.transform;
@@ -128,5 +134,6 @@ public class SalvarFases : MonoBehaviour
     {
         ronaldinhoAnda.SetActive(true);
         ronaldinhoAtor.SetActive(false);
+        telaRonaldinho.SetActive(true);
     }
 }

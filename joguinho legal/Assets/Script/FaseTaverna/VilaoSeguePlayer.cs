@@ -28,8 +28,7 @@ public class VilaoSeguePlayer : MonoBehaviour
         rb = GetComponent<Rigidbody>(); // Obtém o Rigidbody anexado ao vilão
         vidaVilao = GetComponent<VidaVilao>();
 
-        // Modifica a vida diretamente (pode ser útil para cura ou outros efeitos)
-        vidaVilao.Vida = 5;
+        
     }
 
     private void FixedUpdate()
