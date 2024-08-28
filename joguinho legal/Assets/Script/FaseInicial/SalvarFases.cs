@@ -52,29 +52,59 @@ public class SalvarFases : MonoBehaviour
     }
 
     // Verifica o progresso do jogador e desbloqueia as fases correspondentes
-    public void VerificarProgresso()
+   public void VerificarProgresso()
+{
+    // Resetar o estado dos objetos antes de verificar o progresso
+    ResetarObjetos();
+
+    if (PlayerPrefs.GetInt(PredioCompletadoKey, 0) == 0)
     {
-        if (PlayerPrefs.GetInt(PredioCompletadoKey, 0) == 0)
-        {
-            InicioJogo();
-            return; // Encerra a verificação se a primeira condição for verdadeira
-        }
-
-        if (PlayerPrefs.GetInt(TavernaCompletadaKey, 0) == 0)
-        {
-            TavernaDesbloqueada();
-            return;
-        }
-
-        if (PlayerPrefs.GetInt(CassinoCompletadoKey, 0) == 0)
-        {
-            CassinoDesbloqueado();
-            return;
-        }
-
-        // Se todas as fases anteriores foram completadas, desbloqueia o Casarão
-        CasaraoDesbloqueado();
+        InicioJogo();
+        return;
     }
+
+    if (PlayerPrefs.GetInt(TavernaCompletadaKey, 0) == 0)
+    {
+        TavernaDesbloqueada();
+        return;
+    }
+
+    if (PlayerPrefs.GetInt(CassinoCompletadoKey, 0) == 0)
+    {
+        CassinoDesbloqueado();
+        return;
+    }
+
+    CasaraoDesbloqueado();
+}
+
+// Método para resetar o estado dos objetos
+private void ResetarObjetos()
+{
+    // Desative todos os objetos que são ativados por progresso
+    martinha1.SetActive(false);
+    martinha2.SetActive(false);
+    martinha3.SetActive(false);
+    martinha4.SetActive(false);
+
+    telaRonaldinho.SetActive(false);
+    telaRivaldinho.SetActive(false);
+    telaRomarinho.SetActive(false);
+    telaTodos.SetActive(false);
+
+    ronaldinhoAnda.SetActive(false);
+    ronaldinhoAtor.SetActive(true);
+
+    rivaldinhoAnda.SetActive(false);
+    rivaldinhoAtor.SetActive(true);
+
+    romarinhoAnda.SetActive(false);
+    romarinhoAtor.SetActive(true);
+
+    cassino.SetActive(false);
+    taverna.SetActive(false);
+    casarao.SetActive(false);
+}
 
     // Inicia o jogo com a cutscene
     public void InicioJogo()
