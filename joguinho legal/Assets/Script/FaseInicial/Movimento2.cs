@@ -5,9 +5,14 @@ using UnityEngine.SceneManagement;
 public class Movimento2 : MonoBehaviour
 {
     // Movimentar Personagem
-    [SerializeField] private float velocidade; // Velocidade atual do personagem
-    [SerializeField] private float veloAndando; // Velocidade ao andar
-    [SerializeField] private float veloCorrendo; // Velocidade ao correr
+    [SerializeField]
+    public float velocidade; // Velocidade atual do personagem
+
+    [SerializeField]
+    public float veloAndando; // Velocidade ao andar
+
+    [SerializeField]
+    public float veloCorrendo; // Velocidade ao correr
     private Animator anim; // Referência ao Animator para controle de animações
 
     private float inputX; // Entrada do eixo horizontal (A/D ou setas esquerda/direita)
@@ -15,19 +20,28 @@ public class Movimento2 : MonoBehaviour
     private Vector3 direcao; // Direção de movimento
 
     // Pular e verificar colisão com chão
-    [SerializeField] private float forcaPulo = 10f; // Força do pulo
+    [SerializeField]
+    private float forcaPulo = 10f; // Força do pulo
     private Rigidbody rb; // Referência ao Rigidbody para física
-    [SerializeField] private LayerMask layermask; // Máscara de camada para detectar o chão
-    [SerializeField] private float groundCheckSize; // Tamanho da esfera de verificação de chão
-    [SerializeField] private Vector3 groundCheckPosition; // Posição relativa da verificação de chão
 
-    private bool isGrounded; // Indica se o personagem está no chão
+    [SerializeField]
+    private LayerMask layermask; // Máscara de camada para detectar o chão
+
+    [SerializeField]
+    private float groundCheckSize; // Tamanho da esfera de verificação de chão
+
+    [SerializeField]
+    private Vector3 groundCheckPosition; // Posição relativa da verificação de chão
+
+    public bool isGrounded; // Indica se o personagem está no chão
 
     // Referência para a câmera
-    [SerializeField] private CinemachineFreeLook cinemachineCamera; // Câmera do Cinemachine
+    [SerializeField]
+    private CinemachineFreeLook cinemachineCamera; // Câmera do Cinemachine
 
     // Id do banco de dados
-    [SerializeField] private int id; // Identificador usado para operações de banco de dados
+    [SerializeField]
+    private int id; // Identificador usado para operações de banco de dados
 
     private void Awake()
     {
@@ -100,7 +114,11 @@ public class Movimento2 : MonoBehaviour
             anim.SetBool("andando", true); // Ativa a animação de andar
 
             Quaternion toRotation = Quaternion.LookRotation(direcao, Vector3.up); // Calcula a rotação desejada
-            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 5 * Time.deltaTime); // Rotaciona suavemente
+            transform.rotation = Quaternion.Lerp(
+                transform.rotation,
+                toRotation,
+                5 * Time.deltaTime
+            ); // Rotaciona suavemente
         }
         else
         {
@@ -123,19 +141,28 @@ public class Movimento2 : MonoBehaviour
         }
     }
 
-    private void Pular()
+    public void Pular(float multiplicador = 1f)
     {
-        var groundcheck = Physics.OverlapSphere(
-            transform.position + groundCheckPosition, // Posição da verificação de chão
-            groundCheckSize, // Tamanho da esfera de verificação
-            layermask // Máscara de camada para detectar o chão
-        );
-        isGrounded = groundcheck.Length != 0; // Verifica se há colisão com o chão
+        // Obtém a escala atual do objeto
+        Vector3 escalaAtual = transform.localScale;
 
-        anim.SetBool("pulo", !isGrounded); // Ativa/desativa a animação de pulo
-        if (isGrounded && Input.GetButtonDown("Jump")) // Verifica se está no chão e se o botão de pulo foi pressionado
+        // Calcula o tamanho e a posição da verificação de chão com base na escala do objeto
+        float tamanhoVerificado =
+            groundCheckSize * Mathf.Max(escalaAtual.x, escalaAtual.y, escalaAtual.z);
+        Vector3 posicaoVerificada = Vector3.Scale(groundCheckPosition, escalaAtual);
+        // Realiza a verificação de chão com os valores escalados
+        var groundcheck = Physics.OverlapSphere(
+            transform.position + posicaoVerificada,
+            tamanhoVerificado,
+            layermask
+        );
+
+        isGrounded = groundcheck.Length != 0;
+
+        anim.SetBool("pulo", !isGrounded);
+        if (isGrounded && Input.GetButtonDown("Jump"))
         {
-            rb.AddForce(transform.up * forcaPulo, ForceMode.Impulse); // Adiciona força para pular
+            rb.AddForce(transform.up * forcaPulo * multiplicador, ForceMode.Impulse);
         }
     }
 
@@ -149,8 +176,16 @@ public class Movimento2 : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red; // Define a cor do gizmo
-        Gizmos.DrawWireSphere(transform.position + groundCheckPosition, groundCheckSize); // Desenha a esfera de verificação de chão
+        // Obtém a escala atual do objeto
+        Vector3 escalaAtual = transform.localScale;
+
+        // Calcula o tamanho e a posição da verificação de chão com base na escala do objeto
+        float tamanhoVerificado =
+            groundCheckSize * Mathf.Max(escalaAtual.x, escalaAtual.y, escalaAtual.z);
+        Vector3 posicaoVerificada = Vector3.Scale(groundCheckPosition, escalaAtual);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + posicaoVerificada, tamanhoVerificado);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -162,7 +197,12 @@ public class Movimento2 : MonoBehaviour
     private void Salvar(int id)
     {
         BancoDeDados bancoDeDados = new BancoDeDados(); // Instancia o banco de dados
-        bancoDeDados.InserirPosicao(id, transform.position.x, transform.position.y, transform.position.z); // Salva a posição
+        bancoDeDados.InserirPosicao(
+            id,
+            transform.position.x,
+            transform.position.y,
+            transform.position.z
+        ); // Salva a posição
     }
 
     private void Deletar(int id)
@@ -179,7 +219,11 @@ public class Movimento2 : MonoBehaviour
         {
             while (leitura.Read()) // Lê os dados enquanto houver registros
             {
-                transform.position = new Vector3(leitura.GetFloat(1), leitura.GetFloat(2), leitura.GetFloat(3)); // Define a posição do personagem
+                transform.position = new Vector3(
+                    leitura.GetFloat(1),
+                    leitura.GetFloat(2),
+                    leitura.GetFloat(3)
+                ); // Define a posição do personagem
             }
         }
         leitura.Close(); // Fecha o leitor de dados

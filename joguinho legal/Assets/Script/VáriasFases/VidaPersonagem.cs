@@ -11,6 +11,7 @@ public class VidaPersonagem : MonoBehaviour
     private Animator animator;
     public bool acabouojogo = false;
     public GameObject txtPerdeu;
+    public Animator animatorCoracao;
 
     [Header("Corações")]
     public int numMaximoCorações;
@@ -50,7 +51,7 @@ public class VidaPersonagem : MonoBehaviour
         vidaAtual = Mathf.Clamp(vidaAtual, 0, numMaximoCorações); // Garante que a vida esteja dentro dos limites
       
         Debug.Log("Vida do personagem: " + vidaAtual);
-
+        animatorCoracao.SetTrigger("tomou");
         if (vidaAtual <= 0)
         {
             animator.SetTrigger("nocaute");

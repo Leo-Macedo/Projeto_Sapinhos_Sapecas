@@ -8,6 +8,7 @@ public class MatarVilao : MonoBehaviour
     [Header("Referências")]
     private Animator animator; // Animator do jogador
     public GameObject portalvoltar; // Portal de vitória
+    public int danoAtaque = 1;
 
     [Header("Melo Vilão")]
     public Animator animatorvilao; // Animator do vilão
@@ -65,7 +66,7 @@ public class MatarVilao : MonoBehaviour
             if (distancia <= distAtaque && podeatacar)
             {
                 Debug.Log("Chamo evento pela animação");
-                vidaVilao.ReceberDanoVilao(1);
+                vidaVilao.ReceberDanoVilao(danoAtaque);
                 animatorvilao.SetBool("caiu", true);
                 Invoke("Resetou", 2);
                

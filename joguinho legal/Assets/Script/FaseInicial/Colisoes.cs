@@ -43,8 +43,9 @@ public class Colisoes : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("portafundo"))
         {
-            cutscene.Play(); // Inicia a cutscene
-            Invoke("MudarFase", (float)cutscene.duration); // Troca de cena após o fim da cutscene
+            MudarFase();
+            //cutscene.Play(); // Inicia a cutscene
+            //Invoke("MudarFase", (float)cutscene.duration); // Troca de cena após o fim da cutscene
         }
     }
 
