@@ -22,7 +22,6 @@ public class SuperRonaldinho : MonoBehaviour
     private bool isCharging = false;
     private bool isSuperReady = false;
     public bool isSuperActive = false;
-    private bool isGrounded = false;
 
     void Start()
     {

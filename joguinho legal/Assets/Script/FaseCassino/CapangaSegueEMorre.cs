@@ -7,13 +7,16 @@ public class CapangaSegueEMorre : MonoBehaviour
 {
     [Header("Referências")]
     private NavMeshAgent navMeshAgent; // Agente de navegação para o capanga
-    public Animator animator; // Controlador de animação do capanga
+    private Animator animator; // Controlador de animação do capanga
     public float distAtaque; // Distância para verificar o nocaute
+    private VidaPersonagem vidaPersonagemMaisProxima;
+    private bool podeAtacar = true;
 
     void Start()
     {
         // Inicializa o NavMeshAgent
         navMeshAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -37,12 +40,30 @@ public class CapangaSegueEMorre : MonoBehaviour
             {
                 menorDistancia = distancia;
                 jogadorMaisProximo = jogador.transform;
+                vidaPersonagemMaisProxima = jogador.GetComponent<VidaPersonagem>(); // Armazena o VidaPersonagem do jogador mais próximo
             }
         }
 
         if (jogadorMaisProximo != null)
         {
             navMeshAgent.SetDestination(jogadorMaisProximo.position);
+
+            if (navMeshAgent.remainingDistance <= distAtaque && podeAtacar)
+            {
+                podeAtacar = false; // Impede novos ataques até o intervalo terminar
+                Invoke("DanoNoPlayer", 0f);
+                Invoke("ResetarAtaque", 5f); // Permite o próximo ataque após 5 segundos
+            }
+        }
+    }
+
+    private void DanoNoPlayer()
+    {
+        if (vidaPersonagemMaisProxima != null)
+        {
+            // Subtrai 0.1 da vidaAtual do jogador mais próximo
+            vidaPersonagemMaisProxima.vidaAtual -= 0.1f;
+            Debug.Log("Atacando o jogador! Vida restante: " + vidaPersonagemMaisProxima.vidaAtual);
         }
     }
 
@@ -68,5 +89,10 @@ public class CapangaSegueEMorre : MonoBehaviour
         {
             animator.SetBool("andando", false); // Define o parâmetro "andando" como false
         }
+    }
+
+    private void ResetarAtaque()
+    {
+        podeAtacar = true; // Permite que o capanga ataque novamente
     }
 }

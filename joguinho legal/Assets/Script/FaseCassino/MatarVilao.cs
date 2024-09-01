@@ -50,11 +50,7 @@ public class MatarVilao : MonoBehaviour
             Invoke("ResetaGolpe", 1);
         }
 
-        // Verifica se o vilão foi derrotado
-        if (vidaVilao.Vida <= 0)
-        {
-            Vitoria();
-        }
+        
     }
 
     public void DarDanoNoVilao()
@@ -67,9 +63,7 @@ public class MatarVilao : MonoBehaviour
             {
                 Debug.Log("Chamo evento pela animação");
                 vidaVilao.ReceberDanoVilao(danoAtaque);
-                animatorvilao.SetBool("caiu", true);
-                Invoke("Resetou", 2);
-               
+                             
                 podeatacar = false;
                 Invoke("PodeAtacar", 3);
             }
@@ -85,10 +79,7 @@ public class MatarVilao : MonoBehaviour
     }
 
     // Reseta a animação de tomar soco
-    public void Resetou()
-    {
-        animatorvilao.SetBool("caiu", false);
-    }
+    
 
     // Permite que o jogador ataque novamente
     public void PodeAtacar()
@@ -99,9 +90,5 @@ public class MatarVilao : MonoBehaviour
     // Reseta os flags de ataque
    
     // Executa a lógica de vitória
-    public void Vitoria()
-    {
-        PlayerPrefs.SetInt("CassinoCompletado", 1);
-        portalvoltar.SetActive(true);
-    }
+   
 }

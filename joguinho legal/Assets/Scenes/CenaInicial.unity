@@ -630,8 +630,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82993675}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.07894024, y: -0.8418384, z: 0.1282166, w: 0.5183021}
-  m_LocalPosition: {x: 83.07378, y: 37.43, z: 59.512314}
+  m_LocalRotation: {x: 0.1344399, y: -0.41794282, z: 0.06269036, w: 0.89628106}
+  m_LocalPosition: {x: 71.80446, y: 37.43, z: -49.07874}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2003,6 +2003,7 @@ MonoBehaviour:
     m_Bits: 1
   groundCheckSize: 0.44
   groundCheckPosition: {x: 0, y: 0.31, z: 0}
+  isGrounded: 0
   cinemachineCamera: {fileID: 1085014613}
   id: 1
 --- !u!114 &255270389
@@ -3759,7 +3760,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 418240842}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.031748433, y: -0.000000029802326, z: 0.0000000074505815, w: 0.9994959}
+  m_LocalRotation: {x: 0.031748418, y: -0.000000029802322, z: 0.000000014901161, w: 0.9994959}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6913,7 +6914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 341329391}
-  m_PathPosition: 0.08259781
+  m_PathPosition: 1
   m_PositionUnits: 2
   m_PathOffset: {x: 0, y: -14.57, z: 0}
   m_XDamping: 0
@@ -9799,6 +9800,7 @@ MonoBehaviour:
     m_Bits: 1
   groundCheckSize: 0.44
   groundCheckPosition: {x: 0, y: 0.31, z: 0}
+  isGrounded: 0
   cinemachineCamera: {fileID: 1085014613}
   id: 1
 --- !u!114 &904195407
@@ -10342,6 +10344,7 @@ MonoBehaviour:
     m_Bits: 1
   groundCheckSize: 0.44
   groundCheckPosition: {x: 0, y: 0.31, z: 0}
+  isGrounded: 0
   cinemachineCamera: {fileID: 1085014613}
   id: 1
 --- !u!4 &944012315 stripped
@@ -12079,8 +12082,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085014607}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.086717315, y: -0.8016848, z: 0.12004582, w: 0.5791119}
-  m_LocalPosition: {x: 13.228102, y: 9.21, z: 14.228701}
+  m_LocalRotation: {x: 0.08704237, y: -0.80011255, z: 0.11981042, w: 0.5812823}
+  m_LocalPosition: {x: 13.253844, y: 9.21, z: 14.150209}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13074,6 +13077,7 @@ MonoBehaviour:
     m_Bits: 1
   groundCheckSize: 0.4
   groundCheckPosition: {x: 0, y: 0.31, z: 0}
+  isGrounded: 0
   cinemachineCamera: {fileID: 1085014613}
   id: 1
 --- !u!95 &1158723729
@@ -15148,7 +15152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e03115852930db04c9bccb8d90f06e6f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e03115852930db04c9bccb8d90f06e6f, type: 3}
       propertyPath: m_TagString
@@ -16722,7 +16726,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430045649}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000037252903, y: -0.00000008940697, z: 0.000000029802322, w: 1}
+  m_LocalRotation: {x: -0.00000001862645, y: 0.00000008940696, z: -0.0000000074505797, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17267,6 +17271,7 @@ MonoBehaviour:
     m_Bits: 1
   groundCheckSize: 0.4
   groundCheckPosition: {x: 0, y: 0.31, z: 0}
+  isGrounded: 0
   cinemachineCamera: {fileID: 1085014613}
   id: 1
 --- !u!1 &1505597820
@@ -19194,6 +19199,7 @@ MonoBehaviour:
     m_Bits: 1
   groundCheckSize: 0.4
   groundCheckPosition: {x: 0, y: 0.31, z: 0}
+  isGrounded: 0
   cinemachineCamera: {fileID: 1085014613}
   id: 1
 --- !u!95 &1643798688
@@ -19357,7 +19363,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659765395}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.006543499, y: -0.00000005960465, z: 0.000000022351744, w: 0.9999786}
+  m_LocalRotation: {x: -0.0065435395, y: 0.00000014901161, z: -0.000000044703484, w: 0.99997866}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20219,7 +20225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1701045821
 Transform:
   m_ObjectHideFlags: 0
@@ -20911,7 +20917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 354fe0b8c85397d4597fa7b1fbd09c26, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 354fe0b8c85397d4597fa7b1fbd09c26, type: 3}
       propertyPath: m_TagString

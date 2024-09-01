@@ -7,11 +7,13 @@ using UnityEngine.UI;
 public class VidaPersonagem : MonoBehaviour
 {
     [Header("Vida e Slider")]
-    public int vidaAtual;
+    public float vidaAtual;
+    private float vidaAnterior;
     private Animator animator;
     public bool acabouojogo = false;
-    public GameObject txtPerdeu;
     public Animator animatorCoracao;
+    private Rigidbody rb;
+    public float vidaInicial;
 
     [Header("Corações")]
     public int numMaximoCorações;
@@ -21,7 +23,10 @@ public class VidaPersonagem : MonoBehaviour
 
     void Start()
     {
+        vidaInicial = vidaAtual;
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+        vidaAnterior = Mathf.Ceil(vidaAtual); // Inicializa a vidaAnterior com o valor inteiro mais próximo de vidaAtual
     }
 
     void Update()
@@ -43,6 +48,13 @@ public class VidaPersonagem : MonoBehaviour
                 corações[i].enabled = false;
             }
         }
+
+        // Verifica se a vidaAtual perdeu exatamente 1 unidade cheia de vida
+        if (Mathf.FloorToInt(vidaAtual) < Mathf.FloorToInt(vidaAnterior))
+        {
+            animatorCoracao.SetTrigger("tomou"); // Aciona a animação
+            vidaAnterior = Mathf.Floor(vidaAtual); // Atualiza a vidaAnterior para o valor inteiro mais próximo de vidaAtual
+        }
     }
 
     public void ReceberDano(int dano)
@@ -51,12 +63,13 @@ public class VidaPersonagem : MonoBehaviour
         vidaAtual = Mathf.Clamp(vidaAtual, 0, numMaximoCorações); // Garante que a vida esteja dentro dos limites
       
         Debug.Log("Vida do personagem: " + vidaAtual);
-        animatorCoracao.SetTrigger("tomou");
+        
         if (vidaAtual <= 0)
         {
             animator.SetTrigger("nocaute");
-            txtPerdeu.SetActive(true);
-            acabouojogo = true;
+                    rb.constraints = RigidbodyConstraints.FreezeAll;
+
+           
         }
     }
 }

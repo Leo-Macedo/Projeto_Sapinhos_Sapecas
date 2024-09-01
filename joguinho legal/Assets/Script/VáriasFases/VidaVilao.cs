@@ -38,7 +38,8 @@ public class VidaVilao : MonoBehaviour
     public GameObject player;
     private VidaPersonagem vidaPersonagem;
     public bool morreuvilao = false;
-    public GameObject txtGanhou; // Nome atualizado para PascalCase
+    public int VidaInicial;
+
 
     void Start()
     {
@@ -48,7 +49,7 @@ public class VidaVilao : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         vidaPersonagem = player.GetComponent<VidaPersonagem>();
-
+        VidaInicial = Vida;
         // Inicializa a vida do vilão e configura o slider
         slidervidavilao.maxValue = Vida;
         slidervidavilao.value = Vida;
@@ -58,8 +59,10 @@ public class VidaVilao : MonoBehaviour
     public void ReceberDanoVilao(int dano)
     {
         Vida -= dano;
+        animatorvilao.SetBool("caiu", true);
+        Invoke("Resetou", 2);
 
-        if (vidaPersonagem.acabouojogo)
+        if (vidaPersonagem.vidaAtual <= 0)
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
         }
@@ -77,7 +80,10 @@ public class VidaVilao : MonoBehaviour
         animatorvilao.SetBool("caiu", false);
         animatorvilao.SetBool("nocaute", true);
         rb.constraints = RigidbodyConstraints.FreezeAll;
-        vidaPersonagem.acabouojogo = true;
-        txtGanhou.SetActive(true);
+    }
+
+    public void Resetou()
+    {
+        animatorvilao.SetBool("caiu", false);
     }
 }

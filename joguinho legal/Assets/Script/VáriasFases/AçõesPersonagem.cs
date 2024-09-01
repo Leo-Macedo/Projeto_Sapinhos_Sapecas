@@ -60,7 +60,7 @@ public class AçõesPersonagem : MonoBehaviour
     {
         estadesviando = true;
         animator.SetTrigger("desvio");
-        StartCoroutine(PararDesvioDepoisTempo(2f)); // Supondo que o desvio dura 2 segundos
+        StartCoroutine(PararDesvioDepoisTempo(1.2f)); // Supondo que o desvio dura 2 segundos
     }
 
     private IEnumerator PararDesvioDepoisTempo(float tempo)

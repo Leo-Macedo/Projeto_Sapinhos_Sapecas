@@ -84,7 +84,7 @@ public class VilaoSegueEAtaca : MonoBehaviour
                 podeatacar = false; // Desativa a possibilidade de atacar
 
                 VerificarDesvio(); // Verifica se o jogador desviou do ataque
-                Invoke("PodeAtacar", 2); // Permite atacar novamente após 5 segundos
+                Invoke("PodeAtacar", 1); // Permite atacar novamente após 5 segundos
             }
         }
     }
