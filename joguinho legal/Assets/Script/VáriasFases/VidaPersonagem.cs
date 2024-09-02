@@ -14,6 +14,7 @@ public class VidaPersonagem : MonoBehaviour
     public Animator animatorCoracao;
     private Rigidbody rb;
     public float vidaInicial;
+    public AudioSource somDor;
 
     [Header("Corações")]
     public int numMaximoCorações;
@@ -61,15 +62,21 @@ public class VidaPersonagem : MonoBehaviour
     {
         vidaAtual -= dano;
         vidaAtual = Mathf.Clamp(vidaAtual, 0, numMaximoCorações); // Garante que a vida esteja dentro dos limites
-      
+        somDor.Play();
         Debug.Log("Vida do personagem: " + vidaAtual);
+        animator.SetBool("caiu", true); // Ativa animação de queda
+        Invoke("ResetouCaiu", 2); // Reseta a animação de queda após 2 segundos
         
         if (vidaAtual <= 0)
         {
             animator.SetTrigger("nocaute");
-                    rb.constraints = RigidbodyConstraints.FreezeAll;
-
-           
+                     
         }
+    }
+
+     public void ResetouCaiu()
+    {
+        // Reseta a animação de queda do jogador
+        animator.SetBool("caiu", false);
     }
 }

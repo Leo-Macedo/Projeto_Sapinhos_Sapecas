@@ -10,6 +10,7 @@ public class VidaVilao : MonoBehaviour
     // Vida do vilão (campo privado)
     [SerializeField]
     private int _vidaVilao;
+    public AudioSource somDor;
 
     // Propriedade pública para acessar e modificar a vida do vilão
     public int Vida
@@ -61,6 +62,7 @@ public class VidaVilao : MonoBehaviour
         Vida -= dano;
         animatorvilao.SetBool("caiu", true);
         Invoke("Resetou", 2);
+        somDor.Play();
 
         if (vidaPersonagem.vidaAtual <= 0)
         {

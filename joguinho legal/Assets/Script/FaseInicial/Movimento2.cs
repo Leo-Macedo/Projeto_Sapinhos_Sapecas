@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class Movimento2 : MonoBehaviour
 {
+    private bool cursorBloqueado = true;
+
     // Movimentar Personagem
     [SerializeField]
     public float velocidade; // Velocidade atual do personagem
@@ -76,6 +78,7 @@ public class Movimento2 : MonoBehaviour
     private void HandleActions()
     {
         Farpar(); // Controla a ação de farpar (emote)
+        ControlarCursor();
     }
 
     private void HandleSavingAndDeleting()
@@ -192,6 +195,25 @@ public class Movimento2 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("voltar")) // Verifica se o objeto colidido tem a tag "voltar"
             SceneManager.LoadScene("CenaInicial"); // Carrega a cena inicial
+    }
+
+    private void ControlarCursor()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (cursorBloqueado)
+            {
+                Cursor.lockState = CursorLockMode.None; // Libera o cursor
+                Cursor.visible = true; // Mostra o cursor
+                cursorBloqueado = false;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked; // Bloqueia o cursor no centro da tela
+                Cursor.visible = false; // Esconde o cursor
+                cursorBloqueado = true;
+            }
+        }
     }
 
     private void Salvar(int id)

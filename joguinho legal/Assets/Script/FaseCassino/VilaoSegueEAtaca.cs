@@ -107,9 +107,7 @@ public class VilaoSegueEAtaca : MonoBehaviour
         // Verifica se o jogador desviou e aplica dano se não tiver desviado
         if (!açõesPersonagem.EstaDesviando())
         {
-            animatorPlayer.SetBool("caiu", true); // Ativa animação de queda
-            Invoke("ResetouCaiu", 2); // Reseta a animação de queda após 2 segundos
-            vidaPersonagemScript.ReceberDano(1); // Aplica dano ao jogador
+         vidaPersonagemScript.ReceberDano(1); // Aplica dano ao jogador
         }
         else
         {
@@ -129,9 +127,5 @@ public class VilaoSegueEAtaca : MonoBehaviour
         podeatacar = true;
     }
 
-    public void ResetouCaiu()
-    {
-        // Reseta a animação de queda do jogador
-        animatorPlayer.SetBool("caiu", false);
-    }
+   
 }

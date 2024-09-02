@@ -8,6 +8,8 @@ public class MatarVilao : MonoBehaviour
     [Header("Referências")]
     private Animator animator; // Animator do jogador
     public GameObject portalvoltar; // Portal de vitória
+    public AudioSource somSoco;
+    
     public int danoAtaque = 1;
 
     [Header("Melo Vilão")]
@@ -63,7 +65,7 @@ public class MatarVilao : MonoBehaviour
             {
                 Debug.Log("Chamo evento pela animação");
                 vidaVilao.ReceberDanoVilao(danoAtaque);
-                             
+                
                 podeatacar = false;
                 Invoke("PodeAtacar", 3);
             }
@@ -75,6 +77,7 @@ public class MatarVilao : MonoBehaviour
     // Esta função deve ser chamada pelo AnimationEvent
     public void AcionarSoco()
     {
+        somSoco.Play();
         socoExecutado = true; // Ativa o trigger quando a animação de soco acontece
     }
 

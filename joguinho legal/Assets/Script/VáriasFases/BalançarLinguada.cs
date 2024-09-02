@@ -6,6 +6,7 @@ public class BalançarLinguada : MonoBehaviour
 {
     [Header("Input")]
     public KeyCode swingKey = KeyCode.Mouse1;
+    public AudioSource somLinguada;
 
     [Header("References")]
     public LineRenderer lr;
@@ -74,6 +75,7 @@ public class BalançarLinguada : MonoBehaviour
         {
             swingPoint = hit.point;
             isPulling = true;
+            somLinguada.Play();
 
             lr.positionCount = 2;
             currentGrapplePosition = gunTip.position;
@@ -88,6 +90,7 @@ public class BalançarLinguada : MonoBehaviour
 
     void PullPlayer()
     {
+        
         // Puxa o jogador em direção ao ponto de acerto
         player.position = Vector3.MoveTowards(
             player.position,

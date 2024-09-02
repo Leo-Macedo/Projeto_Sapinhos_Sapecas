@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement; // Importante para reiniciar a cena
 
@@ -22,6 +23,8 @@ public class VerificarFaseCassino : MonoBehaviour
     private bool round1Acabou;
     public PlayableDirector cutSceneRound1;
     public PlayableDirector cutSceneRound1Acabou;
+    private Vector3 posInicialRomarinho1;
+    private Vector3 posInicialMelo1;
 
     [Header("Round2")]
     public GameObject romarinho2;
@@ -31,6 +34,8 @@ public class VerificarFaseCassino : MonoBehaviour
     private VidaVilao vidaVilao2;
     private bool round2Acabou;
     public PlayableDirector cutSceneRound2;
+    private Vector3 posInicialRomarinho2;
+    private Vector3 posInicialMelo2;
 
     [Header("Round3")]
     public GameObject romarinho3;
@@ -40,9 +45,38 @@ public class VerificarFaseCassino : MonoBehaviour
     private VidaVilao vidaVilao3;
     private bool round3Acabou;
     public PlayableDirector cutSceneRound3;
+    private Vector3 posInicialRomarinho3;
+    private Vector3 posInicialMelo3;
+
+    //referencias Agent Vilao
+    public NavMeshAgent agentVilao1;
+    public NavMeshAgent agentVilao2;
+    public NavMeshAgent agentVilao3;
+    private float velocidadeInicialVilao1;
+    private float velocidadeInicialVilao2;
+    private float velocidadeInicialVilao3;
 
     void Start()
     {
+        // Armazena as posições iniciais dos personagens e vilões
+        posInicialRomarinho1 = romarinho1.transform.position;
+        posInicialMelo1 = melo1.transform.position;
+        posInicialRomarinho2 = romarinho2.transform.position;
+        posInicialMelo2 = melo2.transform.position;
+        posInicialRomarinho3 = romarinho3.transform.position;
+        posInicialMelo3 = melo3.transform.position;
+
+        // Obtém os NavMeshAgents dos vilões
+        agentVilao1 = melo1.GetComponent<NavMeshAgent>();
+        agentVilao2 = melo2.GetComponent<NavMeshAgent>();
+        agentVilao3 = melo3.GetComponent<NavMeshAgent>();
+
+        // Armazena as velocidades iniciais
+        velocidadeInicialVilao1 = agentVilao1.speed;
+        velocidadeInicialVilao2 = agentVilao2.speed;
+        velocidadeInicialVilao3 = agentVilao3.speed;
+
+        //Script de vida do vilão e Personagem
         vidaVilao1 = melo1.GetComponent<VidaVilao>();
         vidaVilao2 = melo2.GetComponent<VidaVilao>();
         vidaVilao3 = melo3.GetComponent<VidaVilao>();
@@ -51,7 +85,32 @@ public class VerificarFaseCassino : MonoBehaviour
         vidaPersonagem2 = romarinho2.GetComponent<VidaPersonagem>();
         vidaPersonagem3 = romarinho3.GetComponent<VidaPersonagem>();
 
+        DesativarMovimento();
         VerificarProgresso();
+    }
+
+    private void DesativarMovimento()
+    {
+        // Zera a velocidade dos NavMeshAgents
+        DesativarVelocidadeNavMeshAgent(agentVilao1);
+        DesativarVelocidadeNavMeshAgent(agentVilao2);
+        DesativarVelocidadeNavMeshAgent(agentVilao3);
+    }
+
+    private void DesativarVelocidadeNavMeshAgent(NavMeshAgent agent)
+    {
+        if (agent != null)
+        {
+            agent.speed = 0;
+        }
+    }
+
+    private void AtivarVelocidadeNavMeshAgent(NavMeshAgent agent, float velocidadeInicial)
+    {
+        if (agent != null)
+        {
+            agent.speed = velocidadeInicial;
+        }
     }
 
     void Update()
@@ -149,6 +208,10 @@ public class VerificarFaseCassino : MonoBehaviour
 
                 vidaVilao2.Vida = vidaVilao2.VidaInicial;
                 vidaPersonagem2.vidaAtual = vidaPersonagem2.vidaInicial;
+
+                // Reseta as posições dos personagens e vilões no Round 2
+                romarinho2.transform.position = posInicialRomarinho2;
+                melo2.transform.position = posInicialMelo2;
                 break;
             case 2:
                 AtivarRound3();
@@ -156,14 +219,32 @@ public class VerificarFaseCassino : MonoBehaviour
 
                 vidaVilao3.Vida = vidaVilao3.VidaInicial;
                 vidaPersonagem3.vidaAtual = vidaPersonagem3.vidaInicial;
+
+                // Reseta as posições dos personagens e vilões no Round 3
+                romarinho3.transform.position = posInicialRomarinho3;
+                melo3.transform.position = posInicialMelo3;
                 break;
         }
     }
 
+    private IEnumerator DespausarNoFinalDaCutscene(PlayableDirector cutscene)
+    {
+        float cutsceneDuration = (float)cutscene.duration;
+        Debug.Log("Duração da cutscene: " + cutsceneDuration + " segundos.");
+
+        yield return new WaitForSecondsRealtime(cutsceneDuration);
+
+        // Adicione logs para verificar se o movimento está sendo ativado
+        Debug.Log("Final da cutscene. Ativando movimento.");
+        AtivarMovimento();
+    }
+
     public void Round1()
     {
-        round1.SetActive(true);
+        Time.timeScale = 1f; // Despausa o jogo
+
         cutSceneRound1.Play();
+        StartCoroutine(DespausarNoFinalDaCutscene(cutSceneRound1));
     }
 
     public void Round2()
@@ -184,6 +265,8 @@ public class VerificarFaseCassino : MonoBehaviour
         cutSceneRound2.Play();
         round2.SetActive(true);
         round1.SetActive(false);
+        StartCoroutine(DespausarNoFinalDaCutscene(cutSceneRound2));
+
         freeLookCamera.Follow = romarinho2.transform;
         freeLookCamera.LookAt = romarinho2.transform;
     }
@@ -194,8 +277,18 @@ public class VerificarFaseCassino : MonoBehaviour
         cutSceneRound3.Play();
         round3.SetActive(true);
         round2.SetActive(false);
+        StartCoroutine(DespausarNoFinalDaCutscene(cutSceneRound3));
+
         freeLookCamera.Follow = romarinho3.transform;
         freeLookCamera.LookAt = romarinho3.transform;
+    }
+
+    private void AtivarMovimento()
+    {
+        Debug.Log("Ativando movimento dos vilões.");
+        AtivarVelocidadeNavMeshAgent(agentVilao1, velocidadeInicialVilao1);
+        AtivarVelocidadeNavMeshAgent(agentVilao2, velocidadeInicialVilao2);
+        AtivarVelocidadeNavMeshAgent(agentVilao3, velocidadeInicialVilao3);
     }
 
     public void DestruirTodosCapangas()
