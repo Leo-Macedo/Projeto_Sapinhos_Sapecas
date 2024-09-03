@@ -1,91 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 public class TeletransportePorta : MonoBehaviour
 {
-    //contagem de capangas mortos
-    public int capangasmortos = 0;
-    public TextMeshProUGUI txtcapangasmortos;
-    public GameObject txtcapangasmortos1;
+    [Header("Teletransporte")]
+    public GameObject player; // Referência ao jogador
+    public Transform tp; // Ponto de teletransporte para a sala principal
+    public Transform tpsalazida; // Ponto de teletransporte para a sala de trás
 
+    void Start() { }
 
-    //Teletransporte
-    public GameObject player;
-    public Transform tp;
-    public Transform tpp;
-    public GameObject portalvoltar;
-
-
-    //text
-    public GameObject txtmate10capanga;
-
-    //Script NascerCapanga
-    public GameObject NascerCapanga;
-    private NascerCapangaFase2 nascerCapangaFase2;
-
-    void Start()
-    {
-        nascerCapangaFase2 = NascerCapanga.GetComponent<NascerCapangaFase2>();
-
-    }
-
-    void Update()
-    {
-
-    }
+    void Update() { }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Entrar na porta
+        // Verifica se o objeto colidido é a porta para a sala principal
         if (other.gameObject.CompareTag("porta"))
         {
-            EntrarNaPortaEIrParaSala();
-
+            EntrarNaPortaEIrParaSala(); // Teletransporta o jogador para a sala principal
         }
-
+        // Verifica se o objeto colidido é a porta para a sala de trás
+        else if (other.gameObject.CompareTag("porta2"))
+        {
+            TeletransportarParaSalaZida(); // Teletransporta o jogador para a sala de trás
+        }
     }
 
     private void EntrarNaPortaEIrParaSala()
     {
-        txtcapangasmortos1.SetActive(true);
-        player.transform.position = new Vector3(tp.transform.position.x, tp.transform.position.y, tp.transform.position.z);
-        Debug.Log("Entrou na porta");
-        NascerCapanga.SetActive(true);
-        nascerCapangaFase2.ComecarNascer();
-        txtmate10capanga.SetActive(true);
-        Invoke("DesativarTxt", 3);
+        // Teletransporta o jogador para a sala principal
+        player.transform.position = tp.position; // Atualiza a posição do jogador
+        Debug.Log("Entrou na porta"); // Mensagem no console
+        Invoke("DesativarTxt", 3); // Desativa uma mensagem após 3 segundos
     }
 
-    //desativa txt
-    public void DesativarTxt()
+    private void TeletransportarParaSalaZida()
     {
-        txtmate10capanga.SetActive(false);
-
+        // Teletransporta o jogador para a sala de trás
+        player.transform.position = tpsalazida.position; // Atualiza a posição do jogador
     }
 
-    //contar capangas mortos
-    public void ContarCapngasMortos()
+    private void DesativarTxt()
     {
-        capangasmortos++;
-        txtcapangasmortos.text = "Capangas mortos: " + capangasmortos + "/10";
-        if (capangasmortos == 10)
-        {
-            player.transform.position = new Vector3(tpp.transform.position.x,
-            tpp.transform.position.y, tpp.transform.position.z);
-        
-            Debug.Log("PASSOU DE FASE");
-            portalvoltar.SetActive(true);
-
-            //Fase Completa
-            PlayerPrefs.SetInt("TavernaCompletada", 1);
-
-        }
+        // Implementar lógica para desativar a mensagem se necessário
+        // Exemplo: texto de "Entrou na porta" ou algo relacionado
     }
-
-
-
 }

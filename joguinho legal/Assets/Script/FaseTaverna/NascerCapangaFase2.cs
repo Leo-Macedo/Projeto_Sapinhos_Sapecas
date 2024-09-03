@@ -11,12 +11,10 @@ public class NascerCapangaFase2  : MonoBehaviour
 
     public GameObject vilao;
     public GameObject player;
-    //private VidaPersonagem vidaPersonagem;
-    //private VidaVilao vidaVilao;
+  
     private void Start()
     {
-        //vidaVilao = vilao.GetComponent<VidaVilao>();
-        //vidaPersonagem = player.GetComponent<VidaPersonagem>();
+        
     }
     public void ComecarNascer()
     {

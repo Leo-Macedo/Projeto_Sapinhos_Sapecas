@@ -1,83 +1,86 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Playables;
-
 
 public class DialogosNPC : MonoBehaviour
 {
-    public string[] dialogueNpc;
-    public int dialogueIndex;
+    [Header("Diálogo")]
+    public string[] dialogueNpc; // Array de strings contendo o diálogo do NPC
+    public int dialogueIndex; // Índice atual do diálogo
+    public GameObject seta;
+    public GameObject txtFParaInteragir;
 
-    public GameObject dialoguePanel;
-    public Text dialogueText;
+    [Header("Interface de Diálogo")]
+    public GameObject dialoguePanel; // Painel onde o diálogo é exibido
+    public Text dialogueText; // Texto do diálogo
+    public Text nameNpc; // Texto que exibe o nome do NPC
+    public Image imageNpc; // Imagem do NPC
+    public Sprite spriteNpc; // Sprite do NPC
+    public Animator animator;
 
-    public Text nameNpc;
-    public Image imageNpc;
-    public Sprite spriteNpc;
+    [Header("Controle de Diálogo")]
+    public bool readyToSpeak; // Verifica se o jogador está perto o suficiente para falar com o NPC
+    public bool startDialogue; // Verifica se o diálogo foi iniciado
 
-    public bool readyToSpeak;
-    public bool startDialogue;
+    public float segundosletras; // Tempo entre cada letra exibida
+    public string nameNpcString; // Nome do NPC a ser exibido
 
-    public float segundosletras;
-    public string nameNpcString;
-
-   
-    void Start()
-    {
-        
-    }
+    void Start() { }
 
     void Update()
     {
+        // Verifica se a tecla F é pressionada e se o NPC está pronto para falar
         if (Input.GetKeyDown(KeyCode.F) && readyToSpeak)
         {
             if (!startDialogue)
             {
-                StartDialogue();
-               
+                StartDialogue(); // Inicia o diálogo se ainda não tiver iniciado
             }
             else if (dialogueText.text == dialogueNpc[dialogueIndex])
             {
-                NextDialogue();
+                NextDialogue(); // Avança para o próximo diálogo se o texto atual for exibido completamente
             }
         }
     }
 
     void NextDialogue()
     {
-        dialogueIndex++;
+        dialogueIndex++; // Avança para o próximo índice de diálogo
         if (dialogueIndex < dialogueNpc.Length)
         {
-            StartCoroutine(ShowDialogue());
+            StartCoroutine(ShowDialogue()); // Mostra o próximo diálogo
         }
         else
         {
-            dialoguePanel.SetActive(false);
-            startDialogue = false;
+            // Fecha o painel de diálogo e reseta o estado
+            animator.SetTrigger("fechou");
+            startDialogue = true;
             dialogueIndex = 0;
         }
     }
 
     public void StartDialogue()
     {
-        nameNpc.text = nameNpcString;
-        imageNpc.sprite = spriteNpc;
-        startDialogue = true;
-        dialogueIndex = 0;
-        dialoguePanel.SetActive(true);
-        StartCoroutine(ShowDialogue());
+        seta.SetActive(false);
+        txtFParaInteragir.SetActive(false);
+
+        nameNpc.text = nameNpcString; // Define o nome do NPC
+        imageNpc.sprite = spriteNpc; // Define a imagem do NPC
+        startDialogue = true; // Marca o diálogo como iniciado
+        dialogueIndex = 0; // Reseta o índice do diálogo
+        dialoguePanel.SetActive(true); // Ativa o painel de diálogo
+        StartCoroutine(ShowDialogue()); // Inicia a exibição do diálogo
     }
 
     IEnumerator ShowDialogue()
     {
-        dialogueText.text = "";
+        dialogueText.text = ""; // Limpa o texto do diálogo
 
+        // Exibe o texto do diálogo letra por letra
         foreach (char letter in dialogueNpc[dialogueIndex])
         {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(segundosletras);
+            dialogueText.text += letter; // Adiciona uma letra ao texto
+            yield return new WaitForSeconds(segundosletras); // Aguarda um intervalo de tempo
         }
     }
 
@@ -85,7 +88,12 @@ public class DialogosNPC : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            readyToSpeak = true;
+            readyToSpeak = true; // Permite que o jogador fale com o NPC
+
+            if (!startDialogue)
+            {
+                txtFParaInteragir.SetActive(true);
+            }
         }
     }
 
@@ -93,9 +101,12 @@ public class DialogosNPC : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            readyToSpeak = false;
+            readyToSpeak = false; // Impede que o jogador fale com o NPC
+
+            if (!startDialogue)
+            {
+                txtFParaInteragir.SetActive(false);
+            }
         }
     }
-
-  
 }

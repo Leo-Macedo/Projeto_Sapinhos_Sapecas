@@ -7,68 +7,55 @@ using UnityEngine.Playables;
 
 public class Colisoes : MonoBehaviour
 {
-    //Texto porta trancada
-    public GameObject txtportatrancada;
-    public PlayableDirector cutscene;
-   
+    [Header("Componentes")]
+    public GameObject txtportatrancada; // Texto exibido quando a porta está trancada
+    public PlayableDirector cutscene; // Diretor de cutscene para a animação
+    public Movimento2 script; // Referência ao script de movimento (não utilizado no código atual)
 
-    //Camera da CutScene
-    public Movimento2 script;
-
-    //Só poder mover após acabar CutScene
     void Start()
     {
-        
+        // Inicializa o script (nenhuma ação necessária no momento)
     }
 
-    //Colisões para trocar de cena
-    public void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision other)
     {
-        
-        //Ir para fase prédio
+        // Troca de cena com base na colisão
         if (other.gameObject.CompareTag("predio"))
-            SceneManager.LoadScene("Predio");
-
-        //Ir para fase taverna
-        if (other.gameObject.CompareTag("taverna"))
-            SceneManager.LoadScene("Taverna");
-
-        //Ir para fase cassino
-        if (other.gameObject.CompareTag("cassino"))
-            SceneManager.LoadScene("Cassino");
-
-        //Voltar para cena inicial
-        if (other.gameObject.CompareTag("voltar"))
-            SceneManager.LoadScene("CenaInicial");
-
-        //Voltar para cena inicial
-        if (other.gameObject.CompareTag("portatrancada"))
         {
-            txtportatrancada.SetActive(true);
-        Invoke("DesativarTxt", 2);
+            SceneManager.LoadScene("Predio"); // Carrega a cena "Predio"
         }
-
-         //Entrar casarao
-        if (other.gameObject.CompareTag("portafundo"))
+        else if (other.gameObject.CompareTag("taverna"))
         {
-            cutscene.Play();
-        Invoke("MudarFase", (float)cutscene.duration);
+            SceneManager.LoadScene("Taverna"); // Carrega a cena "Taverna"
         }
-
-
+        else if (other.gameObject.CompareTag("cassino"))
+        {
+            SceneManager.LoadScene("Cassino"); // Carrega a cena "Cassino"
+        }
+        else if (other.gameObject.CompareTag("voltar"))
+        {
+            SceneManager.LoadScene("CenaInicial"); // Volta para a cena inicial
+        }
+        else if (other.gameObject.CompareTag("portatrancada"))
+        {
+            txtportatrancada.SetActive(true); // Exibe o texto de porta trancada
+            Invoke("DesativarTxt", 2); // Desativa o texto após 2 segundos
+        }
+        else if (other.gameObject.CompareTag("portafundo"))
+        {
+            MudarFase();
+            //cutscene.Play(); // Inicia a cutscene
+            //Invoke("MudarFase", (float)cutscene.duration); // Troca de cena após o fim da cutscene
+        }
     }
-    
 
     void DesativarTxt()
     {
-        txtportatrancada.SetActive(false);
+        txtportatrancada.SetActive(false); // Desativa o texto de porta trancada
     }
 
     void MudarFase()
     {
-        SceneManager.LoadScene("Casarao");
-
+        SceneManager.LoadScene("Casarao"); // Carrega a cena "Casarao"
     }
-
-    
 }

@@ -6,67 +6,77 @@ using UnityEngine.UI;
 
 public class VidaPersonagem : MonoBehaviour
 {
-    //Vida e o slider dela
-    public int vida;
-    public Slider sliderVida;
+    [Header("Vida e Slider")]
+    public float vidaAtual;
+    private float vidaAnterior;
     private Animator animator;
     public bool acabouojogo = false;
-    public GameObject txtPerdeu;
+    public Animator animatorCoracao;
+    private Rigidbody rb;
+    public float vidaInicial;
+    public AudioSource somDor;
 
-    //Cora��es
-    public int numOfHearts;
-    public Image[] hearts;
-    public Sprite fullHeart;
-    public Sprite emptyHeart;
+    [Header("Corações")]
+    public int numMaximoCorações;
+    public Image[] corações;
+    public Sprite coraçãoCheio;
+    public Sprite coraçãoVazio;
+
     void Start()
     {
-        //Pegar animator 
+        vidaInicial = vidaAtual;
         animator = GetComponent<Animator>();
-        
+        rb = GetComponent<Rigidbody>();
+        vidaAnterior = Mathf.Ceil(vidaAtual); // Inicializa a vidaAnterior com o valor inteiro mais próximo de vidaAtual
     }
 
-     void Update()
+    void Update()
     {
-        for (int i = 0; i < hearts.Length; i++)
+        AtualizarCorações();
+    }
+
+    private void AtualizarCorações()
+    {
+        for (int i = 0; i < corações.Length; i++)
         {
-
-            if (vida > numOfHearts)
+            if (i < numMaximoCorações)
             {
-                vida = numOfHearts;
-            }
-
-            if (i < vida)
-            {
-                hearts[i].sprite = fullHeart;
+                corações[i].sprite = (i < vidaAtual) ? coraçãoCheio : coraçãoVazio;
+                corações[i].enabled = true;
             }
             else
             {
-                hearts[i].sprite = emptyHeart;
-            }
-            if (i < numOfHearts)
-            {
-                hearts[i].enabled = true;
-            }
-            else
-            {
-                hearts[i].enabled = false;
-
+                corações[i].enabled = false;
             }
         }
 
+        // Verifica se a vidaAtual perdeu exatamente 1 unidade cheia de vida
+        if (Mathf.FloorToInt(vidaAtual) < Mathf.FloorToInt(vidaAnterior))
+        {
+            animatorCoracao.SetTrigger("tomou"); // Aciona a animação
+            vidaAnterior = Mathf.Floor(vidaAtual); // Atualiza a vidaAnterior para o valor inteiro mais próximo de vidaAtual
+        }
     }
 
-    //Receber dano e morrer
     public void ReceberDano(int dano)
     {
-        vida -= dano;
-        sliderVida.value = vida;
-        Debug.Log("Vida do personagem: " + vida);
-
-        if (vida <= 0)
-        {   animator.SetTrigger("nocaute");
-            txtPerdeu.SetActive(true);
-            acabouojogo = true;
+        vidaAtual -= dano;
+        vidaAtual = Mathf.Clamp(vidaAtual, 0, numMaximoCorações); // Garante que a vida esteja dentro dos limites
+        somDor.Play();
+        Debug.Log("Vida do personagem: " + vidaAtual);
+        animator.SetBool("caiu", true); // Ativa animação de queda
+        Invoke("ResetouCaiu", 2); // Reseta a animação de queda após 2 segundos
+        
+        if (vidaAtual <= 0)
+        {
+            animator.SetTrigger("nocaute");
+                     
         }
+    }
+
+     public void ResetouCaiu()
+    {
+        // Reseta a animação de queda do jogador
+        animator.SetBool("caiu", false);
     }
 }

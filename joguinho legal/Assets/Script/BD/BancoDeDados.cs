@@ -23,10 +23,10 @@ public class BancoDeDados // Classe do Meu BD
     private IDbConnection criarEAbrirBancoDeDados()
     {
         string dbPath = GetDatabasePath();
-        string idburi = $"URI=file:{dbPath}"; // Variável que armazena a localização do banco de dados dentro da pasta do projeto
+        string idburi = $"URI=file:{dbPath}"; // Variï¿½vel que armazena a localizaï¿½ï¿½o do banco de dados dentro da pasta do projeto
         IDbConnection ConexaoBanco = new SqliteConnection(idburi);
 
-        ConexaoBanco.Open(); // ".Open()" é o comando do Sqlite que inicializa/abre o banco de dados.
+        ConexaoBanco.Open(); // ".Open()" ï¿½ o comando do Sqlite que inicializa/abre o banco de dados.
 
         using (var cmdCriarTB = ConexaoBanco.CreateCommand()) // ".CreateCommand()" utilizado para criar os objetos do banco
         {
@@ -37,7 +37,6 @@ public class BancoDeDados // Classe do Meu BD
                 "z REAL" +
                 ");";
             cmdCriarTB.ExecuteNonQuery();
-            Debug.Log("Tabela POSICOES criada/verificada.");
         }
 
         return ConexaoBanco;
@@ -51,7 +50,6 @@ public class BancoDeDados // Classe do Meu BD
         InserDados.CommandText = $"INSERT OR REPLACE INTO POSICOES(id, x, y, z) " +
                                  $"VALUES({id}, {x.ToString(cultura)}, {y.ToString(cultura)}, {z.ToString(cultura)})";
         InserDados.ExecuteNonQuery();
-        Debug.Log($"Posição inserida/atualizada: ID={id}, x={x}, y={y}, z={z}");
         BancoDados.Close();
     }
 
@@ -61,21 +59,18 @@ public class BancoDeDados // Classe do Meu BD
         IDbCommand ComandoLerPosicao = BancoDados.CreateCommand();
         ComandoLerPosicao.CommandText = $"SELECT * FROM POSICOES WHERE id={id};";
         IDataReader Leitura = ComandoLerPosicao.ExecuteReader();
-        Debug.Log("Leitura de posição executada.");
         return Leitura;
     }
 
     public void FecharConexao()
     {
         BancoDados.Close();
-        Debug.Log("Conexão com banco de dados fechada.");
     }
 
     public void CriarBanco()
     {
         BancoDados = criarEAbrirBancoDeDados();
         BancoDados.Close();
-        Debug.Log("Banco de dados criado/aberto.");
     }
 
     public void NovoJogo()
@@ -85,6 +80,5 @@ public class BancoDeDados // Classe do Meu BD
         DeletarTudo.CommandText = "DELETE FROM POSICOES"; // Alerta de perigo 
         DeletarTudo.ExecuteNonQuery();
         BancoDados.Close();
-        Debug.Log("Todos os dados da tabela POSICOES foram deletados.");
     }
 }
