@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 public class Movimento2 : MonoBehaviour
 {
     private bool cursorBloqueado = true;
+    public AudioSource somPassos;
+    public AudioClip[] audiosPassos;
+     public AudioSource somIdle;
+    public AudioClip[] audiosIdle;
 
     // Movimentar Personagem
     [SerializeField]
@@ -214,6 +218,16 @@ public class Movimento2 : MonoBehaviour
                 cursorBloqueado = true;
             }
         }
+    }
+
+    public void SomPassos()
+    {
+        somPassos.PlayOneShot(audiosPassos[Random.Range(0,audiosPassos.Length)]);
+    }
+
+    public void SomIdle()
+    {
+        // somIdle.PlayOneShot(audiosIdle[Random.Range(0,audiosIdle.Length)]);
     }
 
     private void Salvar(int id)

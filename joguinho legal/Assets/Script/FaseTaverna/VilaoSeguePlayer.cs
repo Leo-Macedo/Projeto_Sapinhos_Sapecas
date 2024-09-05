@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class VilaoSeguePlayer : MonoBehaviour
@@ -15,7 +16,7 @@ public class VilaoSeguePlayer : MonoBehaviour
 
     public VidaVilao vidaVilao; // Referência ao script de vida do vilão
     public VidaPersonagem vidaPersonagem; // Referência ao script de vida do jogador
-
+    public EscudoFuncionando escudoFuncionando;
     private bool podeTomarDano = true; // Flag para permitir ou não que o vilão tome dano
 
     public GameObject particulaPrefab; // Prefab de partículas para colisões
@@ -27,8 +28,6 @@ public class VilaoSeguePlayer : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>(); // Obtém o Rigidbody anexado ao vilão
         vidaVilao = GetComponent<VidaVilao>();
-
-        
     }
 
     private void FixedUpdate()
@@ -65,7 +64,7 @@ public class VilaoSeguePlayer : MonoBehaviour
         }
     }
 
-    private void StopChargeNaParede()
+    private void StopCharge()
     {
         // Congela o movimento do Rigidbody
         rb.constraints = RigidbodyConstraints.FreezePosition;
@@ -85,33 +84,33 @@ public class VilaoSeguePlayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("caixa"))
+        if (podeTomarDano)
         {
-            if (podeTomarDano)
+            if (other.gameObject.CompareTag("caixa"))
             {
                 TomarDano(other);
             }
-        }
-
-        if (other.gameObject.CompareTag("parede"))
-        {
-            if (podeTomarDano)
+            else if (other.gameObject.CompareTag("parede"))
             {
-                StopChargeNaParede();
+                StopCharge();
             }
-        }
-
-        if (other.gameObject.CompareTag("Player"))
-        {
-            vidaPersonagem.ReceberDano(1); // Aplica dano ao jogador
-            StopChargeNaParede();
+            else if (other.gameObject.CompareTag("Player") && !escudoFuncionando.escudoAtivo)
+            {
+                vidaPersonagem.ReceberDano(1); // Aplica dano ao jogador
+                StopCharge();
+            }
+            else if (other.gameObject.CompareTag("Player") && escudoFuncionando.escudoAtivo)
+            {
+                StopCharge();
+                escudoFuncionando.DesativarEscudo();
+            }
         }
     }
 
     private void TomarDano(Collision other)
     {
         vidaVilao.ReceberDanoVilao(1); // Aplica dano ao vilão
-        StopChargeNaParede();
+        StopCharge();
         Debug.Log("Colidiu com a parede. Investida parada.");
         podeTomarDano = false;
 
@@ -121,6 +120,9 @@ public class VilaoSeguePlayer : MonoBehaviour
         // Destroi o objeto com a tag "caixa"
         Destroy(other.gameObject);
         audioSource.Play(); // Toca o som de colisão
+        chargeForce += 1;
+        
+        Debug.Log("Agora a fforça é: " + chargeDuration);
     }
 
     private void PodeTomarDano()

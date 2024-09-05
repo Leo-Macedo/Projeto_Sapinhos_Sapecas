@@ -23,6 +23,7 @@ public class BalançarLinguada : MonoBehaviour
 
     private Vector3 swingPoint;
     private bool isPulling = false;
+    private Rigidbody rb;
 
     [Header("Raycast Settings")]
     public float forwardOffset = 1.0f;
@@ -35,6 +36,7 @@ public class BalançarLinguada : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
 
         // Configura a curva de largura da linha
         lr.widthCurve = tongueWidthCurve;
@@ -90,18 +92,15 @@ public class BalançarLinguada : MonoBehaviour
 
     void PullPlayer()
     {
-        
-        // Puxa o jogador em direção ao ponto de acerto
-        player.position = Vector3.MoveTowards(
-            player.position,
-            swingPoint,
-            pullSpeed * Time.deltaTime
-        );
+        // Calcula a direção e a força para puxar o jogador
+        Vector3 direction = (swingPoint - player.position).normalized;
+        rb.velocity = direction * pullSpeed;
 
         // Se o jogador chegou no ponto de acerto, para de puxar
         if (Vector3.Distance(player.position, swingPoint) < 1.0f)
         {
             StopSwing();
+            rb.velocity = Vector3.zero; // Para o movimento
         }
     }
 

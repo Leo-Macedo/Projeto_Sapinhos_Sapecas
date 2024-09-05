@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class EscudoFuncionando : MonoBehaviour
+{
+    private int contadorEscudo = 0;
+
+    [Header("Referencias")]
+    public AudioSource somPegou;
+    public TextMeshProUGUI txtEscudosPegos;
+    public GameObject escudo;
+    public bool escudoAtivo = false;
+
+    void Start() { }
+
+    void Update()
+    {
+        AtivarEscudo();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("escudo"))
+        {
+            PegarEscudo(other);
+        }
+    }
+
+    public void PegarEscudo(Collider other)
+    {
+        Destroy(other.gameObject);
+        contadorEscudo += 1;
+        somPegou.Play();
+        txtEscudosPegos.text = contadorEscudo + "";
+    }
+
+    public void AtivarEscudo()
+    {
+        if (Input.GetKeyDown(KeyCode.Z) && contadorEscudo > 0)
+        {
+            escudo.SetActive(true);
+            escudoAtivo = true;
+            contadorEscudo -= 1;
+            txtEscudosPegos.text = contadorEscudo + "";
+            Invoke("DesativarEscudo", 2);
+        }
+    }
+
+    public void DesativarEscudo()
+    {
+        escudo.SetActive(false);
+        escudoAtivo = false;
+    }
+
+    
+}
