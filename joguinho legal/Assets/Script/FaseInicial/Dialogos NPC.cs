@@ -19,6 +19,12 @@ public class DialogosNPC : MonoBehaviour
     public Animator animator;
 
     [Header("Controle de Diálogo")]
+    public GameObject txtNomeMarinha;
+    public GameObject txtAviso1;
+    public GameObject txtAviso2;
+    public GameObject painelAviso;
+
+   [Header("Controle de Diálogo")]
     public bool readyToSpeak; // Verifica se o jogador está perto o suficiente para falar com o NPC
     public bool startDialogue; // Verifica se o diálogo foi iniciado
 
@@ -53,7 +59,10 @@ public class DialogosNPC : MonoBehaviour
         else
         {
             // Fecha o painel de diálogo e reseta o estado
+            txtAviso2.SetActive(true);
+            txtNomeMarinha.SetActive(true);
             animator.SetTrigger("fechou");
+            painelAviso.SetActive(true);
             startDialogue = true;
             dialogueIndex = 0;
         }
@@ -63,6 +72,9 @@ public class DialogosNPC : MonoBehaviour
     {
         seta.SetActive(false);
         txtFParaInteragir.SetActive(false);
+        txtNomeMarinha.SetActive(false);
+        txtAviso1.SetActive(false);
+        painelAviso.SetActive(false);
 
         nameNpc.text = nameNpcString; // Define o nome do NPC
         imageNpc.sprite = spriteNpc; // Define a imagem do NPC

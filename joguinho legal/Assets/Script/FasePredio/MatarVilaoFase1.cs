@@ -15,6 +15,8 @@ public class MatarVilaoFase1 : MonoBehaviour
 
     private bool podepular = true; // Permite ou não pular no vilão
     public GameObject portalvoltar; // Portal para voltar à cena anterior
+    public Transform tpAndar2;
+    public GameObject player;
 
     void Start()
     {
@@ -75,6 +77,14 @@ public class MatarVilaoFase1 : MonoBehaviour
         // Reativa a capacidade de pular e redefine a animação do vilão
         podepular = true; // Permite pular novamente
         animatorvilao.SetBool("caiu", false); // Define a animação "caiu" como falsa
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("escada"))
+        {
+            player.transform.position = tpAndar2.position;
+        }
     }
 
     public void Vitoria()
