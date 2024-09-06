@@ -227,7 +227,7 @@ public class Movimento2 : MonoBehaviour
 
     public void SomIdle()
     {
-        // somIdle.PlayOneShot(audiosIdle[Random.Range(0,audiosIdle.Length)]);
+        somIdle.PlayOneShot(audiosIdle[Random.Range(0,audiosIdle.Length)]);
     }
 
     private void Salvar(int id)
