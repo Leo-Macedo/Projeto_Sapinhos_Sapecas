@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vidaVilao: 3
-  somDor: {fileID: 764529416}
+  somDor: {fileID: 1212069615}
   slidervidavilao: {fileID: 1702028971}
   player: {fileID: 2018230877}
   morreuvilao: 1
@@ -261,6 +261,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &42298069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42298059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1aec581c50be704491d9c1dc12d6405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2018230885}
+  animator: {fileID: 0}
+  distAtaque: 2.5
+  podeatacar: 1
 --- !u!1 &58159106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,6 +1346,11 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!82 &247221240 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5314528513602875172, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+  m_PrefabInstance: {fileID: 5718181636793756322}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &250241920
 GameObject:
   m_ObjectHideFlags: 0
@@ -2363,7 +2384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swingKey: 324
-  somLinguada: {fileID: 2025509545}
+  somLinguada: {fileID: 662768309}
   lr: {fileID: 410629142}
   gunTip: {fileID: 143986871}
   cam: {fileID: 350705757}
@@ -2425,13 +2446,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf387c4a7539d343b1d5ce7195b1dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  somPassos: {fileID: 916956874}
+  somPassos: {fileID: 1220661422}
   audiosPassos:
   - {fileID: 8300000, guid: 85d9fe16eca75f74781f3a0ff70e372a, type: 3}
   - {fileID: 8300000, guid: 908e4f1f5eddd7345b0806947c07f319, type: 3}
   - {fileID: 8300000, guid: 33255b973ebc9884296f359bbbf6d652, type: 3}
   - {fileID: 8300000, guid: 7128ad23a7a622d45be79dc914d5b35e, type: 3}
-  somIdle: {fileID: 1563907111}
+  somIdle: {fileID: 1918610507}
   audiosIdle:
   - {fileID: 8300000, guid: 163b2175aee5d50469daf80e32cafedf, type: 3}
   - {fileID: 8300000, guid: 80f47a9e9a88c244ca95e47fdfee9f1b, type: 3}
@@ -2462,7 +2483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalvoltar: {fileID: 1535240878}
-  somSoco: {fileID: 1812038790}
+  somSoco: {fileID: 1739093943}
   danoAtaque: 1
   animatorvilao: {fileID: 1525522356}
   vilao: {fileID: 1525522350}
@@ -2488,7 +2509,7 @@ MonoBehaviour:
   acabouojogo: 0
   animatorCoracao: {fileID: 1438169484}
   vidaInicial: 0
-  somDor: {fileID: 526946347}
+  somDor: {fileID: 247221240}
   "numMaximoCora\xE7\xF5es": 3
   "cora\xE7\xF5es":
   - {fileID: 1442108376}
@@ -3107,7 +3128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vidaVilao: 3
-  somDor: {fileID: 764529416}
+  somDor: {fileID: 1212069615}
   slidervidavilao: {fileID: 231499695}
   player: {fileID: 2018230877}
   morreuvilao: 1
@@ -3182,6 +3203,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
   m_PrefabInstance: {fileID: 1757678109}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &502589405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502589397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1aec581c50be704491d9c1dc12d6405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1795253269}
+  animator: {fileID: 0}
+  distAtaque: 3.3
+  podeatacar: 1
 --- !u!1 &516940158
 GameObject:
   m_ObjectHideFlags: 0
@@ -3280,11 +3317,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 516940158}
   m_CullTransparentMesh: 1
---- !u!82 &526946347 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1818825782364132941, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
-  m_PrefabInstance: {fileID: 5718181636793756322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &554663594
 GameObject:
   m_ObjectHideFlags: 0
@@ -3640,6 +3672,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1795253269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &662768309 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8429425126793211506, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+  m_PrefabInstance: {fileID: 5718181636793756322}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &744074597
 GameObject:
   m_ObjectHideFlags: 0
@@ -3826,11 +3863,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 762945015}
   m_CullTransparentMesh: 1
---- !u!82 &764529416 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 4507732203323297184, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
-  m_PrefabInstance: {fileID: 5718181636793756322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &771118679
 GameObject:
   m_ObjectHideFlags: 0
@@ -4562,11 +4594,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &916956874 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 6466591763799611365, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
-  m_PrefabInstance: {fileID: 5718181636793756322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &929919826
 GameObject:
   m_ObjectHideFlags: 0
@@ -5793,6 +5820,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1164766200}
   m_CullTransparentMesh: 1
+--- !u!82 &1212069615 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3258323930740907263, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+  m_PrefabInstance: {fileID: 5718181636793756322}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1220661422 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6421014639228561696, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+  m_PrefabInstance: {fileID: 5718181636793756322}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1233465372
 GameObject:
   m_ObjectHideFlags: 0
@@ -8418,7 +8455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vidaVilao: 3
-  somDor: {fileID: 764529416}
+  somDor: {fileID: 1212069615}
   slidervidavilao: {fileID: 394545408}
   player: {fileID: 2018230877}
   morreuvilao: 1
@@ -8493,6 +8530,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
   m_PrefabInstance: {fileID: 2083447451}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1525522358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525522350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1aec581c50be704491d9c1dc12d6405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 410629140}
+  animator: {fileID: 0}
+  distAtaque: 4
+  podeatacar: 1
 --- !u!1 &1535240878
 GameObject:
   m_ObjectHideFlags: 0
@@ -9271,11 +9324,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 410629141}
   m_SourcePrefab: {fileID: 100100000, guid: 3cd4b44edf0dc814693fba41a8e75803, type: 3}
---- !u!82 &1563907111 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5585297672478135748, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
-  m_PrefabInstance: {fileID: 5718181636793756322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1570479745
 GameObject:
   m_ObjectHideFlags: 0
@@ -9851,6 +9899,9 @@ PrefabInstance:
       addedObject: {fileID: 2018230882}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3cd4b44edf0dc814693fba41a8e75803, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 2018230886}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3cd4b44edf0dc814693fba41a8e75803, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2018230881}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3cd4b44edf0dc814693fba41a8e75803, type: 3}
       insertIndex: -1
@@ -9864,9 +9915,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3cd4b44edf0dc814693fba41a8e75803, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2018230887}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3cd4b44edf0dc814693fba41a8e75803, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2018230886}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3cd4b44edf0dc814693fba41a8e75803, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2018230888}
@@ -10835,6 +10883,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &1739093943 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4291540362484596925, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+  m_PrefabInstance: {fileID: 5718181636793756322}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1757678109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11821,6 +11874,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 502589399}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 502589405}
     - targetCorrespondingSourceObject: {fileID: 8590174512768330386, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1887046956}
@@ -12153,7 +12209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swingKey: 324
-  somLinguada: {fileID: 2025509545}
+  somLinguada: {fileID: 662768309}
   lr: {fileID: 1795253271}
   gunTip: {fileID: 652026646}
   cam: {fileID: 350705757}
@@ -12215,13 +12271,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf387c4a7539d343b1d5ce7195b1dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  somPassos: {fileID: 916956874}
+  somPassos: {fileID: 1220661422}
   audiosPassos:
   - {fileID: 8300000, guid: 85d9fe16eca75f74781f3a0ff70e372a, type: 3}
   - {fileID: 8300000, guid: 908e4f1f5eddd7345b0806947c07f319, type: 3}
   - {fileID: 8300000, guid: 33255b973ebc9884296f359bbbf6d652, type: 3}
   - {fileID: 8300000, guid: 7128ad23a7a622d45be79dc914d5b35e, type: 3}
-  somIdle: {fileID: 1563907111}
+  somIdle: {fileID: 1918610507}
   audiosIdle:
   - {fileID: 8300000, guid: 163b2175aee5d50469daf80e32cafedf, type: 3}
   - {fileID: 8300000, guid: 80f47a9e9a88c244ca95e47fdfee9f1b, type: 3}
@@ -12252,7 +12308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalvoltar: {fileID: 1535240878}
-  somSoco: {fileID: 1812038790}
+  somSoco: {fileID: 1739093943}
   danoAtaque: 1
   animatorvilao: {fileID: 502589403}
   vilao: {fileID: 502589397}
@@ -12278,7 +12334,7 @@ MonoBehaviour:
   acabouojogo: 0
   animatorCoracao: {fileID: 1438169484}
   vidaInicial: 0
-  somDor: {fileID: 526946347}
+  somDor: {fileID: 247221240}
   "numMaximoCora\xE7\xF5es": 3
   "cora\xE7\xF5es":
   - {fileID: 1896842000}
@@ -12358,11 +12414,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!82 &1812038790 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1429457257284099523, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
-  m_PrefabInstance: {fileID: 5718181636793756322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1813365487 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8590174512768330386, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
@@ -12866,6 +12917,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896841998}
   m_CullTransparentMesh: 1
+--- !u!82 &1918610507 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7390180532609748973, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+  m_PrefabInstance: {fileID: 5718181636793756322}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1921316380
 GameObject:
   m_ObjectHideFlags: 3
@@ -14164,6 +14220,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 42298068}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 42298069}
     - targetCorrespondingSourceObject: {fileID: 8590174512768330386, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1813365491}
@@ -14524,13 +14583,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf387c4a7539d343b1d5ce7195b1dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  somPassos: {fileID: 916956874}
+  somPassos: {fileID: 1220661422}
   audiosPassos:
   - {fileID: 8300000, guid: 85d9fe16eca75f74781f3a0ff70e372a, type: 3}
   - {fileID: 8300000, guid: 908e4f1f5eddd7345b0806947c07f319, type: 3}
   - {fileID: 8300000, guid: 33255b973ebc9884296f359bbbf6d652, type: 3}
   - {fileID: 8300000, guid: 7128ad23a7a622d45be79dc914d5b35e, type: 3}
-  somIdle: {fileID: 1563907111}
+  somIdle: {fileID: 1918610507}
   audiosIdle:
   - {fileID: 8300000, guid: 163b2175aee5d50469daf80e32cafedf, type: 3}
   - {fileID: 8300000, guid: 80f47a9e9a88c244ca95e47fdfee9f1b, type: 3}
@@ -14561,7 +14620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalvoltar: {fileID: 1535240878}
-  somSoco: {fileID: 1812038790}
+  somSoco: {fileID: 1739093943}
   danoAtaque: 1
   animatorvilao: {fileID: 42298065}
   vilao: {fileID: 42298059}
@@ -14587,7 +14646,7 @@ MonoBehaviour:
   acabouojogo: 0
   animatorCoracao: {fileID: 1438169484}
   vidaInicial: 0
-  somDor: {fileID: 526946347}
+  somDor: {fileID: 247221240}
   "numMaximoCora\xE7\xF5es": 3
   "cora\xE7\xF5es":
   - {fileID: 955725518}
@@ -14791,7 +14850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swingKey: 324
-  somLinguada: {fileID: 2025509545}
+  somLinguada: {fileID: 662768309}
   lr: {fileID: 2018230886}
   gunTip: {fileID: 71823118}
   cam: {fileID: 350705757}
@@ -14845,11 +14904,6 @@ MonoBehaviour:
   superSlider: {fileID: 1442100973}
   romarinho: {fileID: 2018230877}
   particulas: {fileID: 1703643058}
---- !u!82 &2025509545 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1315664731618239574, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
-  m_PrefabInstance: {fileID: 5718181636793756322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2027550228 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6900704511881687554, guid: cf9be061d575df6418c98c2c5ebde13d, type: 3}
@@ -15916,6 +15970,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1525522352}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1525522358}
     - targetCorrespondingSourceObject: {fileID: 8590174512768330386, guid: 639c40251bf8a0944ba1f797b3f717ba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1765231671}

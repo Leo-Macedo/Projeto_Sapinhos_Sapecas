@@ -60,7 +60,10 @@ public class VidaVilao : MonoBehaviour
     public void ReceberDanoVilao(int dano)
     {
         Vida -= dano;
+        if (animatorvilao != null)
+        {
         animatorvilao.SetBool("caiu", true);
+        }
         Invoke("Resetou", 2);
         somDor.Play();
 
@@ -79,13 +82,19 @@ public class VidaVilao : MonoBehaviour
             agentvilao.speed = 0f;
         }
 
+        if (animatorvilao != null)
+        {
         animatorvilao.SetBool("caiu", false);
         animatorvilao.SetBool("nocaute", true);
+        }
         rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     public void Resetou()
     {
+        if (animatorvilao != null)
+        {
         animatorvilao.SetBool("caiu", false);
+        }
     }
 }

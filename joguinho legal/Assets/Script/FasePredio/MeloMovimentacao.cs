@@ -1,23 +1,27 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI; // Para usar NavMeshAgent
 
 public class MeloMovimentacao : MonoBehaviour
 {
-    public Transform[] waypoints; // Array de waypoints a seguir
-    public float velocidadeVoo = 5f; // Velocidade de voo da mosca
+    public Transform player; // Jogador a seguir
+    public float alturaVoo = 5f; // Altura de voo da mosca
     public float tempoPousado = 3f; // Tempo que a mosca fica pousada
     public float tempoVoando = 5f; // Tempo que a mosca fica voando
-    public float velocidadeSubida = 2f; // Velocidade para subir ou descer suavemente
 
-    private int waypointAtual = 0; // Índice do waypoint atual
-    private bool voando = true; // Define se a mosca está voando
+    public bool voando = true; // Define se a mosca está voando
     private bool pousado = false; // Define se a mosca está pousada
+    public bool podeReceberDano = false;
     private Rigidbody rb;
+    private NavMeshAgent agent; // Referência ao NavMeshAgent
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.useGravity = false; // Começar voando, então gravidade desligada
+        agent = GetComponent<NavMeshAgent>();
+
+        rb.useGravity = false; // Desativa a gravidade ao começar voando
+        agent.enabled = true; // Ativa o NavMeshAgent para começar a seguir o player
         StartCoroutine(CicloMosca());
     }
 
@@ -31,7 +35,7 @@ public class MeloMovimentacao : MonoBehaviour
                 float tempoVooRestante = tempoVoando;
                 while (tempoVooRestante > 0f)
                 {
-                    VoarParaWaypoints(); // Movimentação da mosca entre os waypoints
+                    SeguirPlayer(); // Segue o jogador enquanto estiver voando
                     tempoVooRestante -= Time.deltaTime;
                     yield return null;
                 }
@@ -48,33 +52,16 @@ public class MeloMovimentacao : MonoBehaviour
         }
     }
 
-    void VoarParaWaypoints()
+    void SeguirPlayer()
     {
-        if (waypoints.Length == 0) return;
-
-        // Pega o próximo waypoint
-        Transform waypoint = waypoints[waypointAtual];
-        
-        // Calcula a direção para o waypoint (incluindo a altura do waypoint)
-        Vector3 direcao = (waypoint.position - transform.position).normalized;
-
-        // Move a mosca na direção do waypoint
-        Vector3 novaPosicao = transform.position + direcao * velocidadeVoo * Time.deltaTime;
-
-        // Ajusta a altura de voo para a altura do waypoint
-        novaPosicao.y = waypoint.position.y;
-
-        rb.MovePosition(novaPosicao);
-
-        // Checa se a mosca chegou perto o suficiente do waypoint
-        if (Vector3.Distance(transform.position, waypoint.position) < 0.2f)
+        if (player != null && agent.enabled)
         {
-            waypointAtual++;
-            if (waypointAtual >= waypoints.Length)
-            {
-                // Se chegar no último waypoint, volta para o primeiro
-                waypointAtual = 0;
-            }
+            // Define o destino do NavMeshAgent como a posição do jogador no plano XZ (ignorando a altura)
+            agent.SetDestination(player.position);
+
+            // Mantém a altura da mosca ajustada à altura de voo desejada
+            Vector3 posicaoComAltura = new Vector3(transform.position.x, alturaVoo, transform.position.z);
+            transform.position = posicaoComAltura;
         }
     }
 
@@ -82,6 +69,8 @@ public class MeloMovimentacao : MonoBehaviour
     {
         voando = false;
         pousado = true;
+        podeReceberDano = true;
+        agent.enabled = false; // Desativa o NavMeshAgent ao pousar
         rb.useGravity = true; // Ativa a gravidade ao pousar
         rb.velocity = Vector3.zero; // Para o movimento da mosca
     }
@@ -90,22 +79,25 @@ public class MeloMovimentacao : MonoBehaviour
     {
         voando = true;
         pousado = false;
+        podeReceberDano = false;
         rb.useGravity = false; // Desativa a gravidade ao voltar a voar
+        agent.enabled = true; // Ativa novamente o NavMeshAgent
 
-        // Define a altura do waypoint atual
-        float alturaWaypoint = waypoints[waypointAtual].position.y;
-        Vector3 posicaoInicial = transform.position;
-        Vector3 posicaoFinal = new Vector3(transform.position.x, alturaWaypoint, transform.position.z);
-
+        // Transição suave de subida
+        float alturaInicial = transform.position.y;
         float tempoInicio = Time.time;
         float duracao = 1f; // Duração da transição suave
+
         while (Time.time - tempoInicio < duracao)
         {
             float t = (Time.time - tempoInicio) / duracao;
-            Vector3 novaPosicao = Vector3.Lerp(posicaoInicial, posicaoFinal, t);
-            rb.MovePosition(novaPosicao);
+            Vector3 novaPosicao = new Vector3(transform.position.x, Mathf.Lerp(alturaInicial, alturaVoo, t), transform.position.z);
+            transform.position = novaPosicao; // Controla a altura durante a subida
             yield return null;
         }
-        rb.MovePosition(posicaoFinal); // Garante que a posição final seja alcançada
+
+        // Garante que a altura final seja alcançada
+        transform.position = new Vector3(transform.position.x, alturaVoo, transform.position.z);
     }
+
 }

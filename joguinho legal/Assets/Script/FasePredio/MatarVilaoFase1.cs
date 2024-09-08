@@ -6,90 +6,61 @@ using UnityEngine.EventSystems;
 
 public class MatarVilaoFase1 : MonoBehaviour
 {
-    [Header("Referências")]
-    public GameObject vilao; // Referência ao objeto do vilão
-    private Animator animatorvilao; // Componente Animator do vilão
-    private Animator animator; // Componente Animator do jogador (não utilizado no código atual)
-
-    public int vidaVilao = 3; // Vida inicial do vilão
-
-    private bool podepular = true; // Permite ou não pular no vilão
-    public GameObject portalvoltar; // Portal para voltar à cena anterior
-    public Transform tpAndar2;
-    public GameObject player;
+    public GameObject melo;
+    public GameObject portal;
+    private VidaVilao vidaVilao;
+    private MeloMovimentacao meloMovimentacao;
+    public float alturaColisaoCabeça = 1.5f; // Altura para verificar se o jogador pulou na cabeça
+    public bool podeatacar = true;
 
     void Start()
     {
-        // Obtém o componente Animator do vilão
-        animatorvilao = vilao.GetComponent<Animator>();
-        animator = GetComponent<Animator>(); // Obtém o componente Animator do jogador
+        vidaVilao = melo.GetComponent<VidaVilao>();
+        meloMovimentacao = melo.GetComponent<MeloMovimentacao>();
     }
 
-    void Update()
+    void LateUpdate()
     {
-        // Verifica se a vida do vilão chegou a 0 e executa a função de morte e vitória
-        if (vidaVilao <= 0)
+        if (vidaVilao.Vida <= 0)
         {
-            VilaoMorreu(); // Lida com a morte do vilão
-            Vitoria(); // Marca a fase como completa
+            Vitoria();
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    void OnCollisionEnter(Collision other)
     {
-        // Verifica se o jogador está em um objeto com a tag "lugar"
-        if (other.gameObject.CompareTag("lugar"))
+        // Verifica se colidiu com a mosca
+        if (other.gameObject.CompareTag("melo"))
         {
-            animatorvilao.SetBool("parado", true); // Define a animação do vilão para "parado"
+            Debug.Log("colidiu com melo");
+            if (vidaVilao != null && meloMovimentacao.podeReceberDano)
+            {
+                // Verifica se o jogador está pulando na cabeça da mosca
+                float alturaJogador = transform.position.y;
+                float alturaMelo = melo.transform.position.y;
+                Debug.Log($"Altura do jogador: {alturaJogador}, Altura do melo: {alturaMelo}");
+
+                // Verifica se o jogador está pulando na cabeça da mosca
+                if (alturaJogador > alturaMelo + alturaColisaoCabeça && podeatacar)
+                {
+                    // Aplica dano à mosca
+                    vidaVilao.ReceberDanoVilao(1);
+                    podeatacar = false;
+                    Invoke("ResetaPodeAtacar", 2f);
+                }
+            }
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    public void ResetaPodeAtacar()
     {
-        // Verifica se o jogador colidiu com a cabeça do vilão e se pode pular
-        if (other.gameObject.CompareTag("cabeca") && podepular)
-        {
-            DarDanoPulandoNaCabeca(); // Dá dano ao vilão ao pular na cabeça
-        }
-    }
-
-    private void VilaoMorreu()
-    {
-        // Define animações e ativa o portal de volta
-        animatorvilao.SetTrigger("nocaute"); // Aciona a animação de nocaute
-        animatorvilao.SetBool("caiu", false); // Define a animação "caiu" como falsa
-        Debug.Log("VilaoMorreu"); // Loga a morte do vilão
-        portalvoltar.SetActive(true); // Ativa o portal para voltar à cena anterior
-    }
-
-    private void DarDanoPulandoNaCabeca()
-    {
-        // Reduz a vida do vilão e atualiza o estado de pular
-        animatorvilao.SetBool("caiu", true); // Define a animação "caiu" como verdadeira
-        vidaVilao -= 1; // Reduz a vida do vilão
-        podepular = false; // Desativa a capacidade de pular temporariamente
-        Invoke("PodePular", 2f); // Reativa a capacidade de pular após 2 segundos
-        Debug.Log("Vida do Vilão: " + vidaVilao); // Loga a vida restante do vilão
-    }
-
-    public void PodePular()
-    {
-        // Reativa a capacidade de pular e redefine a animação do vilão
-        podepular = true; // Permite pular novamente
-        animatorvilao.SetBool("caiu", false); // Define a animação "caiu" como falsa
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("escada"))
-        {
-            player.transform.position = tpAndar2.position;
-        }
+        podeatacar = true;
     }
 
     public void Vitoria()
     {
         // Marca a fase como completa no PlayerPrefs
+        portal.SetActive(true);
         PlayerPrefs.SetInt("PredioCompletado", 1); // Define o progresso da fase
     }
 }

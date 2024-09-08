@@ -18,6 +18,7 @@ public class SalvarFases : MonoBehaviour
 
     [Header("CutScenes")]
     public PlayableDirector cutsceneInicial;
+    public PlayableDirector cutsceneTaverna;
 
     [Header("Sapos")]
     public CinemachineFreeLook freeLookCamera;
@@ -119,7 +120,7 @@ private void ResetarObjetos()
     public void TavernaDesbloqueada()
     {
         Debug.Log("Metodo chamado TavernaDesbloqueada e fase1 predio completada");
-
+        cutsceneTaverna.Play();
         taverna.SetActive(true);
         martinha2.SetActive(true);
         telaRivaldinho.SetActive(true);

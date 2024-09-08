@@ -62,32 +62,10 @@ public class VilaoSegueEAtaca : MonoBehaviour
     {
         Seguiranimar(); // Atualiza a animação com base no movimento
 
-        float distancia = Vector3.Distance(transform.position, player.position);
-        if (!vidaPersonagemScript.acabouojogo)
-        {
-            if (distancia <= distAtaque)
-            {
-                animator.SetBool("ataque", true); // Inicia a animação de ataque
-                Invoke("NãoPodeAtacar", 1); // Reseta a animação de ataque após 1 segundo
-            }
-        }
+        
     }
 
-    public void AtacarOJogador()
-    {
-        // Ataca o jogador se estiver dentro da distância de ataque e se for permitido atacar
-        float distancia = Vector3.Distance(transform.position, player.position);
-        if (distancia <= distAtaque)
-        {
-            if (podeatacar)
-            {
-                podeatacar = false; // Desativa a possibilidade de atacar
-
-                VerificarDesvio(); // Verifica se o jogador desviou do ataque
-                Invoke("PodeAtacar", 1); // Permite atacar novamente após 5 segundos
-            }
-        }
-    }
+  
 
     private void Seguiranimar()
     {
@@ -102,30 +80,7 @@ public class VilaoSegueEAtaca : MonoBehaviour
         }
     }
 
-    public void VerificarDesvio()
-    {
-        // Verifica se o jogador desviou e aplica dano se não tiver desviado
-        if (!açõesPersonagem.EstaDesviando())
-        {
-         vidaPersonagemScript.ReceberDano(1); // Aplica dano ao jogador
-        }
-        else
-        {
-            Debug.Log("Jogador desviou do ataque");
-        }
-    }
-
-    public void NãoPodeAtacar()
-    {
-        // Reseta a animação de ataque
-        animator.SetBool("ataque", false);
-    }
-
-    public void PodeAtacar()
-    {
-        // Permite que o vilão ataque novamente
-        podeatacar = true;
-    }
+   
 
    
 }

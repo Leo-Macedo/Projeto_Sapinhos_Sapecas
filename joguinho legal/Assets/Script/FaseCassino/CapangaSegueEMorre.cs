@@ -26,46 +26,60 @@ public class CapangaSegueEMorre : MonoBehaviour
         SeguirEanimar();
     }
 
-    private void EncontrarPlayerMaisProximo()
+   private void EncontrarPlayerMaisProximo()
+{
+    GameObject[] jogadores = GameObject.FindGameObjectsWithTag("Player");
+    Transform jogadorMaisProximo = null;
+    float menorDistancia = Mathf.Infinity;
+
+    foreach (GameObject jogador in jogadores)
     {
-        // Encontra o jogador mais próximo e define o destino do NavMeshAgent
-        GameObject[] jogadores = GameObject.FindGameObjectsWithTag("Player");
-        Transform jogadorMaisProximo = null;
-        float menorDistancia = Mathf.Infinity;
-
-        foreach (GameObject jogador in jogadores)
+        Vector3 posicaoPlayer = jogador.transform.position;
+        Vector3 posicaoCapanga = transform.position;
+        
+        // Calcula a distância no plano XZ
+        float distanciaHorizontal = Vector3.Distance(new Vector3(posicaoCapanga.x, 0, posicaoCapanga.z), new Vector3(posicaoPlayer.x, 0, posicaoPlayer.z));
+        
+        if (distanciaHorizontal < menorDistancia)
         {
-            float distancia = Vector3.Distance(transform.position, jogador.transform.position);
-            if (distancia < menorDistancia)
-            {
-                menorDistancia = distancia;
-                jogadorMaisProximo = jogador.transform;
-                vidaPersonagemMaisProxima = jogador.GetComponent<VidaPersonagem>(); // Armazena o VidaPersonagem do jogador mais próximo
-            }
-        }
-
-        if (jogadorMaisProximo != null)
-        {
-            navMeshAgent.SetDestination(jogadorMaisProximo.position);
-
-            if (navMeshAgent.remainingDistance <= distAtaque && podeAtacar)
-            {
-                podeAtacar = false; // Impede novos ataques até o intervalo terminar
-                Invoke("DanoNoPlayer", 0f);
-                Invoke("ResetarAtaque", 5f); // Permite o próximo ataque após 5 segundos
-            }
+            menorDistancia = distanciaHorizontal;
+            jogadorMaisProximo = jogador.transform;
+            vidaPersonagemMaisProxima = jogador.GetComponent<VidaPersonagem>(); // Armazena o VidaPersonagem do jogador mais próximo
         }
     }
 
-    private void DanoNoPlayer()
+    if (jogadorMaisProximo != null)
     {
-        if (vidaPersonagemMaisProxima != null)
+        navMeshAgent.SetDestination(jogadorMaisProximo.position);
+
+        if (navMeshAgent.remainingDistance <= distAtaque && podeAtacar)
         {
-            // Subtrai 0.1 da vidaAtual do jogador mais próximo
+            podeAtacar = false; // Impede novos ataques até o intervalo terminar
+            Invoke("DanoNoPlayer", 0f);
+            Invoke("ResetarAtaque", 5f); // Permite o próximo ataque após 5 segundos
+        }
+    }
+}
+
+    private void DanoNoPlayer()
+{
+    if (vidaPersonagemMaisProxima != null)
+    {
+        Vector3 posicaoPlayer = vidaPersonagemMaisProxima.transform.position;
+        Vector3 posicaoCapanga = transform.position;
+
+        // Verifica se o jogador está na mesma faixa de altura (ajuste o valor de 1.0f conforme necessário)
+        if (Mathf.Abs(posicaoPlayer.y - posicaoCapanga.y) < 1.0f)
+        {
             vidaPersonagemMaisProxima.vidaAtual -= 0.1f;
             Debug.Log("Atacando o jogador! Vida restante: " + vidaPersonagemMaisProxima.vidaAtual);
         }
+        else
+        {
+            Debug.Log("Jogador fora da faixa de altura para ataque.");
+        }
     }
+}
 
     public void VericarNocauteCapanga()
     {

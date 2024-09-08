@@ -90,8 +90,5 @@ public class MatarVilao : MonoBehaviour
         podeatacar = true;
     }
 
-    // Reseta os flags de ataque
-   
-    // Executa a lógica de vitória
-   
+    
 }
