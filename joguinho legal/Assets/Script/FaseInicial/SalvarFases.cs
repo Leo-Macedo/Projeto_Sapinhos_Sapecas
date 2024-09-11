@@ -17,6 +17,7 @@ public class SalvarFases : MonoBehaviour
     public GameObject casarao;
 
     [Header("CutScenes")]
+    public GameObject GOCutsceneInicial;
     public PlayableDirector cutsceneInicial;
     public PlayableDirector cutsceneTaverna;
 
@@ -53,59 +54,59 @@ public class SalvarFases : MonoBehaviour
     }
 
     // Verifica o progresso do jogador e desbloqueia as fases correspondentes
-   public void VerificarProgresso()
-{
-    // Resetar o estado dos objetos antes de verificar o progresso
-    ResetarObjetos();
-
-    if (PlayerPrefs.GetInt(PredioCompletadoKey, 0) == 0)
+    public void VerificarProgresso()
     {
-        InicioJogo();
-        return;
+        // Resetar o estado dos objetos antes de verificar o progresso
+        ResetarObjetos();
+
+        if (PlayerPrefs.GetInt(PredioCompletadoKey, 0) == 0)
+        {
+            InicioJogo();
+            return;
+        }
+
+        if (PlayerPrefs.GetInt(TavernaCompletadaKey, 0) == 0)
+        {
+            TavernaDesbloqueada();
+            return;
+        }
+
+        if (PlayerPrefs.GetInt(CassinoCompletadoKey, 0) == 0)
+        {
+            CassinoDesbloqueado();
+            return;
+        }
+
+        CasaraoDesbloqueado();
     }
 
-    if (PlayerPrefs.GetInt(TavernaCompletadaKey, 0) == 0)
+    // Método para resetar o estado dos objetos
+    private void ResetarObjetos()
     {
-        TavernaDesbloqueada();
-        return;
+        // Desative todos os objetos que são ativados por progresso
+        martinha1.SetActive(false);
+        martinha2.SetActive(false);
+        martinha3.SetActive(false);
+        martinha4.SetActive(false);
+
+        telaRonaldinho.SetActive(false);
+        telaRivaldinho.SetActive(false);
+        telaRomarinho.SetActive(false);
+        telaTodos.SetActive(false);
+
+        ronaldinhoAnda.SetActive(false);
+        ronaldinhoAtor.SetActive(true);
+
+        rivaldinhoAnda.SetActive(false);
+        rivaldinhoAtor.SetActive(true);
+
+        romarinhoAnda.SetActive(false);
+        romarinhoAtor.SetActive(true);
+
+        cassino.SetActive(false);
+        taverna.SetActive(false);
+        casarao.SetActive(false);
     }
-
-    if (PlayerPrefs.GetInt(CassinoCompletadoKey, 0) == 0)
-    {
-        CassinoDesbloqueado();
-        return;
-    }
-
-    CasaraoDesbloqueado();
-}
-
-// Método para resetar o estado dos objetos
-private void ResetarObjetos()
-{
-    // Desative todos os objetos que são ativados por progresso
-    martinha1.SetActive(false);
-    martinha2.SetActive(false);
-    martinha3.SetActive(false);
-    martinha4.SetActive(false);
-
-    telaRonaldinho.SetActive(false);
-    telaRivaldinho.SetActive(false);
-    telaRomarinho.SetActive(false);
-    telaTodos.SetActive(false);
-
-    ronaldinhoAnda.SetActive(false);
-    ronaldinhoAtor.SetActive(true);
-
-    rivaldinhoAnda.SetActive(false);
-    rivaldinhoAtor.SetActive(true);
-
-    romarinhoAnda.SetActive(false);
-    romarinhoAtor.SetActive(true);
-
-    cassino.SetActive(false);
-    taverna.SetActive(false);
-    casarao.SetActive(false);
-}
 
     // Inicia o jogo com a cutscene
     public void InicioJogo()
@@ -113,6 +114,7 @@ private void ResetarObjetos()
         Invoke("PodeAndar", (float)cutsceneInicial.duration);
         Debug.Log("Metodo chamado InicioJogo e não completou fases");
         martinha1.SetActive(true);
+        GOCutsceneInicial.SetActive(true);
         cutsceneInicial.Play();
     }
 
@@ -126,6 +128,7 @@ private void ResetarObjetos()
         telaRivaldinho.SetActive(true);
         rivaldinhoAnda.SetActive(true);
         rivaldinhoAtor.SetActive(false);
+        GOCutsceneInicial.SetActive(false);
         freeLookCamera.Follow = rivaldinhoAnda.transform;
         freeLookCamera.LookAt = rivaldinhoAnda.transform;
     }
@@ -141,6 +144,7 @@ private void ResetarObjetos()
         telaRomarinho.SetActive(true);
         romarinhoAnda.SetActive(true);
         romarinhoAtor.SetActive(false);
+        GOCutsceneInicial.SetActive(false);
         freeLookCamera.Follow = romarinhoAnda.transform;
         freeLookCamera.LookAt = romarinhoAnda.transform;
     }
@@ -156,7 +160,8 @@ private void ResetarObjetos()
         martinha4.SetActive(true);
         telaTodos.SetActive(true);
         ronaldinhoAnda.SetActive(true);
-        ronaldinhoAtor.SetActive(false);
+        ronaldinhoAtor.SetActive(false);        
+        GOCutsceneInicial.SetActive(false);
         freeLookCamera.Follow = ronaldinhoAnda.transform;
         freeLookCamera.LookAt = ronaldinhoAnda.transform;
     }
