@@ -60,17 +60,20 @@ public class PassarFases : MonoBehaviour
         if (other.gameObject.CompareTag("andar2"))
         {
             player.position = andar2.position;
+            verificarFasePredio.Andar2();
             verificarFasePredio.AtualizarControladorFases();
         }
         if (other.gameObject.CompareTag("andar3"))
         {
             player.position = andar3.position;
+            verificarFasePredio.Andar3();
             verificarFasePredio.AtualizarControladorFases();
         }
 
         if (other.gameObject.CompareTag("andar4"))
         {
             player.position = andar4.position;
+            verificarFasePredio.Andar4();
             verificarFasePredio.AtualizarControladorFases();
         }
     }

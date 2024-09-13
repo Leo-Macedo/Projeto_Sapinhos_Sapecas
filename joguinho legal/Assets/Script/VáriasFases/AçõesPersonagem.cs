@@ -82,7 +82,7 @@ public class AçõesPersonagem : MonoBehaviour
             float distancia = Vector3.Distance(transform.position, capangaSegueEMorre.transform.position);
             if (podeMatarCapanga && distancia <= distAtaque)
             {
-                capangaSegueEMorre.VericarNocauteCapanga();
+                capangaSegueEMorre.ReceberDanoCapanga(1);
                 podeMatarCapanga = false;
             }
         }

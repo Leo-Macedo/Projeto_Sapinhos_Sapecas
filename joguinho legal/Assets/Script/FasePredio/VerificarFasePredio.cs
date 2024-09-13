@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class VerificarFasePredio : MonoBehaviour
 {
@@ -13,15 +16,34 @@ public class VerificarFasePredio : MonoBehaviour
     public Transform pontoNascer1;
     public Transform pontoNascer2;
     public Transform pontoNascer3;
+    public GameObject cilindroCapanga;
+    public GameObject cilindroVilao;
+
+    [Header("CutScenes")]
+    public PlayableDirector cutsceneAndar1;
+    public PlayableDirector cutsceneAndar2;
+    public PlayableDirector cutsceneAndar3;
+    public PlayableDirector cutsceneAndar4;
+
+   
+    [Header("Câmera")]
+    public CinemachineFreeLook freeLookCamera;
 
     private VidaPersonagem vidaPersonagem;
+    private Movimento2 movimento2;
+    private float veloAndandoInicial;
+    private float veloCorrendoInicial;
 
     void Start()
     {
         Time.timeScale = 1f;
-        
+
         vidaPersonagem = player.GetComponent<VidaPersonagem>();
-        controladorFases = PlayerPrefs.GetInt("ControladorFases", 0);
+        movimento2 = player.GetComponent<Movimento2>();
+        controladorFases = PlayerPrefs.GetInt("ControladorFasesPredio", 0);
+
+        veloAndandoInicial = movimento2.veloAndando;
+        veloCorrendoInicial = movimento2.veloCorrendo;
         CarregarRound(); // Define a posição inicial do jogador ao iniciar
     }
 
@@ -39,9 +61,9 @@ public class VerificarFasePredio : MonoBehaviour
 
         // Recarrega a cena atual
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        
+
         // Atualiza o controlador de fases após recarregar a cena
-        controladorFases = PlayerPrefs.GetInt("ControladorFases", 0);
+        controladorFases = PlayerPrefs.GetInt("ControladorFasesPredio", 0);
     }
 
     void CarregarRound()
@@ -80,30 +102,68 @@ public class VerificarFasePredio : MonoBehaviour
         }
     }
 
-    public void Andar1() 
+    public void Andar1()
     {
-        // Pode definir uma posição padrão ou uma lógica específica para o andar 1
+        StartCoroutine(ControlarMovimentoDuranteCutscene());
+        cutsceneAndar1.Play();
     }
 
     public void Andar2()
     {
+        StartCoroutine(ControlarMovimentoDuranteCutscene());
+        cutsceneAndar2.Play();
+        Invoke("DesativarOBJ1", (float)cutsceneAndar2.duration);
+
         player.transform.position = pontoNascer1.position;
     }
 
     public void Andar3()
     {
+        StartCoroutine(ControlarMovimentoDuranteCutscene());
+        cutsceneAndar3.Play();
         player.transform.position = pontoNascer2.position;
     }
 
     public void Andar4()
     {
+        StartCoroutine(ControlarMovimentoDuranteCutscene());
+        cutsceneAndar4.Play();
+        Invoke("DesativarOBJ2", (float)cutsceneAndar4.duration);
         player.transform.position = pontoNascer3.position;
+    }
+
+    private IEnumerator ControlarMovimentoDuranteCutscene()
+    {
+        // Zera a velocidade
+        movimento2.veloAndando = 0f;
+        movimento2.veloCorrendo = 0f;
+        yield return new WaitForSeconds(0.5f);
+
+        freeLookCamera.enabled = false;
+
+        // Espera pela duração da cutscene
+        yield return new WaitForSeconds((float)cutsceneAndar1.duration);
+
+        // Restaura as velocidades iniciais
+        movimento2.veloAndando = veloAndandoInicial;
+        movimento2.veloCorrendo = veloCorrendoInicial;
+        freeLookCamera.enabled = true;
+    }
+
+    private void DesativarOBJ1()
+    {
+        cilindroCapanga.SetActive(false);
+    }
+
+    private void DesativarOBJ2()
+    {
+        cilindroVilao.SetActive(false);
     }
 
     public void AtualizarControladorFases()
     {
         controladorFases += 1;
-        PlayerPrefs.SetInt("ControladorFases", controladorFases);
+        PlayerPrefs.SetInt("ControladorFasesPredio", controladorFases);
         PlayerPrefs.Save(); // Garante que as mudanças sejam salvas imediatamente
         Debug.Log("PlayerPrefs + 1 = " + controladorFases);
     }

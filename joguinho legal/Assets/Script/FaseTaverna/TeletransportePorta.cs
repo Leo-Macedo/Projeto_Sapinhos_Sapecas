@@ -11,6 +11,7 @@ public class TeletransportePorta : MonoBehaviour
     public GameObject player; // Referência ao jogador
     public Transform tp; // Ponto de teletransporte para a sala principal
     public Transform tpsalazida; // Ponto de teletransporte para a sala de trás
+    public VerificarFasesTaverna verificarFasesTaverna;
 
     void Start() { }
 
@@ -34,19 +35,15 @@ public class TeletransportePorta : MonoBehaviour
     {
         // Teletransporta o jogador para a sala principal
         player.transform.position = tp.position; // Atualiza a posição do jogador
-        Debug.Log("Entrou na porta"); // Mensagem no console
-        Invoke("DesativarTxt", 3); // Desativa uma mensagem após 3 segundos
+        verificarFasesTaverna.AtualizarControladorFases();
+        verificarFasesTaverna.Porao();
     }
 
     private void TeletransportarParaSalaZida()
     {
         // Teletransporta o jogador para a sala de trás
+        verificarFasesTaverna.AtualizarControladorFases();
+        verificarFasesTaverna.SalaZida();
         player.transform.position = tpsalazida.position; // Atualiza a posição do jogador
-    }
-
-    private void DesativarTxt()
-    {
-        // Implementar lógica para desativar a mensagem se necessário
-        // Exemplo: texto de "Entrou na porta" ou algo relacionado
     }
 }

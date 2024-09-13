@@ -23,6 +23,7 @@ public class VilaoSeguePlayer : MonoBehaviour
     public AudioSource audioSource; // Fonte de áudio para efeitos sonoros
 
     public GameObject portalvoltar; // Portal para voltar
+    private bool podeDarDano = true;
 
     private void Start()
     {
@@ -94,9 +95,10 @@ public class VilaoSeguePlayer : MonoBehaviour
             {
                 StopCharge();
             }
-            else if (other.gameObject.CompareTag("Player") && !escudoFuncionando.escudoAtivo)
+            else if (other.gameObject.CompareTag("Player") && !escudoFuncionando.escudoAtivo && podeDarDano)
             {
                 vidaPersonagem.ReceberDano(1); // Aplica dano ao jogador
+                Invoke("PodeDarDano", 3);
                 StopCharge();
             }
             else if (other.gameObject.CompareTag("Player") && escudoFuncionando.escudoAtivo)
@@ -126,6 +128,11 @@ public class VilaoSeguePlayer : MonoBehaviour
     }
 
     private void PodeTomarDano()
+    {
+        podeTomarDano = true;
+    }
+
+    private void PodeDarDano()
     {
         podeTomarDano = true;
     }
