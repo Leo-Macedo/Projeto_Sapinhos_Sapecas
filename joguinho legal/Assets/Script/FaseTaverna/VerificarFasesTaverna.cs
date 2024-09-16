@@ -26,6 +26,28 @@ public class VerificarFasesTaverna : MonoBehaviour
     [Header("Câmera")]
     public CinemachineFreeLook freeLookCamera;
 
+    [Header("Mensagens")]
+    public AudioSource somNoti;
+    public GameObject mensagem1;
+    public GameObject mensagem2;
+    public GameObject mensagem3;
+    public GameObject mensagem4;
+    public GameObject mensagem5;
+    public GameObject mensagem6;
+
+    public GameObject mensagem11;
+    public GameObject mensagem12;
+    public GameObject mensagem13;
+
+    private Animator animMensagem1;
+    private Animator animMensagem2;
+    private Animator animMensagem3;
+    private Animator animMensagem4;
+    private Animator animMensagem5;
+    private Animator animMensagem6;
+    private Animator animMensagem11;
+    private Animator animMensagem12;
+    private Animator animMensagem13;
     private VidaPersonagem vidaPersonagem;
     private Movimento2 movimento2;
     private float veloAndandoInicial;
@@ -33,6 +55,16 @@ public class VerificarFasesTaverna : MonoBehaviour
 
     void Start()
     {
+        animMensagem1 = mensagem1.GetComponent<Animator>();
+        animMensagem2 = mensagem2.GetComponent<Animator>();
+        animMensagem3 = mensagem3.GetComponent<Animator>();
+        animMensagem4 = mensagem4.GetComponent<Animator>();
+        animMensagem5 = mensagem5.GetComponent<Animator>();
+        animMensagem6 = mensagem6.GetComponent<Animator>();
+     
+        animMensagem11 = mensagem11.GetComponent<Animator>();
+        animMensagem12 = mensagem12.GetComponent<Animator>();
+        animMensagem13 = mensagem13.GetComponent<Animator>();
         Time.timeScale = 1f;
 
         vidaPersonagem = player.GetComponent<VidaPersonagem>();
@@ -69,7 +101,7 @@ public class VerificarFasesTaverna : MonoBehaviour
         switch (controladorFases)
         {
             case 0:
-                Bar();
+                StartCoroutine(Bar());
                 break;
 
             case 1:
@@ -95,10 +127,24 @@ public class VerificarFasesTaverna : MonoBehaviour
         }
     }
 
-    public void Bar()
+    public IEnumerator Bar()
     {
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneBar.Play();
+        yield return new WaitForSeconds((float)cutsceneBar.duration);
+        somNoti.Play();
+        mensagem1.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem1.SetTrigger("fechou");
+        somNoti.Play();
+        mensagem2.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem2.SetTrigger("fechou");
+        somNoti.Play();
+        mensagem3.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem3.SetTrigger("fechou");
+
     }
 
     public void Porao()

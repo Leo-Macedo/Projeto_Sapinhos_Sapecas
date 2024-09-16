@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class VerificarFasePredio : MonoBehaviour
 {
     public int controladorFases = 0;
+    public PassarFases passarFases;
 
     [Header("Referências")]
     public GameObject gameOverCanvas;
@@ -18,6 +19,7 @@ public class VerificarFasePredio : MonoBehaviour
     public Transform pontoNascer3;
     public GameObject cilindroCapanga;
     public GameObject cilindroVilao;
+    public GameObject cilindroCapanga3;
 
     [Header("CutScenes")]
     public PlayableDirector cutsceneAndar1;
@@ -25,9 +27,31 @@ public class VerificarFasePredio : MonoBehaviour
     public PlayableDirector cutsceneAndar3;
     public PlayableDirector cutsceneAndar4;
 
-   
     [Header("Câmera")]
     public CinemachineFreeLook freeLookCamera;
+
+    [Header("Mensagens")]
+    public AudioSource somNoti;
+    public GameObject mensagem1;
+    public GameObject mensagem2;
+    public GameObject mensagem3;
+    public GameObject mensagem4;
+    public GameObject mensagem5;
+    public GameObject mensagem6;
+
+    public GameObject mensagem11;
+    public GameObject mensagem12;
+    public GameObject mensagem13;
+
+    private Animator animMensagem1;
+    private Animator animMensagem2;
+    private Animator animMensagem3;
+    private Animator animMensagem4;
+    private Animator animMensagem5;
+    private Animator animMensagem6;
+      private Animator animMensagem11;
+    private Animator animMensagem12;
+    private Animator animMensagem13;
 
     private VidaPersonagem vidaPersonagem;
     private Movimento2 movimento2;
@@ -36,6 +60,17 @@ public class VerificarFasePredio : MonoBehaviour
 
     void Start()
     {
+        animMensagem1 = mensagem1.GetComponent<Animator>();
+        animMensagem2 = mensagem2.GetComponent<Animator>();
+        animMensagem3 = mensagem3.GetComponent<Animator>();
+        animMensagem4 = mensagem4.GetComponent<Animator>();
+        animMensagem5 = mensagem5.GetComponent<Animator>();
+        animMensagem6 = mensagem6.GetComponent<Animator>();
+     
+        animMensagem11 = mensagem11.GetComponent<Animator>();
+        animMensagem12 = mensagem12.GetComponent<Animator>();
+        animMensagem13 = mensagem13.GetComponent<Animator>();
+
         Time.timeScale = 1f;
 
         vidaPersonagem = player.GetComponent<VidaPersonagem>();
@@ -72,19 +107,21 @@ public class VerificarFasePredio : MonoBehaviour
         switch (controladorFases)
         {
             case 0:
-                Andar1();
+                StartCoroutine(Andar1());
                 break;
 
             case 1:
-                Andar2();
+                StartCoroutine(Andar2());
+
                 break;
 
             case 2:
-                Andar3();
+                StartCoroutine(Andar3());
+
                 break;
 
             case 3:
-                Andar4();
+                StartCoroutine(Andar4());
                 break;
 
             default:
@@ -102,34 +139,83 @@ public class VerificarFasePredio : MonoBehaviour
         }
     }
 
-    public void Andar1()
+    public IEnumerator Andar1()
     {
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar1.Play();
+
+        yield return new WaitForSeconds((float)cutsceneAndar1.duration);
+        somNoti.Play();
+        mensagem1.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem1.SetTrigger("fechou");
+        somNoti.Play();
+        mensagem2.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem2.SetTrigger("fechou");
     }
 
-    public void Andar2()
+    public IEnumerator Andar2()
     {
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar2.Play();
-        Invoke("DesativarOBJ1", (float)cutsceneAndar2.duration);
-
         player.transform.position = pontoNascer1.position;
+        passarFases.boolandar2 = true;
+
+        yield return new WaitForSeconds((float)cutsceneAndar2.duration);
+        cilindroCapanga.SetActive(false);
+        somNoti.Play();
+        mensagem3.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem3.SetTrigger("fechou");
+        somNoti.Play();
+        mensagem4.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem4.SetTrigger("fechou");
+        somNoti.Play();
+        mensagem5.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem5.SetTrigger("fechou");
     }
 
-    public void Andar3()
+    public IEnumerator Andar3()
     {
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar3.Play();
+        passarFases.AtivarCapangas("CapangaAndar3", 3);
+        passarFases.boolandar3 = true;
+        passarFases.boolandar2 = false;
         player.transform.position = pontoNascer2.position;
+
+        yield return new WaitForSeconds((float)cutsceneAndar3.duration);
+        cilindroCapanga3.SetActive(false);
+        somNoti.Play();
+        mensagem6.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem6.SetTrigger("fechou");
     }
 
-    public void Andar4()
+    public IEnumerator Andar4()
     {
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar4.Play();
-        Invoke("DesativarOBJ2", (float)cutsceneAndar4.duration);
         player.transform.position = pontoNascer3.position;
+
+        yield return new WaitForSeconds((float)cutsceneAndar3.duration);
+
+        cilindroVilao.SetActive(false);
+        somNoti.Play();
+        mensagem11.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem11.SetTrigger("fechou");
+        somNoti.Play();
+        mensagem12.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem12.SetTrigger("fechou");
+        somNoti.Play();
+        mensagem13.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animMensagem13.SetTrigger("fechou");
     }
 
     private IEnumerator ControlarMovimentoDuranteCutscene()
@@ -148,16 +234,6 @@ public class VerificarFasePredio : MonoBehaviour
         movimento2.veloAndando = veloAndandoInicial;
         movimento2.veloCorrendo = veloCorrendoInicial;
         freeLookCamera.enabled = true;
-    }
-
-    private void DesativarOBJ1()
-    {
-        cilindroCapanga.SetActive(false);
-    }
-
-    private void DesativarOBJ2()
-    {
-        cilindroVilao.SetActive(false);
     }
 
     public void AtualizarControladorFases()
