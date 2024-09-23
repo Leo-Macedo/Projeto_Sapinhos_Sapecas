@@ -21,6 +21,7 @@ public class SalvarFases : MonoBehaviour
     public PlayableDirector cutsceneInicial;
     public PlayableDirector cutsceneTaverna;
     public PlayableDirector cutsceneCassino;
+    public PlayableDirector cutsceneCasarao;
 
     [Header("Sapos")]
     public CinemachineFreeLook freeLookCamera;
@@ -155,7 +156,7 @@ public class SalvarFases : MonoBehaviour
     public void CasaraoDesbloqueado()
     {
         Debug.Log("Metodo chamado CasaraoDesbloqueado e fase3 taverna completada");
-
+        cutsceneCasarao.Play();
         casarao.SetActive(true);
         taverna.SetActive(true);
         cassino.SetActive(true);
