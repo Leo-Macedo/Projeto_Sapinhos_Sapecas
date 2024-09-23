@@ -20,6 +20,7 @@ public class SalvarFases : MonoBehaviour
     public GameObject GOCutsceneInicial;
     public PlayableDirector cutsceneInicial;
     public PlayableDirector cutsceneTaverna;
+    public PlayableDirector cutsceneCassino;
 
     [Header("Sapos")]
     public CinemachineFreeLook freeLookCamera;
@@ -138,6 +139,7 @@ public class SalvarFases : MonoBehaviour
     {
         Debug.Log("Metodo chamado CassinoDesbloqueado e fase2 taverna completada");
 
+        cutsceneCassino.Play();
         cassino.SetActive(true);
         taverna.SetActive(true);
         martinha3.SetActive(true);
