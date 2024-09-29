@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class Movimento2 : MonoBehaviour
 {
-    private bool cursorBloqueado = true;
     public AudioSource somPassos;
     public AudioClip[] audiosPassos;
      public AudioSource somIdle;
@@ -82,7 +81,6 @@ public class Movimento2 : MonoBehaviour
     private void HandleActions()
     {
         Farpar(); // Controla a ação de farpar (emote)
-        ControlarCursor();
     }
 
     private void HandleSavingAndDeleting()
@@ -201,24 +199,7 @@ public class Movimento2 : MonoBehaviour
             SceneManager.LoadScene("CenaInicial"); // Carrega a cena inicial
     }
 
-    private void ControlarCursor()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (cursorBloqueado)
-            {
-                Cursor.lockState = CursorLockMode.None; // Libera o cursor
-                Cursor.visible = true; // Mostra o cursor
-                cursorBloqueado = false;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked; // Bloqueia o cursor no centro da tela
-                Cursor.visible = false; // Esconde o cursor
-                cursorBloqueado = true;
-            }
-        }
-    }
+   
 
     public void SomPassos()
     {
