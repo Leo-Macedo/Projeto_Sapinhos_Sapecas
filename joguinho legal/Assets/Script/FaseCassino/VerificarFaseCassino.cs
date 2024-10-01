@@ -190,6 +190,8 @@ public class VerificarFaseCassino : MonoBehaviour
     {
         gameOverCanvas.SetActive(true); // Ativa a tela de Game Over
         Time.timeScale = 0f; // Pausa o jogo
+        Cursor.lockState = CursorLockMode.None; 
+        Cursor.visible = true; 
     }
 
     public void ReiniciarRound()

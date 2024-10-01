@@ -30,17 +30,17 @@ public class AçõesPersonagem : MonoBehaviour
             animator.SetTrigger("soco");
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             animator.SetTrigger("chute");
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             animator.SetTrigger("emote1");
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             IniciarDesvio();
         }

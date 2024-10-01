@@ -173,7 +173,7 @@ public class Movimento2 : MonoBehaviour
 
     private void Farpar()
     {
-        if (Input.GetKeyDown(KeyCode.E)) // Verifica se a tecla E foi pressionada
+        if (Input.GetKeyDown(KeyCode.T)) // Verifica se a tecla E foi pressionada
         {
             anim.SetTrigger("emote1"); // Ativa o trigger para a animação de farpar
         }

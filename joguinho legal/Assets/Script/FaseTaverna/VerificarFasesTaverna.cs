@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,14 @@ using UnityEngine.UI;
 public class VerificarFasesTaverna : MonoBehaviour
 {
     public int controladorFases = 0;
+    public EscudoFuncionando escudoFuncionando;
+
+    [Header("Hud")]
+    public GameObject vidaMelo;
+    public GameObject vidaPlayer;
+    public GameObject super;
+    public GameObject escudos;
+    public TextMeshProUGUI txtEscudosPegos;
 
     [Header("Referências")]
     public GameObject gameOverCanvas;
@@ -61,7 +70,7 @@ public class VerificarFasesTaverna : MonoBehaviour
         animMensagem4 = mensagem4.GetComponent<Animator>();
         animMensagem5 = mensagem5.GetComponent<Animator>();
         animMensagem6 = mensagem6.GetComponent<Animator>();
-     
+
         animMensagem11 = mensagem11.GetComponent<Animator>();
         animMensagem12 = mensagem12.GetComponent<Animator>();
         animMensagem13 = mensagem13.GetComponent<Animator>();
@@ -124,6 +133,8 @@ public class VerificarFasesTaverna : MonoBehaviour
         {
             Time.timeScale = 0f; // Pausa o jogo
             gameOverCanvas.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 
@@ -144,11 +155,12 @@ public class VerificarFasesTaverna : MonoBehaviour
         mensagem3.SetActive(true);
         yield return new WaitForSeconds(5);
         animMensagem3.SetTrigger("fechou");
-
     }
 
     public void Porao()
     {
+        super.SetActive(true);
+        escudos.SetActive(true);
         cutscenePorao.Play();
         StartCoroutine(ControlarMovimentoDuranteCutscene());
 
@@ -158,6 +170,12 @@ public class VerificarFasesTaverna : MonoBehaviour
 
     public void SalaZida()
     {
+        super.SetActive(true);
+        vidaMelo.SetActive(true);
+        vidaPlayer.SetActive(true);
+        escudos.SetActive(true);
+        escudoFuncionando.contadorEscudo = 3;
+        txtEscudosPegos.text = escudoFuncionando.contadorEscudo + "";
         cutsceneSalaZida.Play();
         StartCoroutine(ControlarMovimentoDuranteCutscene());
 

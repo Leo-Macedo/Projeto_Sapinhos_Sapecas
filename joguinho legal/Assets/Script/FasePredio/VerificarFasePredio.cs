@@ -11,6 +11,11 @@ public class VerificarFasePredio : MonoBehaviour
     public int controladorFases = 0;
     public PassarFases passarFases;
 
+    [Header("Hud")]
+    public GameObject vidaMelo;
+    public GameObject vidaPlayer;
+    public GameObject Super;
+
     [Header("Referências")]
     public GameObject gameOverCanvas;
     public GameObject player;
@@ -49,7 +54,7 @@ public class VerificarFasePredio : MonoBehaviour
     private Animator animMensagem4;
     private Animator animMensagem5;
     private Animator animMensagem6;
-      private Animator animMensagem11;
+    private Animator animMensagem11;
     private Animator animMensagem12;
     private Animator animMensagem13;
 
@@ -66,7 +71,7 @@ public class VerificarFasePredio : MonoBehaviour
         animMensagem4 = mensagem4.GetComponent<Animator>();
         animMensagem5 = mensagem5.GetComponent<Animator>();
         animMensagem6 = mensagem6.GetComponent<Animator>();
-     
+
         animMensagem11 = mensagem11.GetComponent<Animator>();
         animMensagem12 = mensagem12.GetComponent<Animator>();
         animMensagem13 = mensagem13.GetComponent<Animator>();
@@ -136,6 +141,8 @@ public class VerificarFasePredio : MonoBehaviour
         {
             Time.timeScale = 0f; // Pausa o jogo
             gameOverCanvas.SetActive(true);
+            Cursor.lockState = CursorLockMode.None; 
+        Cursor.visible = true; 
         }
     }
 
@@ -143,6 +150,7 @@ public class VerificarFasePredio : MonoBehaviour
     {
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar1.Play();
+        vidaPersonagem.vidaAtual = 3;
 
         yield return new WaitForSeconds((float)cutsceneAndar1.duration);
         somNoti.Play();
@@ -157,10 +165,13 @@ public class VerificarFasePredio : MonoBehaviour
 
     public IEnumerator Andar2()
     {
+        vidaPersonagem.vidaAtual = 3;
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar2.Play();
         player.transform.position = pontoNascer1.position;
         passarFases.boolandar2 = true;
+        vidaPlayer.SetActive(true);
+        Super.SetActive(true);
 
         yield return new WaitForSeconds((float)cutsceneAndar2.duration);
         cilindroCapanga.SetActive(false);
@@ -180,12 +191,16 @@ public class VerificarFasePredio : MonoBehaviour
 
     public IEnumerator Andar3()
     {
+        vidaPersonagem.vidaAtual = 3;
+
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar3.Play();
         passarFases.AtivarCapangas("CapangaAndar3", 3);
         passarFases.boolandar3 = true;
         passarFases.boolandar2 = false;
         player.transform.position = pontoNascer2.position;
+        vidaPlayer.SetActive(true);
+        Super.SetActive(true);
 
         yield return new WaitForSeconds((float)cutsceneAndar3.duration);
         cilindroCapanga3.SetActive(false);
@@ -197,10 +212,13 @@ public class VerificarFasePredio : MonoBehaviour
 
     public IEnumerator Andar4()
     {
+        vidaPersonagem.vidaAtual = 3;
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar4.Play();
         player.transform.position = pontoNascer3.position;
-
+        vidaPlayer.SetActive(true);
+        Super.SetActive(true);
+        vidaMelo.SetActive(true);
         yield return new WaitForSeconds((float)cutsceneAndar3.duration);
 
         cilindroVilao.SetActive(false);

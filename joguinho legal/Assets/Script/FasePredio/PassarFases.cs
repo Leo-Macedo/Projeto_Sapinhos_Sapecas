@@ -15,10 +15,16 @@ public class PassarFases : MonoBehaviour
     public Transform andar4;
     public Animator animatorEscada;
     public VerificarFasePredio verificarFasePredio;
+    private VidaPersonagem vidaPersonagem;
 
     public bool boolandar2 = false;
     public bool boolandar3 = false;
     public bool boolandar4 = false;
+
+     [Header("Hud")]
+    public GameObject vidaMelo;
+    public GameObject vidaPlayer;
+    public GameObject Super;
 
     [Header("Cutscenes")]
     private bool tocouCutScene3;
@@ -47,6 +53,7 @@ public class PassarFases : MonoBehaviour
         animMensagem10 = mensagem10.GetComponent<Animator>();
 
         player = GetComponent<Transform>();
+        vidaPersonagem = GetComponent<VidaPersonagem>();
         AtivarCapangas("CapangaAndar2", 2); // Ativar capangas do andar 2
     }
 
@@ -159,6 +166,8 @@ public class PassarFases : MonoBehaviour
         Debug.Log("Todos os capangas estão mortos do andar 3!");
         cutsceneSubiuParkour1.Play();
         tocouCutScene3 = true;
+        vidaPlayer.SetActive(false);
+        Super.SetActive(false);
         somNoti.Play();
         mensagem7.SetActive(true);
         yield return new WaitForSeconds(5);
@@ -170,6 +179,8 @@ public class PassarFases : MonoBehaviour
         Debug.Log("Todos os capangas estão mortos do andar 4!");
         cutsceneSubiuParkour2.Play();
         tocouCutScene4 = true;
+        vidaPlayer.SetActive(false);
+        Super.SetActive(false);
         somNoti.Play();
         mensagem10.SetActive(true);
         yield return new WaitForSeconds(5);
@@ -183,6 +194,9 @@ public class PassarFases : MonoBehaviour
         yield return new WaitForSeconds((float)cutsceneDesceuParkour1.duration);
         boolandar4 = true;
         boolandar3 = false;
+        vidaPersonagem.vidaAtual = 3;
+         vidaPlayer.SetActive(true);
+        Super.SetActive(true);
         AtivarCapangas("CapangaAndar4", 4); // Ativar capangas do andar 4
         somNoti.Play();
         mensagem8.SetActive(true);

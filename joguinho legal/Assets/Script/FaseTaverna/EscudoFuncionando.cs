@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EscudoFuncionando : MonoBehaviour
 {
-    private int contadorEscudo = 0;
+    public int contadorEscudo;
 
     [Header("Referencias")]
     public AudioSource somPegou;

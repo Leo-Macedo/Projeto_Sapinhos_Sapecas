@@ -58,7 +58,7 @@ public class SuperRonaldinho : MonoBehaviour
         }
 
         // Verifica se o super está pronto e a tecla "I" foi pressionada
-        if (isSuperReady && Input.GetKeyDown(KeyCode.I))
+        if (isSuperReady && Input.GetKeyDown(KeyCode.R))
         {
             ActivateSuper();
         }
