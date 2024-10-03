@@ -85,6 +85,9 @@ public class VerificarFaseCassino : MonoBehaviour
         vidaPersonagem2 = romarinho2.GetComponent<VidaPersonagem>();
         vidaPersonagem3 = romarinho3.GetComponent<VidaPersonagem>();
 
+        Cursor.lockState = CursorLockMode.Locked; // Trava o cursor no meio da tela
+        Cursor.visible = false; // Torna o cursor invisível
+
         DesativarMovimento();
         VerificarProgresso();
     }

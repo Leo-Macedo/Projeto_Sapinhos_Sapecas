@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class SalvarFases : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class SalvarFases : MonoBehaviour
     private const string PredioCompletadoKey = "PredioCompletado";
     private const string TavernaCompletadaKey = "TavernaCompletada";
     private const string CassinoCompletadoKey = "CassinoCompletado";
+    private const string TutorialCompletadoKey = "TutorialCompletado";
+
+    [Header("Tutorial")]
+    public GameObject paineltutorial;
+    public Animator fade;
 
     [Header("Objetos")]
     public GameObject cassino;
@@ -52,6 +58,8 @@ public class SalvarFases : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         VerificarProgresso();
     }
 
@@ -61,9 +69,17 @@ public class SalvarFases : MonoBehaviour
         // Resetar o estado dos objetos antes de verificar o progresso
         ResetarObjetos();
 
-        if (PlayerPrefs.GetInt(PredioCompletadoKey, 0) == 0)
+        if (
+            PlayerPrefs.GetInt(PredioCompletadoKey, 0) == 0
+            && PlayerPrefs.GetInt(TutorialCompletadoKey, 0) == 0
+        )
         {
             InicioJogo();
+            return;
+        }
+        if (PlayerPrefs.GetInt(TutorialCompletadoKey, 0) == 1)
+        {
+            Começar();
             return;
         }
 
@@ -114,6 +130,7 @@ public class SalvarFases : MonoBehaviour
     public void InicioJogo()
     {
         Invoke("PodeAndar", (float)cutsceneInicial.duration);
+        Invoke("Tutorial", (float)cutsceneInicial.duration);
         Debug.Log("Metodo chamado InicioJogo e não completou fases");
         martinha1.SetActive(true);
         GOCutsceneInicial.SetActive(true);
@@ -163,7 +180,7 @@ public class SalvarFases : MonoBehaviour
         martinha4.SetActive(true);
         telaTodos.SetActive(true);
         ronaldinhoAnda.SetActive(true);
-        ronaldinhoAtor.SetActive(false);        
+        ronaldinhoAtor.SetActive(false);
         GOCutsceneInicial.SetActive(false);
         freeLookCamera.Follow = ronaldinhoAnda.transform;
         freeLookCamera.LookAt = ronaldinhoAnda.transform;
@@ -174,5 +191,35 @@ public class SalvarFases : MonoBehaviour
         ronaldinhoAnda.SetActive(true);
         ronaldinhoAtor.SetActive(false);
         telaRonaldinho.SetActive(true);
+    }
+
+    public void Começar()
+    {
+        martinha1.SetActive(true);
+
+        PodeAndar();
+        PlayerPrefs.SetInt("TutorialCompletado", 2);
+    }
+
+    public void Tutorial()
+    {
+        paineltutorial.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0;
+    }
+
+    public void ChamarCorrotinaTutorial()
+    {
+        StartCoroutine(MudarFase());
+    }
+
+    public IEnumerator MudarFase()
+    {
+        Time.timeScale = 1;
+        fade.SetTrigger("fechar");
+        paineltutorial.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("Tutorial"); // Carrega a cena "Casarao"
     }
 }

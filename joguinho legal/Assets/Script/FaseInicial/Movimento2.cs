@@ -1,9 +1,11 @@
+using System.Collections;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Movimento2 : MonoBehaviour
-{
+{   
+    public Animator animatorFade;
     public AudioSource somPassos;
     public AudioClip[] audiosPassos;
      public AudioSource somIdle;
@@ -58,8 +60,7 @@ public class Movimento2 : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked; // Trava o cursor no meio da tela
-        Cursor.visible = false; // Torna o cursor invisível
+        
         velocidade = veloAndando; // Define a velocidade inicial como a de andar
         Carregar(id); // Carrega a posição do jogador ao iniciar
     }
@@ -196,9 +197,19 @@ public class Movimento2 : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("voltar")) // Verifica se o objeto colidido tem a tag "voltar"
-            SceneManager.LoadScene("CenaInicial"); // Carrega a cena inicial
+            {
+                StartCoroutine(Voltar());
+            }
     }
 
+    public IEnumerator Voltar()
+    {
+        veloAndando = 0;
+        veloCorrendo = 0;
+        animatorFade.SetTrigger("fechar");
+         yield return new WaitForSeconds(2f);
+         SceneManager.LoadScene("CenaInicial"); // Carrega a cena inicial
+    }
    
 
     public void SomPassos()

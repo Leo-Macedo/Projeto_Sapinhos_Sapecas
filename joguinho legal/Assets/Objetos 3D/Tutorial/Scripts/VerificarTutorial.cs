@@ -7,6 +7,7 @@ public class VerificarTutorial : MonoBehaviour
     public Animator animatorPlaca;
     public Animator animatorPortal;
     public CapangaSegueEMorre capangaSegueEMorre;
+    public GameObject sliderSuper;
     void Start()
     {
         
@@ -18,6 +19,7 @@ public class VerificarTutorial : MonoBehaviour
         {
             animatorPlaca.SetTrigger("subiu");
             animatorPortal.SetTrigger("subiu");
+            sliderSuper.SetActive(true);
         }
     }
 }

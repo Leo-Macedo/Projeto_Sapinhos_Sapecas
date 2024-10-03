@@ -82,6 +82,9 @@ public class VerificarFasesTaverna : MonoBehaviour
 
         veloAndandoInicial = movimento2.veloAndando;
         veloCorrendoInicial = movimento2.veloCorrendo;
+
+        Cursor.lockState = CursorLockMode.Locked; // Trava o cursor no meio da tela
+        Cursor.visible = false; // Torna o cursor invisível
         CarregarRound(); // Define a posição inicial do jogador ao iniciar
     }
 
