@@ -19,7 +19,7 @@ public class VerificarTutorial : MonoBehaviour
         {
             animatorPlaca.SetTrigger("subiu");
             animatorPortal.SetTrigger("subiu");
-            sliderSuper.SetActive(true);
+            sliderSuper.SetActive(false);
         }
     }
 }

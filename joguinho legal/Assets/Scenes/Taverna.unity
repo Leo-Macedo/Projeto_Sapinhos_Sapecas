@@ -5298,7 +5298,7 @@ MonoBehaviour:
   m_YAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 2.028764
+    m_MaxSpeed: 2.007212
     m_AccelTime: 0.2
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
@@ -5322,7 +5322,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 304.3146
+    m_MaxSpeed: 301.0818
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -11959,7 +11959,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291047978}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.046479568, y: 0.000000059604645, z: 0.000000014901161, w: 0.9989193}
+  m_LocalRotation: {x: 0.046479575, y: 0.00000008940697, z: 0.000000022351742, w: 0.9989193}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18559,12 +18559,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836821603}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42ca62358885679408bda47e37017b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distAtaque: 0
+  somSoco: {fileID: 1945426193}
 --- !u!114 &1836821608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19566,6 +19567,11 @@ PlayableDirector:
     value: {fileID: 707562300}
   m_ExposedReferences:
     m_References: []
+--- !u!82 &1945426193 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4291540362484596925, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+  m_PrefabInstance: {fileID: 1858089739732612766}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1951708649
 GameObject:
   m_ObjectHideFlags: 0

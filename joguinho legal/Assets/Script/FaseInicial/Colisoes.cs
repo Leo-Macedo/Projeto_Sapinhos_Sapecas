@@ -2,19 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class Colisoes : MonoBehaviour
 {
     [Header("Componentes")]
     public GameObject txtportatrancada; // Texto exibido quando a porta está trancada
     public PlayableDirector cutscene; // Diretor de cutscene para a animação
-    public Movimento2 script; // Referência ao script de movimento (não utilizado no código atual)
+    private Movimento2 movimento2;
+    public Animator animatorFade;
 
     void Start()
     {
-        // Inicializa o script (nenhuma ação necessária no momento)
+        movimento2 = GetComponent<Movimento2>();
     }
 
     void OnCollisionEnter(Collision other)
@@ -22,19 +23,15 @@ public class Colisoes : MonoBehaviour
         // Troca de cena com base na colisão
         if (other.gameObject.CompareTag("predio"))
         {
-            SceneManager.LoadScene("Predio"); // Carrega a cena "Predio"
+            StartCoroutine(TrocarCena("Predio"));
         }
         else if (other.gameObject.CompareTag("taverna"))
         {
-            SceneManager.LoadScene("Taverna"); // Carrega a cena "Taverna"
+            StartCoroutine(TrocarCena("Taverna"));
         }
         else if (other.gameObject.CompareTag("cassino"))
         {
-            SceneManager.LoadScene("Cassino"); // Carrega a cena "Cassino"
-        }
-        else if (other.gameObject.CompareTag("voltar"))
-        {
-            SceneManager.LoadScene("CenaInicial"); // Volta para a cena inicial
+            StartCoroutine(TrocarCena("Cassino"));
         }
         else if (other.gameObject.CompareTag("portatrancada"))
         {
@@ -57,5 +54,14 @@ public class Colisoes : MonoBehaviour
     void MudarFase()
     {
         SceneManager.LoadScene("Casarao"); // Carrega a cena "Casarao"
+    }
+
+    public IEnumerator TrocarCena(string nomeCena)
+    {
+        movimento2.veloAndando = 0;
+        movimento2.veloCorrendo = 0;
+        animatorFade.SetTrigger("fechar");
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(nomeCena);
     }
 }

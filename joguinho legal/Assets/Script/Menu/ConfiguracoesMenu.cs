@@ -1,11 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class MenuController : MonoBehaviour
 {
+    public Animator animatorFade;
     public CanvasGroup telaInicialCanvasGroup;
     public CanvasGroup telaPrincipalCanvasGroup;
     public CanvasGroup telaConfiguracoesCanvasGroup;
@@ -98,15 +99,18 @@ public class MenuController : MonoBehaviour
         TrocarTela(telaPrincipalCanvasGroup);
     }
 
-    public void ResetPlayerPrefs()
+    public void IniciarJogo()
+    {
+        StartCoroutine(TrocarCena());
+    }
+
+    public IEnumerator TrocarCena()
     {
         PlayerPrefs.DeleteAll();
-        SceneManager.LoadScene("CenaInicial");
+
         Debug.Log("PlayerPrefs resetado no Build.");
+        animatorFade.SetTrigger("fechar");
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("CenaInicial");
     }
 }
-
-
-    
-    
-

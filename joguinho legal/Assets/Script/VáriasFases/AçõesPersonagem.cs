@@ -11,6 +11,7 @@ public class AçõesPersonagem : MonoBehaviour
     private bool podeMatarCapanga = false;
     public float distAtaque = 1f; // Distância máxima para atacar o capanga
     private bool cursorAtivo = false;
+    public AudioSource somSoco;
 
     void Start()
     {
@@ -23,15 +24,17 @@ public class AçõesPersonagem : MonoBehaviour
 
     void Update()
     {
-       HabilitarCursor();
+      
         // Entrada do jogador para ações
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            somSoco.Play();
             animator.SetTrigger("soco");
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            somSoco.Play();
             animator.SetTrigger("chute");
         }
 
@@ -46,15 +49,7 @@ public class AçõesPersonagem : MonoBehaviour
         }
     }
 
-    private void HabilitarCursor()
-    {
-         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            cursorAtivo = !cursorAtivo; // Alterna o estado do cursor
-            Cursor.lockState = cursorAtivo ? CursorLockMode.None : CursorLockMode.Locked;
-            Cursor.visible = cursorAtivo;
-        }
-    }
+   
 
     void IniciarDesvio()
     {
