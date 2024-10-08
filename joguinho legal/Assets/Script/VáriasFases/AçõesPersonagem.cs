@@ -10,7 +10,7 @@ public class AçõesPersonagem : MonoBehaviour
     private CapangaSegueEMorre capangaSegueEMorre;
     private bool podeMatarCapanga = false;
     public float distAtaque = 1f; // Distância máxima para atacar o capanga
-    private bool cursorAtivo = false;
+    
     public AudioSource somSoco;
 
     void Start()

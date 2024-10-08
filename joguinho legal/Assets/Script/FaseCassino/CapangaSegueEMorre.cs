@@ -180,10 +180,7 @@ public class CapangaSegueEMorre : MonoBehaviour
         Invoke("Resetou", 2);
         somDor.Play();
 
-        if (vidaPersonagem.vidaAtual <= 0)
-        {
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-        }
+        
     }
 
     // Lógica quando o vilão morre

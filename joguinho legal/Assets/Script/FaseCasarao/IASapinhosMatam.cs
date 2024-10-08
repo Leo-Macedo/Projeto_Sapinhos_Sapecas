@@ -29,6 +29,8 @@ public class IASapinhosMatam : MonoBehaviour
     {
         Seguiranimar();
         AtacarOCapanga();
+        AtualizarListaCapangas();   // Atualiza a lista de capangas a cada quadro
+        VerificarCapangasMortos(); // Verifica se todos os capangas estão mortos
     }
 
     private void Seguiranimar()
@@ -36,16 +38,7 @@ public class IASapinhosMatam : MonoBehaviour
         if (alvoAtual != null)
         {
             navMeshAgent.SetDestination(alvoAtual.position);
-
-            // Animações de andar e parar
-            if (navMeshAgent.velocity != Vector3.zero)
-            {
-                animator.SetBool("andando", true);
-            }
-            else
-            {
-                animator.SetBool("andando", false);
-            }
+            animator.SetBool("correndo", navMeshAgent.velocity != Vector3.zero);
         }
     }
 
@@ -53,30 +46,62 @@ public class IASapinhosMatam : MonoBehaviour
     {
         if (alvoAtual != null)
         {
-            // Atacar o capanga
             float distancia = Vector3.Distance(transform.position, alvoAtual.position);
             if (distancia <= distAtaque)
             {
-                if (podeatacar)
+                CapangaSegueEMorre capangaScript = alvoAtual.GetComponent<CapangaSegueEMorre>();
+                if (capangaScript != null && !capangaScript.morreu)
                 {
-                    podeatacar = false;
-                    animator.SetBool("soco", true);
-
-                    Animator animatorCapanga = alvoAtual.GetComponent<Animator>();
-                    NavMeshAgent navMeshAgentCapanga = alvoAtual.GetComponent<NavMeshAgent>();
-
-                    animatorCapanga.SetBool("nocaute", true);
-                    navMeshAgentCapanga.speed = 0f;
-                    navMeshAgentCapanga.isStopped = true;
-
-                    // Remove o capanga nocauteado da lista e seleciona um novo alvo
-                    RemoveCapanga(alvoAtual);
-                    Invoke("SelecionarAlvo", 0.1f); // Chama SelecionarAlvo depois de um curto intervalo
-
-                    Invoke("PodeAtacar", 1);
-                    Invoke("NãoPodeAtacar", 1);
+                    if (podeatacar)
+                    {
+                        podeatacar = false;
+                        animator.SetBool("soco", true);
+                        capangaScript.ReceberDanoCapanga(1);
+                        Invoke("VerificarCapangaMorto", 0.1f);
+                        Invoke("PodeAtacar", 1);
+                        Invoke("NãoPodeAtacar", 1);
+                    }
                 }
             }
+        }
+        else
+        {
+            SelecionarAlvo(); // Seleciona um novo alvo se não houver alvo atual
+        }
+    }
+
+    private void VerificarCapangaMorto()
+    {
+        if (alvoAtual != null)
+        {
+            CapangaSegueEMorre capangaScript = alvoAtual.GetComponent<CapangaSegueEMorre>();
+            if (capangaScript != null && capangaScript.morreu)
+            {
+                RemoveCapanga(alvoAtual);
+                SelecionarAlvo(); // Seleciona um novo alvo
+            }
+        }
+    }
+
+    private void VerificarCapangasMortos()
+    {
+        bool todosMortos = true;
+
+        foreach (Transform capanga in capangas)
+        {
+            CapangaSegueEMorre capangaScript = capanga.GetComponent<CapangaSegueEMorre>();
+            if (capangaScript != null && !capangaScript.morreu)
+            {
+                todosMortos = false;
+                break; // Não precisamos continuar se encontramos um capanga vivo
+            }
+        }
+
+        if (todosMortos)
+        {
+            navMeshAgent.isStopped = true;
+            animator.SetBool("correndo", false);
+            Debug.Log("Todos os capangas estão mortos. NPC parou.");
         }
     }
 
@@ -106,12 +131,15 @@ public class IASapinhosMatam : MonoBehaviour
 
             foreach (Transform capangaTransform in capangas)
             {
-                float distance = Vector3.Distance(transform.position, capangaTransform.position);
-
-                if (distance < minDistance)
+                CapangaSegueEMorre capangaScript = capangaTransform.GetComponent<CapangaSegueEMorre>();
+                if (capangaScript != null && !capangaScript.morreu)
                 {
-                    minDistance = distance;
-                    closestCapanga = capangaTransform;
+                    float distance = Vector3.Distance(transform.position, capangaTransform.position);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        closestCapanga = capangaTransform;
+                    }
                 }
             }
 

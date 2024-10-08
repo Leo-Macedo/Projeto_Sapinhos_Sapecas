@@ -77,7 +77,7 @@ public class VilaoSeguePlayer : MonoBehaviour
     private void IniciarInvestidaNovamente()
     {
         rb.constraints = RigidbodyConstraints.None;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
         Debug.Log("Investida retomada.");
         rb.WakeUp();
         isCharging = false;
