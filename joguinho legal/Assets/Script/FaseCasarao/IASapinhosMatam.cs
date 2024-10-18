@@ -11,6 +11,7 @@ public class IASapinhosMatam : MonoBehaviour
 
     public float distAtaque;
     public bool podeatacar = true;
+    public GameObject porta;
 
     private Transform alvoAtual; // Capanga que o NPC está seguindo
     private List<Transform> capangas = new List<Transform>(); // Lista de capangas
@@ -102,6 +103,8 @@ public class IASapinhosMatam : MonoBehaviour
             navMeshAgent.isStopped = true;
             animator.SetBool("correndo", false);
             Debug.Log("Todos os capangas estão mortos. NPC parou.");
+            porta.SetActive(true);
+
         }
     }
 
