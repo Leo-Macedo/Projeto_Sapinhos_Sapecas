@@ -20,6 +20,7 @@ public class Senha : MonoBehaviour
     public GameObject painelsenha; // Painel da senha
     public GameObject cliqueaqui; // Mensagem para interagir com a senha
     public GameObject porta; // Porta a ser desbloqueada
+    public Animator animatoPorta;
 
     void Start()
     {
@@ -53,6 +54,7 @@ public class Senha : MonoBehaviour
             senhainserida = ""; // Limpa a senha inserida
             telasenha.text = senhainserida; // Atualiza o texto da senha
             porta.SetActive(true); // Ativa a porta
+            animatoPorta.SetTrigger("abrir");
         }
         else
         {

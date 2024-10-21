@@ -36,13 +36,12 @@ public class Colisoes : MonoBehaviour
         else if (other.gameObject.CompareTag("portatrancada"))
         {
             txtportatrancada.SetActive(true); // Exibe o texto de porta trancada
-            Invoke("DesativarTxt", 2); // Desativa o texto após 2 segundos
+            Invoke("DesativarTxt", 3); // Desativa o texto após 2 segundos
         }
         else if (other.gameObject.CompareTag("portafundo"))
         {
-            MudarFase();
-            //cutscene.Play(); // Inicia a cutscene
-            //Invoke("MudarFase", (float)cutscene.duration); // Troca de cena após o fim da cutscene
+            cutscene.Play(); // Inicia a cutscene
+            Invoke("MudarFase", (float)cutscene.duration); // Troca de cena após o fim da cutscene
         }
     }
 

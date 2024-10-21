@@ -8,6 +8,17 @@ public class AnimarSapos : MonoBehaviour
     private Vector3 ultimaPosicao; // Posição anterior do objeto
     private Vector3 movimento; // Movimento detectado do objeto
 
+    [SerializeField]
+    private float groundCheckSize; // Tamanho da esfera de verificação de chão
+
+    [SerializeField]
+    private Vector3 groundCheckPosition; // Posição relativa da verificação de chão
+
+    public bool isGrounded; // Indica se o personagem está no chão
+
+    [SerializeField]
+    private LayerMask layermask; // Máscara de camada para detectar o chão
+
     void Start()
     {
         ultimaPosicao = transform.position; // Inicializa a última posição com a posição atual
@@ -17,7 +28,21 @@ public class AnimarSapos : MonoBehaviour
     void Update()
     {
         AnimacaoEAndando(); // Atualiza a animação com base no movimento
-        farpar(); // Verifica se a tecla para "farpar" foi pressionada
+        // Obtém a escala atual do objeto
+        Vector3 escalaAtual = transform.localScale;
+
+        // Calcula o tamanho e a posição da verificação de chão com base na escala do objeto
+        float tamanhoVerificado =
+            groundCheckSize * Mathf.Max(escalaAtual.x, escalaAtual.y, escalaAtual.z);
+        Vector3 posicaoVerificada = Vector3.Scale(groundCheckPosition, escalaAtual);
+        // Realiza a verificação de chão com os valores escalados
+        var groundcheck = Physics.OverlapSphere(
+            transform.position + posicaoVerificada,
+            tamanhoVerificado,
+            layermask
+        );
+        isGrounded = groundcheck.Length != 0;
+        animator.SetBool("pulo", !isGrounded);
     }
 
     private void AnimacaoEAndando()
@@ -37,12 +62,17 @@ public class AnimarSapos : MonoBehaviour
         }
     }
 
-    public void farpar()
+    private void OnDrawGizmos()
     {
-        // Verifica se a tecla E foi pressionada e aciona a animação de "farpar"
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            animator.SetTrigger("emote1"); // Aciona o gatilho "emote1" para a animação
-        }
+        // Obtém a escala atual do objeto
+        Vector3 escalaAtual = transform.localScale;
+
+        // Calcula o tamanho e a posição da verificação de chão com base na escala do objeto
+        float tamanhoVerificado =
+            groundCheckSize * Mathf.Max(escalaAtual.x, escalaAtual.y, escalaAtual.z);
+        Vector3 posicaoVerificada = Vector3.Scale(groundCheckPosition, escalaAtual);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + posicaoVerificada, tamanhoVerificado);
     }
 }
