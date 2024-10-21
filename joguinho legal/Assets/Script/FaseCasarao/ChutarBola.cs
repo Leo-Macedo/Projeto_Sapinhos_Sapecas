@@ -60,38 +60,10 @@ public class ChutarBola : MonoBehaviour
                 {
                     Vector3 direcaoChute = (bombaMaisProxima.transform.position - transform.position).normalized;
                     rb.AddForce(direcaoChute * forcaChute, ForceMode.Impulse);
-                    StartCoroutine(MudarCameraParaPlayer());
                 }
             }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("bomba"))
-        {
-            StartCoroutine(MudarCameraParaVilao());
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("bomba"))
-        {
-            StartCoroutine(MudarCameraParaPlayer());
-        }
-    }
-
-    private IEnumerator MudarCameraParaVilao()
-    {
-        cinemachineCamera.LookAt = vilao; // Muda o follow para o vilão
-        yield return new WaitForSeconds(0.1f); // Espera 0.1 segundos
-        cinemachineCamera.enabled = true; // Muda o follow de volta para o jogador
-    }
-
-    private IEnumerator MudarCameraParaPlayer()
-    {
-        cinemachineCamera.LookAt = jogador; // Muda o follow para o vilão
-        yield return new WaitForSeconds(0.1f); // Espera 0.1 segundos
-        cinemachineCamera.enabled = true; // Muda o follow de volta para o jogador
-    }
+   
 }
