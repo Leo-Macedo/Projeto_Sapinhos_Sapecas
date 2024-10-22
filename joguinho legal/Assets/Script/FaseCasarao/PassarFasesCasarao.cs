@@ -30,9 +30,18 @@ public class PassarFasesCasarao : MonoBehaviour
     {
         if (other.gameObject.CompareTag("portaporao"))
         {
-            StartCoroutine(VerificarFasesCasarao.PassouFase());
+            if (VerificarFasesCasarao != null)
+            {
+                StartCoroutine(VerificarFasesCasarao.PassouFase());
+            }
         }
-        if (other.gameObject.CompareTag("porta")) { }
+        if (other.gameObject.CompareTag("parede"))
+        {
+            if (VerificarFasesCasarao != null)
+            {
+                StartCoroutine(VerificarFasesCasarao.PassouFasePorao());
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,8 +50,16 @@ public class PassarFasesCasarao : MonoBehaviour
         {
             if (completouSenha)
             {
-                som.Play();
-                DebugChave.SetActive(true);
+                if (som != null)
+                {
+                    som.Play();
+                }
+
+                if (DebugChave != null)
+                {
+                    DebugChave.SetActive(true);
+                }
+
                 estaComChave = true;
                 Destroy(other.gameObject);
             }
@@ -73,25 +90,42 @@ public class PassarFasesCasarao : MonoBehaviour
 
     public IEnumerator ColidiuPorta()
     {
-        if (!estaComChave)
+        if (debugPorta != null && debugPortaobj != null)
         {
-            debugPorta.text = "Ache a chave para entrar";
+            if (!estaComChave)
+            {
+                debugPorta.text = "Ache a chave para entrar";
+            }
+            else if (estaComChave)
+            {
+                debugPorta.text = "Clique 'F' para abrir";
+            }
+
+            debugPortaobj.SetActive(true);
+            yield return new WaitForSeconds(3f);
+            debugPortaobj.SetActive(false);
         }
-        else if (estaComChave)
-        {
-            debugPorta.text = "Clique 'F' para abrir";
-        }
-        debugPortaobj.SetActive(true);
-        yield return new WaitForSeconds(3f);
-        debugPortaobj.SetActive(false);
     }
 
     public IEnumerator AbrirPorta()
     {
-        somChave.Play();
+        if (somChave != null)
+        {
+            somChave.Play();
+        }
+
         yield return new WaitForSeconds(1);
-        porta.SetActive(true); // Ativa a porta
-        animatoPorta.SetTrigger("abrir");
+
+        if (porta != null)
+        {
+            porta.SetActive(true); // Ativa a porta
+        }
+
+        if (animatoPorta != null)
+        {
+            animatoPorta.SetTrigger("abrir");
+        }
+
         abriu = true;
     }
 }

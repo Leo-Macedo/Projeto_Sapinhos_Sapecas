@@ -4,44 +4,45 @@ using UnityEngine;
 
 public class BolaNoGol : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private InstanciadorDeBolas instanciador;
+     // Referência ao script de instanciamento
+
     void Start()
     {
-        
+        instanciador = GameObject.FindWithTag("instanciador").GetComponent<InstanciadorDeBolas>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // Verifica a colisão com diferentes objetos para destruir a bola e permitir nova instância
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("gol"))
+        if (other.gameObject.CompareTag("gol"))
         {
+            instanciador.SomarGols();
             Debug.Log("GOOOOOLLLLL");
             Destroy(gameObject);
+            instanciador.podeInstanciar = true; // Permite instanciar uma nova bola
         }
-        
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("naogol"))
         {
-            Debug.Log("pra fora");
+            Debug.Log("Pra fora!");
             Destroy(gameObject);
+            instanciador.podeInstanciar = true; // Permite instanciar uma nova bola
         }
-        if (other.gameObject.CompareTag("trave"))
+        else if (other.gameObject.CompareTag("trave"))
         {
-            Debug.Log("na trave");
+            Debug.Log("Na trave!");
             Destroy(gameObject);
+            instanciador.podeInstanciar = true; // Permite instanciar uma nova bola
         }
-        if (other.gameObject.CompareTag("goleiro"))
+        else if (other.gameObject.CompareTag("goleiro"))
         {
-            Debug.Log("defendeu goleiro");
+            Debug.Log("Defendeu goleiro!");
             Destroy(gameObject);
+            instanciador.podeInstanciar = true; // Permite instanciar uma nova bola
         }
     }
 }

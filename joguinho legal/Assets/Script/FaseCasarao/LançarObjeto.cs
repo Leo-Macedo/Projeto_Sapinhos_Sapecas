@@ -8,32 +8,60 @@ public class LançarObjeto : MonoBehaviour
     public Transform spawnPoint; // Ponto onde a caixa irá aparecer
     public float throwForce = 10f; // Força do lançamento
     public float rotationSpeed = 5f; // Velocidade de rotação
-    private Animator animator; // Referência ao Animator
+    public float moveSpeed = 3f; // Velocidade de movimentação do NPC
+    public List<Transform> waypoints; // Lista de waypoints
     private GameObject caixa; // Referência à caixa atual
     private Transform player; // Referência ao transform do jogador
+    private Animator animator; // Referência ao Animator
 
     void Start()
     {
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform; // Obtém a posição do jogador
-        StartCoroutine(LançarCaixaPeriodicamente()); // Inicia a rotina de lançamento
+        StartCoroutine(MoverEntreWaypoints()); // Inicia a rotina de mover e lançar caixas
+    }
+
+    private IEnumerator MoverEntreWaypoints()
+    {
+        while (true) // Loop infinito
+        {
+            if (waypoints.Count == 0) yield break; // Se não houver waypoints, saia do loop
+
+            // Escolhe um waypoint aleatório
+            int randomIndex = Random.Range(0, waypoints.Count);
+            Transform targetWaypoint = waypoints[randomIndex];
+
+            // Move o NPC até o waypoint
+            while (Vector3.Distance(transform.position, targetWaypoint.position) > 0.1f)
+            {
+                // Move o NPC em direção ao waypoint
+                Vector3 direcao = (targetWaypoint.position - transform.position).normalized;
+                transform.position += direcao * moveSpeed * Time.deltaTime;
+
+                // Rotaciona suavemente em direção ao waypoint
+                Quaternion lookRotation = Quaternion.LookRotation(direcao);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
+                yield return null; // Espera um frame
+            }
+
+            // Chegou ao waypoint, lança o objeto
+            yield return StartCoroutine(LançarCaixaPeriodicamente());
+
+            // Espera 5 segundos após lançar a caixa
+            yield return new WaitForSeconds(5f);
+        }
     }
 
     private IEnumerator LançarCaixaPeriodicamente()
     {
-        while (true) // Loop infinito
+        if (caixa == null) // Verifica se não há uma caixa sendo lançada
         {
-            if (caixa == null) // Verifica se não há uma caixa sendo lançada
-            {
-                // Ativa a animação de lançar
-                animator.SetTrigger("lançar");
+            // Ativa a animação de lançar
+            animator.SetTrigger("lançar");
 
-                // Inicia a rotação enquanto a animação estiver em execução
-                yield return StartCoroutine(RotacionarDuranteAnimacao());
-
-                
-            }
-            yield return new WaitForSeconds(2f); // Espera 3 segundos antes de repetir
+            // Inicia a rotação enquanto a animação estiver em execução
+            yield return StartCoroutine(RotacionarDuranteAnimacao());
         }
     }
 

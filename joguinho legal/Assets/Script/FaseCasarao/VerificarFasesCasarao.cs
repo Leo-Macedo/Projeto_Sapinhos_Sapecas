@@ -1,6 +1,6 @@
-using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class VerificarFasesCasarao : MonoBehaviour
@@ -9,35 +9,75 @@ public class VerificarFasesCasarao : MonoBehaviour
     public CinemachineFreeLook freeLookCamera;
     public GameObject rivaldo;
     public GameObject romario;
+    public GameObject ronaldo;
     public GameObject[] canvas;
-    void Start()
-    {
-        
-    }
+    public Transform waiPoint;
 
-    void Update()
-    {
-        
-    }
+    void Start() { }
+
+    void Update() { }
 
     public IEnumerator PassouFase()
     {
-        animatorFade.SetTrigger("fechar");
+        if (animatorFade != null)
+        {
+            animatorFade.SetTrigger("fechar");
+        }
+
         yield return new WaitForSeconds(2);
-       
-        canvas[0].SetActive(false);
-        canvas[1].SetActive(true);
-        
-        rivaldo.SetActive(true);
-        freeLookCamera.Follow = rivaldo.transform;
-        freeLookCamera.LookAt = rivaldo.transform;
+
+        if (canvas != null && canvas.Length > 1)
+        {
+            if (canvas[0] != null) canvas[0].SetActive(false);
+            if (canvas[1] != null) canvas[1].SetActive(true);
+        }
+
+        if (rivaldo != null)
+        {
+            rivaldo.SetActive(true);
+        }
+
+        if (freeLookCamera != null && rivaldo != null)
+        {
+            freeLookCamera.Follow = rivaldo.transform;
+            freeLookCamera.LookAt = rivaldo.transform;
+        }
+
         yield return new WaitForSeconds(1f);
-        
-        animatorFade.SetTrigger("abrir");
+
+        if (animatorFade != null)
+        {
+            animatorFade.SetTrigger("abrir");
+        }
+
         Debug.Log("funcionouuuuuuuuuuuuuuuuuuuuuuu");
-        romario.SetActive(false);
 
+        if (romario != null)
+        {
+            romario.SetActive(false);
+        }
+    }
 
+    public IEnumerator PassouFasePorao()
+    {
+        if (animatorFade != null)
+        {
+            animatorFade.SetTrigger("fechar");
+        }
 
+        yield return new WaitForSeconds(2);
+
+        if (ronaldo != null && waiPoint != null)
+        {
+            ronaldo.transform.position = waiPoint.position;
+            ronaldo.transform.rotation = waiPoint.rotation;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (animatorFade != null)
+        {
+            animatorFade.SetTrigger("abrir");
+        }
     }
 }
