@@ -72,6 +72,13 @@ public class PassarFasesCasarao : MonoBehaviour
                 StartCoroutine(ColidiuPorta());
             }
         }
+
+         if (other.gameObject.CompareTag("cabeca"))
+        {
+             
+                StartCoroutine(VerificarFasesCasarao.TrocarCena());
+            
+        } 
     }
 
     private void OnTriggerStay(Collider other)
@@ -128,4 +135,5 @@ public class PassarFasesCasarao : MonoBehaviour
 
         abriu = true;
     }
+
 }

@@ -7373,7 +7373,7 @@ GameObject:
   - component: {fileID: 920203100}
   m_Layer: 0
   m_Name: porta funda
-  m_TagString: porta
+  m_TagString: cabeca
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7393,7 +7393,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -13022,9 +13022,11 @@ MonoBehaviour:
   freeLookCamera: {fileID: 1494379368}
   rivaldo: {fileID: 178145188}
   romario: {fileID: 315435495}
+  ronaldo: {fileID: 0}
   canvas:
   - {fileID: 1901604706}
   - {fileID: 1295103744}
+  waiPoint: {fileID: 0}
 --- !u!1 &1790978667
 GameObject:
   m_ObjectHideFlags: 0
@@ -15070,7 +15072,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 0.040872574, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.019000754, b: 0, a: 1}
   m_Intensity: 0
   m_Range: 25.3
   m_SpotAngle: 30

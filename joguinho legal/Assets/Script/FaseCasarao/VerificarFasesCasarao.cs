@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VerificarFasesCasarao : MonoBehaviour
 {
@@ -80,4 +81,18 @@ public class VerificarFasesCasarao : MonoBehaviour
             animatorFade.SetTrigger("abrir");
         }
     }
+     public IEnumerator TrocarCena()
+    {
+        if (animatorFade != null)
+        {
+            animatorFade.SetTrigger("fechar");
+        }
+
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("Casarao2"); 
+
+
+
+
+    } 
 }
