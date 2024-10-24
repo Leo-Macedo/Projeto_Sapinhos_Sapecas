@@ -8,52 +8,48 @@ public class Movimento2 : MonoBehaviour
     public Animator animatorFade;
     public AudioSource somPassos;
     public AudioClip[] audiosPassos;
-     public AudioSource somIdle;
+    public AudioSource somIdle;
     public AudioClip[] audiosIdle;
 
-    // Movimentar Personagem
     [SerializeField]
-    public float velocidade; // Velocidade atual do personagem
-
-    [SerializeField]
-    public float veloAndando; // Velocidade ao andar
+    public float velocidade;
 
     [SerializeField]
-    public float veloCorrendo; // Velocidade ao correr
-    private Animator anim; // Referência ao Animator para controle de animações
-
-    private float inputX; // Entrada do eixo horizontal (A/D ou setas esquerda/direita)
-    private float inputZ; // Entrada do eixo vertical (W/S ou setas cima/baixo)
-    private Vector3 direcao; // Direção de movimento
-
-    // Pular e verificar colisão com chão
-    [SerializeField]
-    private float forcaPulo = 10f; // Força do pulo
-    private Rigidbody rb; // Referência ao Rigidbody para física
+    public float veloAndando;
 
     [SerializeField]
-    private LayerMask layermask; // Máscara de camada para detectar o chão
+    public float veloCorrendo;
+    private Animator anim;
+
+    private float inputX;
+    private float inputZ;
+    private Vector3 direcao;
 
     [SerializeField]
-    private float groundCheckSize; // Tamanho da esfera de verificação de chão
+    private float forcaPulo = 10f;
+    private Rigidbody rb;
 
     [SerializeField]
-    private Vector3 groundCheckPosition; // Posição relativa da verificação de chão
+    private LayerMask layermask;
 
-    public bool isGrounded; // Indica se o personagem está no chão
-
-    // Referência para a câmera
     [SerializeField]
-    private CinemachineFreeLook cinemachineCamera; // Câmera do Cinemachine
+    private float groundCheckSize;
 
-    // Id do banco de dados
     [SerializeField]
-    private int id; // Identificador usado para operações de banco de dados
+    private Vector3 groundCheckPosition;
+
+    public bool isGrounded;
+
+    [SerializeField]
+    private CinemachineFreeLook cinemachineCamera;
+
+    [SerializeField]
+    private int id;
 
     private void Awake()
     {
-        BancoDeDados bancoDeDados = new BancoDeDados(); // Instancia o banco de dados
-        bancoDeDados.CriarBanco(); // Cria o banco de dados
+        BancoDeDados bancoDeDados = new BancoDeDados();
+        bancoDeDados.CriarBanco();
     }
 
     void Start()
@@ -61,102 +57,100 @@ public class Movimento2 : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         
-        velocidade = veloAndando; // Define a velocidade inicial como a de andar
-        Carregar(id); // Carrega a posição do jogador ao iniciar
+        velocidade = veloAndando;
+        Carregar(id);
     }
 
     void Update()
     {
-        HandleMovement(); // Lida com a movimentação do personagem
-        HandleActions(); // Lida com as ações do personagem (e.g., farpar)
-        HandleSavingAndDeleting(); // Lida com salvar e deletar
+        HandleMovement();
+        HandleActions();
+        HandleSavingAndDeleting();
     }
 
     private void HandleMovement()
     {
-        Andar(); // Controla a movimentação ao andar
-        Correr(); // Controla a movimentação ao correr
-        Pular(); // Controla o pulo
+        Andar();
+        Correr();
+        Pular();
     }
 
     private void HandleActions()
     {
-        Farpar(); // Controla a ação de farpar (emote)
+        Farpar();
     }
 
     private void HandleSavingAndDeleting()
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            Salvar(id); // Salva a posição do jogador
-            Debug.Log("Salvou"); // Mensagem de debug
+            Salvar(id);
+            Debug.Log("Salvou");
         }
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            Deletar(id); // Deleta os dados do jogador
-            Debug.Log("Deletou"); // Mensagem de debug
+            Deletar(id);
+            Debug.Log("Deletou");
         }
     }
 
     private void Andar()
     {
-        inputX = Input.GetAxis("Horizontal"); // Obtém a entrada horizontal
-        inputZ = Input.GetAxis("Vertical"); // Obtém a entrada vertical
+        inputX = Input.GetAxis("Horizontal");
+        inputZ = Input.GetAxis("Vertical");
 
-        Vector3 forward = cinemachineCamera.transform.forward; // Direção para frente da câmera
-        forward.y = 0; // Ignora o eixo Y para manter o movimento horizontal
-        forward.Normalize(); // Normaliza a direção
+        Vector3 forward = cinemachineCamera.transform.forward;
+        forward.y = 0;
+        forward.Normalize();
 
-        Vector3 right = cinemachineCamera.transform.right; // Direção para a direita da câmera
-        right.y = 0; // Ignora o eixo Y
-        right.Normalize(); // Normaliza a direção
+        Vector3 right = cinemachineCamera.transform.right;
+        right.y = 0;
+        right.Normalize();
 
-        direcao = (forward * inputZ + right * inputX).normalized; // Calcula a direção desejada
+        direcao = (forward * inputZ + right * inputX).normalized;
 
-        if (direcao.magnitude >= 0.1f) // Verifica se há movimento significativo
+        if (direcao.magnitude >= 0.1f)
         {
-            transform.Translate(direcao * velocidade * Time.deltaTime, Space.World); // Move o personagem
-            anim.SetBool("andando", true); // Ativa a animação de andar
+            transform.Translate(direcao * velocidade * Time.deltaTime, Space.World);
+            anim.SetBool("andando", true);
 
-            Quaternion toRotation = Quaternion.LookRotation(direcao, Vector3.up); // Calcula a rotação desejada
+            Quaternion toRotation = Quaternion.LookRotation(direcao, Vector3.up);
             transform.rotation = Quaternion.Lerp(
                 transform.rotation,
                 toRotation,
                 5 * Time.deltaTime
-            ); // Rotaciona suavemente
+            );
         }
         else
         {
-            anim.SetBool("andando", false); // Desativa a animação de andar se não houver movimento
+            anim.SetBool("andando", false);
         }
     }
 
     private void Correr()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && direcao != Vector3.zero) // Verifica se a tecla Shift está pressionada
+        if (Input.GetKeyDown(KeyCode.LeftShift) && direcao != Vector3.zero)
         {
-            velocidade = veloCorrendo; // Define a velocidade de correr
-            anim.SetBool("correndo", true); // Ativa a animação de correr
-            anim.SetBool("andando", false); // Desativa a animação de andar
+            velocidade = veloCorrendo;
+            anim.SetBool("correndo", true);
+            anim.SetBool("andando", false);
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift) || direcao == Vector3.zero) // Verifica se a tecla Shift foi solta ou não há movimento
+        if (Input.GetKeyUp(KeyCode.LeftShift) || direcao == Vector3.zero)
         {
-            velocidade = veloAndando; // Define a velocidade de andar
-            anim.SetBool("correndo", false); // Desativa a animação de correr
+            velocidade = veloAndando;
+            anim.SetBool("correndo", false);
         }
     }
 
     public void Pular(float multiplicador = 1f)
     {
-        // Obtém a escala atual do objeto
         Vector3 escalaAtual = transform.localScale;
 
-        // Calcula o tamanho e a posição da verificação de chão com base na escala do objeto
         float tamanhoVerificado =
             groundCheckSize * Mathf.Max(escalaAtual.x, escalaAtual.y, escalaAtual.z);
         Vector3 posicaoVerificada = Vector3.Scale(groundCheckPosition, escalaAtual);
-        // Realiza a verificação de chão com os valores escalados
+        
         var groundcheck = Physics.OverlapSphere(
             transform.position + posicaoVerificada,
             tamanhoVerificado,
@@ -174,18 +168,16 @@ public class Movimento2 : MonoBehaviour
 
     private void Farpar()
     {
-        if (Input.GetKeyDown(KeyCode.T)) // Verifica se a tecla E foi pressionada
+        if (Input.GetKeyDown(KeyCode.T))
         {
-            anim.SetTrigger("emote1"); // Ativa o trigger para a animação de farpar
+            anim.SetTrigger("emote1");
         }
     }
 
     private void OnDrawGizmos()
     {
-        // Obtém a escala atual do objeto
         Vector3 escalaAtual = transform.localScale;
 
-        // Calcula o tamanho e a posição da verificação de chão com base na escala do objeto
         float tamanhoVerificado =
             groundCheckSize * Mathf.Max(escalaAtual.x, escalaAtual.y, escalaAtual.z);
         Vector3 posicaoVerificada = Vector3.Scale(groundCheckPosition, escalaAtual);
@@ -196,10 +188,10 @@ public class Movimento2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("voltar")) // Verifica se o objeto colidido tem a tag "voltar"
-            {
-                StartCoroutine(Voltar());
-            }
+        if (other.gameObject.CompareTag("voltar"))
+        {
+            StartCoroutine(Voltar());
+        }
     }
 
     public IEnumerator Voltar()
@@ -207,54 +199,53 @@ public class Movimento2 : MonoBehaviour
         veloAndando = 0;
         veloCorrendo = 0;
         animatorFade.SetTrigger("fechar");
-         yield return new WaitForSeconds(2f);
-         SceneManager.LoadScene("CenaInicial"); // Carrega a cena inicial
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("CenaInicial");
     }
-   
 
     public void SomPassos()
     {
-        somPassos.PlayOneShot(audiosPassos[Random.Range(0,audiosPassos.Length)]);
+        somPassos.PlayOneShot(audiosPassos[Random.Range(0, audiosPassos.Length)]);
     }
 
     public void SomIdle()
     {
-        somIdle.PlayOneShot(audiosIdle[Random.Range(0,audiosIdle.Length)]);
+        somIdle.PlayOneShot(audiosIdle[Random.Range(0, audiosIdle.Length)]);
     }
 
     private void Salvar(int id)
     {
-        BancoDeDados bancoDeDados = new BancoDeDados(); // Instancia o banco de dados
+        BancoDeDados bancoDeDados = new BancoDeDados();
         bancoDeDados.InserirPosicao(
             id,
             transform.position.x,
             transform.position.y,
             transform.position.z
-        ); // Salva a posição
+        );
     }
 
     private void Deletar(int id)
     {
-        BancoDeDados bancoDeDados = new BancoDeDados(); // Instancia o banco de dados
-        bancoDeDados.NovoJogo(); // Deleta os dados do jogador
+        BancoDeDados bancoDeDados = new BancoDeDados();
+        bancoDeDados.NovoJogo();
     }
 
     private void Carregar(int id)
     {
-        BancoDeDados bancoDeDados = new BancoDeDados(); // Instancia o banco de dados
-        var leitura = bancoDeDados.LerPosicao(id); // Lê a posição do banco de dados
+        BancoDeDados bancoDeDados = new BancoDeDados();
+        var leitura = bancoDeDados.LerPosicao(id);
         if (leitura != null)
         {
-            while (leitura.Read()) // Lê os dados enquanto houver registros
+            while (leitura.Read())
             {
                 transform.position = new Vector3(
                     leitura.GetFloat(1),
                     leitura.GetFloat(2),
                     leitura.GetFloat(3)
-                ); // Define a posição do personagem
+                );
             }
         }
-        leitura.Close(); // Fecha o leitor de dados
-        bancoDeDados.FecharConexao(); // Fecha a conexão com o banco de dados
+        leitura.Close();
+        bancoDeDados.FecharConexao();
     }
 }

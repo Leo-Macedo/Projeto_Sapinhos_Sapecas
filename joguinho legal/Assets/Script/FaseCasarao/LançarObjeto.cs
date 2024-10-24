@@ -13,10 +13,13 @@ public class LançarObjeto : MonoBehaviour
     private GameObject caixa; // Referência à caixa atual
     private Transform player; // Referência ao transform do jogador
     private Animator animator; // Referência ao Animator
+    private int waypointAtual = -1; // Índice do waypoint atual (-1 significa nenhum waypoint selecionado
+    private Rigidbody rb; // Referência ao Rigidbody
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>(); // Obtém o Rigidbody
         player = GameObject.FindGameObjectWithTag("Player").transform; // Obtém a posição do jogador
         StartCoroutine(MoverEntreWaypoints()); // Inicia a rotina de mover e lançar caixas
     }
@@ -27,8 +30,16 @@ public class LançarObjeto : MonoBehaviour
         {
             if (waypoints.Count == 0) yield break; // Se não houver waypoints, saia do loop
 
-            // Escolhe um waypoint aleatório
-            int randomIndex = Random.Range(0, waypoints.Count);
+            // Escolhe um waypoint diferente do atual
+            int randomIndex;
+            do
+            {
+                randomIndex = Random.Range(0, waypoints.Count);
+            } while (randomIndex == waypointAtual);
+
+            // Atualiza o waypoint atual
+            waypointAtual = randomIndex;
+
             Transform targetWaypoint = waypoints[randomIndex];
 
             // Move o NPC até o waypoint
@@ -38,8 +49,10 @@ public class LançarObjeto : MonoBehaviour
                 Vector3 direcao = (targetWaypoint.position - transform.position).normalized;
                 transform.position += direcao * moveSpeed * Time.deltaTime;
 
-                // Rotaciona suavemente em direção ao waypoint
+                // Rotaciona suavemente em direção ao waypoint (apenas no eixo Y)
                 Quaternion lookRotation = Quaternion.LookRotation(direcao);
+                lookRotation.x = 0; // Impede a inclinação no eixo X
+                lookRotation.z = 0; // Impede a inclinação no eixo Z
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
                 yield return null; // Espera um frame
@@ -87,6 +100,8 @@ public class LançarObjeto : MonoBehaviour
 
             // Calcula a rotação desejada
             Quaternion lookRotation = Quaternion.LookRotation(direcao);
+            lookRotation.x = 0; // Impede a inclinação no eixo X
+            lookRotation.z = 0; // Impede a inclinação no eixo Z
 
             // Rotaciona suavemente em direção ao jogador
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
@@ -103,6 +118,9 @@ public class LançarObjeto : MonoBehaviour
         Rigidbody rb = caixa.GetComponent<Rigidbody>();
         Vector3 direcaoLançamento = (player.position - spawnPoint.position).normalized; // Direção para o jogador
         rb.AddForce(direcaoLançamento * throwForce, ForceMode.Impulse);
+
+        // Adiciona o script para gerenciar a colisão da caixa
+        caixa.AddComponent<CaixaDanoNoPlayer>();
 
         // Reseta a referência à caixa
         caixa = null;

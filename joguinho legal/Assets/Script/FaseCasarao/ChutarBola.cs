@@ -63,6 +63,8 @@ public class ChutarBola : MonoBehaviour
                 }
             }
         }
+                bombaMaisProxima.AddComponent<CaixaDanoNoVilao>();
+
     }
 
    
