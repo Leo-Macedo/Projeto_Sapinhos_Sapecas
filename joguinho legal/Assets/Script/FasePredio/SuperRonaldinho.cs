@@ -22,6 +22,7 @@ public class SuperRonaldinho : MonoBehaviour
     private bool isCharging = false;
     private bool isSuperReady = false;
     public bool isSuperActive = false;
+    public bool podeUtar;
 
     void Start()
     {
@@ -58,7 +59,7 @@ public class SuperRonaldinho : MonoBehaviour
         }
 
         // Verifica se o super está pronto e a tecla "I" foi pressionada
-        if (isSuperReady && Input.GetKeyDown(KeyCode.R))
+        if (isSuperReady && Input.GetKeyDown(KeyCode.R) && podeUtar)
         {
             ActivateSuper();
         }

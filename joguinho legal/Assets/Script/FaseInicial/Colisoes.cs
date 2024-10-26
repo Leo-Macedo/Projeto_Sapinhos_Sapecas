@@ -21,17 +21,17 @@ public class Colisoes : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         // Troca de cena com base na colisão
-        if (other.gameObject.CompareTag("predio"))
+        if (other.gameObject.CompareTag("predio") && PlayerPrefs.GetInt("PredioCompletado", 0) == 0)
         {
             StartCoroutine(TrocarCena("Predio"));
         }
-        else if (other.gameObject.CompareTag("taverna"))
+        else if (other.gameObject.CompareTag("taverna") && PlayerPrefs.GetInt("TavernaCompletada", 0) == 0)
         {
             StartCoroutine(TrocarCena("Taverna"));
         }
-        else if (other.gameObject.CompareTag("cassino"))
+        else if (other.gameObject.CompareTag("cassino") && PlayerPrefs.GetInt("CassinoCompletado", 0) == 0)
         {
-            StartCoroutine(TrocarCena("Cassino"));
+            StartCoroutine(TrocarCena("Cassino1"));
         }
         else if (other.gameObject.CompareTag("portatrancada"))
         {

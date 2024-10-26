@@ -91,8 +91,5 @@ public class VerificarFasesCasarao : MonoBehaviour
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene("Casarao2"); 
 
-
-
-
     } 
 }

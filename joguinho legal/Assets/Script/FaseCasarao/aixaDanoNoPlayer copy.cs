@@ -21,14 +21,15 @@ public class CaixaDanoNoPlayer : MonoBehaviour
         {
             vidaPersonagem.ReceberDano(1);
             jaColidiu = true;
+            GameObject prefab = Resources.Load<GameObject>("Bombadedinehirobow");
+            Instantiate(prefab, other.transform.position, Quaternion.identity);
+            Destroy(gameObject);
 
             // Para a caixa ao colidir com o jogador
         }
         if (other.gameObject.CompareTag("outroobj"))
         {
-            Rigidbody rb = GetComponent<Rigidbody>();
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            
             jaColidiu = true;
         }
     }

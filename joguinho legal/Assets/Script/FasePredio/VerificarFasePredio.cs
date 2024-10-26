@@ -62,6 +62,7 @@ public class VerificarFasePredio : MonoBehaviour
     private Movimento2 movimento2;
     private float veloAndandoInicial;
     private float veloCorrendoInicial;
+    public SuperRonaldinho superRonaldinho;
 
     void Start()
     {
@@ -144,8 +145,8 @@ public class VerificarFasePredio : MonoBehaviour
         {
             Time.timeScale = 0f; // Pausa o jogo
             gameOverCanvas.SetActive(true);
-            Cursor.lockState = CursorLockMode.None; 
-        Cursor.visible = true; 
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 
@@ -154,7 +155,7 @@ public class VerificarFasePredio : MonoBehaviour
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar1.Play();
         vidaPersonagem.vidaAtual = 3;
-
+        superRonaldinho.podeUtar = false;
         yield return new WaitForSeconds((float)cutsceneAndar1.duration);
         somNoti.Play();
         mensagem1.SetActive(true);
@@ -169,6 +170,8 @@ public class VerificarFasePredio : MonoBehaviour
     public IEnumerator Andar2()
     {
         vidaPersonagem.vidaAtual = 3;
+        superRonaldinho.podeUtar = true;
+
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar2.Play();
         player.transform.position = pontoNascer1.position;
@@ -195,7 +198,7 @@ public class VerificarFasePredio : MonoBehaviour
     public IEnumerator Andar3()
     {
         vidaPersonagem.vidaAtual = 3;
-
+        superRonaldinho.podeUtar = true;
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar3.Play();
         passarFases.AtivarCapangas("CapangaAndar3", 3);
@@ -222,6 +225,8 @@ public class VerificarFasePredio : MonoBehaviour
         vidaPlayer.SetActive(true);
         Super.SetActive(true);
         vidaMelo.SetActive(true);
+        superRonaldinho.podeUtar = true;
+
         yield return new WaitForSeconds((float)cutsceneAndar3.duration);
 
         cilindroVilao.SetActive(false);

@@ -55,7 +55,9 @@ public class VerificarFaseCassino : MonoBehaviour
     private float velocidadeInicialVilao1;
     private float velocidadeInicialVilao2;
     private float velocidadeInicialVilao3;
-
+    public GameObject quadradoVilao1;
+    public GameObject quadradoVilao2;
+    public GameObject quadradoVilao3;
     void Start()
     {
         // Armazena as posições iniciais dos personagens e vilões
@@ -238,7 +240,18 @@ public class VerificarFaseCassino : MonoBehaviour
         Debug.Log("Duração da cutscene: " + cutsceneDuration + " segundos.");
 
         yield return new WaitForSecondsRealtime(cutsceneDuration);
-
+        if(controladorFases == 0)
+        {
+            quadradoVilao1.SetActive(false);
+        }
+        if(controladorFases == 1)
+        {
+            quadradoVilao2.SetActive(false);
+        }
+        if(controladorFases == 2)
+        {
+            quadradoVilao3.SetActive(false);
+        }
         // Adicione logs para verificar se o movimento está sendo ativado
         Debug.Log("Final da cutscene. Ativando movimento.");
         AtivarMovimento();

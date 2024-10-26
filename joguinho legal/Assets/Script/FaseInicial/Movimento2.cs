@@ -1,10 +1,9 @@
 using System.Collections;
-using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Movimento2 : MonoBehaviour
-{   
+{
     public Animator animatorFade;
     public AudioSource somPassos;
     public AudioClip[] audiosPassos;
@@ -39,9 +38,7 @@ public class Movimento2 : MonoBehaviour
     private Vector3 groundCheckPosition;
 
     public bool isGrounded;
-
-    [SerializeField]
-    private CinemachineFreeLook cinemachineCamera;
+    public float rotationSpeed;
 
     [SerializeField]
     private int id;
@@ -56,7 +53,7 @@ public class Movimento2 : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        
+
         velocidade = veloAndando;
         Carregar(id);
     }
@@ -73,6 +70,7 @@ public class Movimento2 : MonoBehaviour
         Andar();
         Correr();
         Pular();
+        Rotacao();
     }
 
     private void HandleActions()
@@ -100,32 +98,33 @@ public class Movimento2 : MonoBehaviour
         inputX = Input.GetAxis("Horizontal");
         inputZ = Input.GetAxis("Vertical");
 
-        Vector3 forward = cinemachineCamera.transform.forward;
-        forward.y = 0;
+        // Pega a posição da câmera principal
+        Vector3 forward = Camera.main.transform.forward;
+        forward.y = 0; // Mantém o movimento apenas no plano XZ
         forward.Normalize();
 
-        Vector3 right = cinemachineCamera.transform.right;
-        right.y = 0;
+        Vector3 right = Camera.main.transform.right;
+        right.y = 0; // Mantém o movimento apenas no plano XZ
         right.Normalize();
 
+        // Calcula a direção do movimento em relação à câmera
         direcao = (forward * inputZ + right * inputX).normalized;
 
+        // Atualiza os parâmetros do Animator para a BlendTree
+        anim.SetFloat("inputX", inputX);
+        anim.SetFloat("inputY", inputZ);
+
+        // Movimenta o personagem na direção calculada, se houver input
         if (direcao.magnitude >= 0.1f)
         {
             transform.Translate(direcao * velocidade * Time.deltaTime, Space.World);
-            anim.SetBool("andando", true);
+        }
+    }
 
-            Quaternion toRotation = Quaternion.LookRotation(direcao, Vector3.up);
-            transform.rotation = Quaternion.Lerp(
-                transform.rotation,
-                toRotation,
-                5 * Time.deltaTime
-            );
-        }
-        else
-        {
-            anim.SetBool("andando", false);
-        }
+    private void Rotacao()
+    {
+        float mouseXInput = Input.GetAxis("Mouse X");
+        transform.Rotate(0f, mouseXInput * rotationSpeed, 0f);
     }
 
     private void Correr()
@@ -150,7 +149,7 @@ public class Movimento2 : MonoBehaviour
         float tamanhoVerificado =
             groundCheckSize * Mathf.Max(escalaAtual.x, escalaAtual.y, escalaAtual.z);
         Vector3 posicaoVerificada = Vector3.Scale(groundCheckPosition, escalaAtual);
-        
+
         var groundcheck = Physics.OverlapSphere(
             transform.position + posicaoVerificada,
             tamanhoVerificado,

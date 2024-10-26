@@ -2,40 +2,58 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target; // O jogador
-    public Vector3 offset; // Offset da câmera em relação ao jogador
-    public float smoothSpeed = 0.125f; // Velocidade de suavização da câmera
-    public float minDistance = 1.5f; // Distância mínima da câmera ao jogador
-    public float maxDistance = 5f; // Distância máxima da câmera ao jogador
+    public Transform alvo;
+    public Transform posicaoCamera;
+    public float ajusteCamera = 0.3f;
+    public float suavidade = 5f; // Controla a suavidade da transição
+    public float distanciaMinima = 0.2f; // Distância mínima para evitar tremores
+    public float rotationSpeed = 2f; // Velocidade de rotação vertical da câmera
 
-    private void LateUpdate()
+    private Vector3 posicaoDestino;
+    private bool emColisao;
+    private float rotacaoVertical = 0f;
+
+    void Start()
     {
-        if (target != null)
+        posicaoDestino = posicaoCamera.position; // Posição inicial da câmera
+    }
+
+    void Update()
+    {
+        AjustarPosicaoCamera();
+        RotacionarCamera();
+    }
+
+    private void AjustarPosicaoCamera()
+    {
+        Vector3 destinoCamera = posicaoCamera.position;
+
+        if (Physics.Linecast(alvo.position, posicaoCamera.position, out RaycastHit hit))
         {
-            // Calcula a posição desejada da câmera
-            Vector3 desiredPosition = target.position + offset;
+            emColisao = true;
 
-            // Verifica se há colisões
-            Vector3 direction = (desiredPosition - target.position).normalized;
-            float distance = Vector3.Distance(desiredPosition, target.position);
+            destinoCamera = hit.point + hit.normal * ajusteCamera;
 
-            // Se a distância for maior que o máximo permitido, ajusta a posição
-            if (distance > maxDistance)
-            {
-                desiredPosition = target.position + direction * maxDistance;
-            }
-
-            // Verifica colisões entre a posição desejada e o jogador
-            RaycastHit hit;
-            if (Physics.Raycast(target.position, -direction, out hit, distance))
-            {
-                // Se houver uma colisão, ajusta a posição da câmera para a distância mínima
-                desiredPosition = hit.point + direction * minDistance;
-            }
-
-            // Move a câmera suavemente em direção à posição desejada
-            transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-            transform.LookAt(target.position); // Faz a câmera olhar para o jogador
+            posicaoDestino = Vector3.Lerp(posicaoDestino, destinoCamera, Time.deltaTime * suavidade);
         }
+        else
+        {
+            if (emColisao)
+            {
+                emColisao = false;
+                posicaoDestino = posicaoCamera.position;
+            }
+        }
+
+        transform.position = emColisao ? posicaoDestino : destinoCamera;
+    }
+
+    private void RotacionarCamera()
+    {
+        float mouseYInput = Input.GetAxis("Mouse Y");
+        rotacaoVertical -= mouseYInput * rotationSpeed;
+        rotacaoVertical = Mathf.Clamp(rotacaoVertical, -20f, 20f); // Limita a rotação vertical
+
+        transform.localRotation = Quaternion.Euler(rotacaoVertical, transform.localEulerAngles.y, 0f);
     }
 }

@@ -21,7 +21,7 @@ public class PassarFases : MonoBehaviour
     public bool boolandar3 = false;
     public bool boolandar4 = false;
 
-     [Header("Hud")]
+    [Header("Hud")]
     public GameObject vidaMelo;
     public GameObject vidaPlayer;
     public GameObject Super;
@@ -44,6 +44,7 @@ public class PassarFases : MonoBehaviour
     private Animator animMensagem8;
     private Animator animMensagem9;
     private Animator animMensagem10;
+    public SuperRonaldinho superRonaldinho;
 
     void Start()
     {
@@ -164,6 +165,8 @@ public class PassarFases : MonoBehaviour
     public IEnumerator AcaoQuandoCapangasAndar3Morreram()
     {
         Debug.Log("Todos os capangas estão mortos do andar 3!");
+        superRonaldinho.podeUtar = false;
+
         cutsceneSubiuParkour1.Play();
         tocouCutScene3 = true;
         vidaPlayer.SetActive(false);
@@ -177,6 +180,8 @@ public class PassarFases : MonoBehaviour
     public IEnumerator AcaoQuandoCapangasAndar4Morreram()
     {
         Debug.Log("Todos os capangas estão mortos do andar 4!");
+        superRonaldinho.podeUtar = false;
+
         cutsceneSubiuParkour2.Play();
         tocouCutScene4 = true;
         vidaPlayer.SetActive(false);
@@ -190,12 +195,13 @@ public class PassarFases : MonoBehaviour
     public IEnumerator DesativarParkour1()
     {
         cutsceneDesceuParkour1.Play();
+        superRonaldinho.podeUtar = true;
 
         yield return new WaitForSeconds((float)cutsceneDesceuParkour1.duration);
         boolandar4 = true;
         boolandar3 = false;
         vidaPersonagem.vidaAtual = 3;
-         vidaPlayer.SetActive(true);
+        vidaPlayer.SetActive(true);
         Super.SetActive(true);
         AtivarCapangas("CapangaAndar4", 4); // Ativar capangas do andar 4
         somNoti.Play();
@@ -213,12 +219,16 @@ public class PassarFases : MonoBehaviour
         if (other.gameObject.CompareTag("andar2"))
         {
             player.position = andar2.position;
+            player.rotation = Quaternion.Euler(0, andar2.rotation.eulerAngles.y, 0); // Define apenas a rotação no eixo Y
+
             StartCoroutine(verificarFasePredio.Andar2());
             verificarFasePredio.AtualizarControladorFases();
         }
         if (other.gameObject.CompareTag("andar3"))
         {
             player.position = andar3.position;
+            player.rotation = Quaternion.Euler(0, andar3.rotation.eulerAngles.y, 0); // Define apenas a rotação no eixo Y
+
             StartCoroutine(verificarFasePredio.Andar3());
             verificarFasePredio.AtualizarControladorFases();
         }
@@ -230,6 +240,8 @@ public class PassarFases : MonoBehaviour
         if (other.gameObject.CompareTag("andar4"))
         {
             player.position = andar4.position;
+            player.rotation = Quaternion.Euler(0, andar4.rotation.eulerAngles.y, 0); // Define apenas a rotação no eixo Y
+
             StartCoroutine(verificarFasePredio.Andar4());
             verificarFasePredio.AtualizarControladorFases();
         }
