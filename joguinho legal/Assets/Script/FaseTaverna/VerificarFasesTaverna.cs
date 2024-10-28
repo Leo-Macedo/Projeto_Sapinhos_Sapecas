@@ -37,26 +37,9 @@ public class VerificarFasesTaverna : MonoBehaviour
 
     [Header("Mensagens")]
     public AudioSource somNoti;
-    public GameObject mensagem1;
-    public GameObject mensagem2;
-    public GameObject mensagem3;
-    public GameObject mensagem4;
-    public GameObject mensagem5;
-    public GameObject mensagem6;
+    public GameObject[] mensagem;
+    public Animator[] animatorMSG;
 
-    public GameObject mensagem11;
-    public GameObject mensagem12;
-    public GameObject mensagem13;
-
-    private Animator animMensagem1;
-    private Animator animMensagem2;
-    private Animator animMensagem3;
-    private Animator animMensagem4;
-    private Animator animMensagem5;
-    private Animator animMensagem6;
-    private Animator animMensagem11;
-    private Animator animMensagem12;
-    private Animator animMensagem13;
     private VidaPersonagem vidaPersonagem;
     private Movimento2 movimento2;
     private float veloAndandoInicial;
@@ -64,16 +47,6 @@ public class VerificarFasesTaverna : MonoBehaviour
 
     void Start()
     {
-        animMensagem1 = mensagem1.GetComponent<Animator>();
-        animMensagem2 = mensagem2.GetComponent<Animator>();
-        animMensagem3 = mensagem3.GetComponent<Animator>();
-        animMensagem4 = mensagem4.GetComponent<Animator>();
-        animMensagem5 = mensagem5.GetComponent<Animator>();
-        animMensagem6 = mensagem6.GetComponent<Animator>();
-
-        animMensagem11 = mensagem11.GetComponent<Animator>();
-        animMensagem12 = mensagem12.GetComponent<Animator>();
-        animMensagem13 = mensagem13.GetComponent<Animator>();
         Time.timeScale = 1f;
 
         vidaPersonagem = player.GetComponent<VidaPersonagem>();
@@ -117,11 +90,11 @@ public class VerificarFasesTaverna : MonoBehaviour
                 break;
 
             case 1:
-                Porao();
+                StartCoroutine(Porao());
                 break;
 
             case 2:
-                SalaZida();
+                StartCoroutine(SalaZida());
                 break;
 
             default:
@@ -147,20 +120,20 @@ public class VerificarFasesTaverna : MonoBehaviour
         cutsceneBar.Play();
         yield return new WaitForSeconds((float)cutsceneBar.duration);
         somNoti.Play();
-        mensagem1.SetActive(true);
+        mensagem[0].SetActive(true);
         yield return new WaitForSeconds(5);
-        animMensagem1.SetTrigger("fechou");
+        animatorMSG[0].SetTrigger("fechou");
         somNoti.Play();
-        mensagem2.SetActive(true);
+        mensagem[1].SetActive(true);
         yield return new WaitForSeconds(5);
-        animMensagem2.SetTrigger("fechou");
+        animatorMSG[1].SetTrigger("fechou");
         somNoti.Play();
-        mensagem3.SetActive(true);
+        mensagem[2].SetActive(true);
         yield return new WaitForSeconds(5);
-        animMensagem3.SetTrigger("fechou");
+        animatorMSG[2].SetTrigger("fechou");
     }
 
-    public void Porao()
+    public IEnumerator Porao()
     {
         super.SetActive(true);
         escudos.SetActive(true);
@@ -169,9 +142,23 @@ public class VerificarFasesTaverna : MonoBehaviour
 
         Invoke("DesativarOBJ1", (float)cutscenePorao.duration);
         player.transform.position = pontoNascer1.position;
+
+        yield return new WaitForSeconds((float)cutscenePorao.duration);
+        somNoti.Play();
+        mensagem[3].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[3].SetTrigger("fechou");
+        somNoti.Play();
+        mensagem[4].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[4].SetTrigger("fechou");
+        somNoti.Play();
+        mensagem[5].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[5].SetTrigger("fechou");
     }
 
-    public void SalaZida()
+    public IEnumerator SalaZida()
     {
         super.SetActive(true);
         vidaMelo.SetActive(true);
@@ -185,6 +172,20 @@ public class VerificarFasesTaverna : MonoBehaviour
         Invoke("DesativarOBJ2", (float)cutsceneSalaZida.duration);
 
         player.transform.position = pontoNascer2.position;
+
+        yield return new WaitForSeconds((float)cutsceneSalaZida.duration);
+        somNoti.Play();
+        mensagem[6].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[6].SetTrigger("fechou");
+        somNoti.Play();
+        mensagem[7].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[7].SetTrigger("fechou");
+        somNoti.Play();
+        mensagem[8].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[8].SetTrigger("fechou");
     }
 
     private IEnumerator ControlarMovimentoDuranteCutscene()

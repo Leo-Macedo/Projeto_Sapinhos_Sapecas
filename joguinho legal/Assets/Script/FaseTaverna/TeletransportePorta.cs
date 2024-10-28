@@ -36,14 +36,14 @@ public class TeletransportePorta : MonoBehaviour
         // Teletransporta o jogador para a sala principal
         player.transform.position = tp.position; // Atualiza a posição do jogador
         verificarFasesTaverna.AtualizarControladorFases();
-        verificarFasesTaverna.Porao();
+        StartCoroutine(verificarFasesTaverna.Porao());
     }
 
     private void TeletransportarParaSalaZida()
     {
         // Teletransporta o jogador para a sala de trás
         verificarFasesTaverna.AtualizarControladorFases();
-        verificarFasesTaverna.SalaZida();
+        StartCoroutine(verificarFasesTaverna.SalaZida());
         player.transform.position = tpsalazida.position; // Atualiza a posição do jogador
     }
 }

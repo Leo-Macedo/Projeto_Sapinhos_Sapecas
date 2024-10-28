@@ -23,6 +23,11 @@ public class SenhaCor : MonoBehaviour
     public GameObject txtsenhaincorreta; // Mensagem de senha incorreta
     public GameObject painelsenha; // Painel da senha
     public GameObject cliqueaqui; // Mensagem para interagir com a senha
+
+    [Header("Mensagens")]
+    public AudioSource somNoti;
+    public GameObject mensagem;
+    public Animator animatorMSG;
     
 
     void Start()
@@ -113,5 +118,12 @@ public class SenhaCor : MonoBehaviour
         yield return new WaitForSeconds(2);
         Fechar();
         passarFasesCasarao.completouSenha = true;
+        if(somNoti != null && mensagem != null && animatorMSG != null )
+        {
+        somNoti.Play();
+        mensagem.SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG.SetTrigger("fechou");
+        }
     }
 }

@@ -99,18 +99,5 @@ public class MenuController : MonoBehaviour
         TrocarTela(telaPrincipalCanvasGroup);
     }
 
-    public void IniciarJogo()
-    {
-        StartCoroutine(TrocarCena());
-    }
-
-    public IEnumerator TrocarCena()
-    {
-        PlayerPrefs.DeleteAll();
-
-        Debug.Log("PlayerPrefs resetado no Build.");
-        animatorFade.SetTrigger("fechar");
-        yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene("CenaInicial");
-    }
+    
 }

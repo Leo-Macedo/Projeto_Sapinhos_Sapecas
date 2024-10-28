@@ -32,16 +32,23 @@ public class PassarFasesCasarao : MonoBehaviour
         {
             if (VerificarFasesCasarao != null)
             {
-                StartCoroutine(VerificarFasesCasarao.PassouFase());
+                StartCoroutine(VerificarFasesCasarao.PassouFasePorao());
             }
         }
         if (other.gameObject.CompareTag("parede"))
         {
             if (VerificarFasesCasarao != null)
             {
-                StartCoroutine(VerificarFasesCasarao.PassouFasePorao());
+                StartCoroutine(VerificarFasesCasarao.PassouFaseSegundoAndar());
             }
         }
+
+         if (other.gameObject.CompareTag("cabeca"))
+        {
+             
+                StartCoroutine(VerificarFasesCasarao.PassouFaseEntradaPrincipal());
+            
+        } 
     }
 
     private void OnTriggerEnter(Collider other)
@@ -73,12 +80,7 @@ public class PassarFasesCasarao : MonoBehaviour
             }
         }
 
-         if (other.gameObject.CompareTag("cabeca"))
-        {
-             
-                StartCoroutine(VerificarFasesCasarao.TrocarCena());
-            
-        } 
+        
     }
 
     private void OnTriggerStay(Collider other)

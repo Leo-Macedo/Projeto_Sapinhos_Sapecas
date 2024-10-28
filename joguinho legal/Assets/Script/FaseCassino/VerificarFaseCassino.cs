@@ -58,6 +58,12 @@ public class VerificarFaseCassino : MonoBehaviour
     public GameObject quadradoVilao1;
     public GameObject quadradoVilao2;
     public GameObject quadradoVilao3;
+
+    [Header("Mensagens")]
+    public AudioSource somNoti;
+    public GameObject[] mensagem;
+    public Animator[] animatorMSG;
+
     void Start()
     {
         // Armazena as posições iniciais dos personagens e vilões
@@ -128,15 +134,15 @@ public class VerificarFaseCassino : MonoBehaviour
     {
         if (controladorFases == 0)
         {
-            Round1();
+            StartCoroutine(Round1());
         }
         else if (controladorFases == 1)
         {
-            Round2();
+            StartCoroutine(Round2());
         }
         else if (controladorFases == 2)
         {
-            Round3();
+            StartCoroutine(Round3());
         }
         else if (controladorFases == 3)
         {
@@ -195,8 +201,8 @@ public class VerificarFaseCassino : MonoBehaviour
     {
         gameOverCanvas.SetActive(true); // Ativa a tela de Game Over
         Time.timeScale = 0f; // Pausa o jogo
-        Cursor.lockState = CursorLockMode.None; 
-        Cursor.visible = true; 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void ReiniciarRound()
@@ -207,10 +213,10 @@ public class VerificarFaseCassino : MonoBehaviour
             case 0:
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reinicia no Round 1
                 gameOverCanvas.SetActive(false);
-                Round1();
+                StartCoroutine(Round1());
                 break;
             case 1:
-                AtivarRound2();
+                StartCoroutine(AtivarRound2());
                 gameOverCanvas.SetActive(false);
 
                 vidaVilao2.Vida = vidaVilao2.VidaInicial;
@@ -221,7 +227,7 @@ public class VerificarFaseCassino : MonoBehaviour
                 melo2.transform.position = posInicialMelo2;
                 break;
             case 2:
-                AtivarRound3();
+                StartCoroutine(AtivarRound3());
                 gameOverCanvas.SetActive(false);
 
                 vidaVilao3.Vida = vidaVilao3.VidaInicial;
@@ -240,15 +246,15 @@ public class VerificarFaseCassino : MonoBehaviour
         Debug.Log("Duração da cutscene: " + cutsceneDuration + " segundos.");
 
         yield return new WaitForSecondsRealtime(cutsceneDuration);
-        if(controladorFases == 0)
+        if (controladorFases == 0)
         {
             quadradoVilao1.SetActive(false);
         }
-        if(controladorFases == 1)
+        if (controladorFases == 1)
         {
             quadradoVilao2.SetActive(false);
         }
-        if(controladorFases == 2)
+        if (controladorFases == 2)
         {
             quadradoVilao3.SetActive(false);
         }
@@ -257,27 +263,38 @@ public class VerificarFaseCassino : MonoBehaviour
         AtivarMovimento();
     }
 
-    public void Round1()
+    public IEnumerator Round1()
     {
         Time.timeScale = 1f; // Despausa o jogo
 
         cutSceneRound1.Play();
         StartCoroutine(DespausarNoFinalDaCutscene(cutSceneRound1));
+        yield return new WaitForSeconds((float)cutSceneRound1.duration);
+        somNoti.Play();
+        mensagem[0].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[0].SetTrigger("fechou");
+        somNoti.Play();
+        mensagem[1].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[1].SetTrigger("fechou");
     }
 
-    public void Round2()
+    public IEnumerator Round2()
     {
         cutSceneRound1Acabou.Play();
-        Invoke("AtivarRound2", (float)cutSceneRound1Acabou.duration);
+        yield return new WaitForSeconds((float)cutSceneRound1Acabou.duration);
+        StartCoroutine(AtivarRound2());
     }
 
-    public void Round3()
+    public IEnumerator Round3()
     {
         cutSceneRound1Acabou.Play();
-        Invoke("AtivarRound3", (float)cutSceneRound1Acabou.duration);
+        yield return new WaitForSeconds((float)cutSceneRound1Acabou.duration);
+        StartCoroutine(AtivarRound3());
     }
 
-    public void AtivarRound2()
+    public IEnumerator AtivarRound2()
     {
         DestruirTodosCapangas();
         cutSceneRound2.Play();
@@ -287,9 +304,14 @@ public class VerificarFaseCassino : MonoBehaviour
 
         freeLookCamera.Follow = romarinho2.transform;
         freeLookCamera.LookAt = romarinho2.transform;
+        yield return new WaitForSeconds((float)cutSceneRound2.duration);
+        somNoti.Play();
+        mensagem[2].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[2].SetTrigger("fechou");
     }
 
-    public void AtivarRound3()
+    public IEnumerator AtivarRound3()
     {
         DestruirTodosCapangas();
         cutSceneRound3.Play();
@@ -299,6 +321,16 @@ public class VerificarFaseCassino : MonoBehaviour
 
         freeLookCamera.Follow = romarinho3.transform;
         freeLookCamera.LookAt = romarinho3.transform;
+
+        yield return new WaitForSeconds((float)cutSceneRound1.duration);
+        somNoti.Play();
+        mensagem[3].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[3].SetTrigger("fechou");
+        somNoti.Play();
+        mensagem[4].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[4].SetTrigger("fechou");
     }
 
     private void AtivarMovimento()
