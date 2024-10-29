@@ -12,7 +12,7 @@ public class CapangaSegueEMorre : MonoBehaviour
     private VidaPersonagem vidaPersonagemMaisProxima;
     private bool podeAtacar = true;
     public bool morreu = false;
-
+    public GameObject CANVASVIDADOCARLAO;
     //VIDA E DANO
     // Vida do vilão (campo privado)
     [SerializeField]
@@ -199,6 +199,7 @@ public class CapangaSegueEMorre : MonoBehaviour
         }
         rb.constraints = RigidbodyConstraints.FreezeAll;
         morreu = true;
+        CANVASVIDADOCARLAO.SetActive(false);
     }
 
     public void Resetou()
