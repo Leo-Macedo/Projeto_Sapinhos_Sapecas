@@ -33,22 +33,23 @@ public class PassarFasesCasarao : MonoBehaviour
             if (VerificarFasesCasarao != null)
             {
                 StartCoroutine(VerificarFasesCasarao.PassouFasePorao());
+                VerificarFasesCasarao.AtualizarControladorFases();
             }
+        }
+
+        if (other.gameObject.CompareTag("cabeca"))
+        {
+            StartCoroutine(VerificarFasesCasarao.PassouFaseEntradaPrincipal());
+            VerificarFasesCasarao.AtualizarControladorFases();
         }
         if (other.gameObject.CompareTag("parede"))
         {
             if (VerificarFasesCasarao != null)
             {
                 StartCoroutine(VerificarFasesCasarao.PassouFaseSegundoAndar());
+                VerificarFasesCasarao.AtualizarControladorFases();
             }
         }
-
-         if (other.gameObject.CompareTag("cabeca"))
-        {
-             
-                StartCoroutine(VerificarFasesCasarao.PassouFaseEntradaPrincipal());
-            
-        } 
     }
 
     private void OnTriggerEnter(Collider other)
@@ -79,8 +80,6 @@ public class PassarFasesCasarao : MonoBehaviour
                 StartCoroutine(ColidiuPorta());
             }
         }
-
-        
     }
 
     private void OnTriggerStay(Collider other)
@@ -137,5 +136,4 @@ public class PassarFasesCasarao : MonoBehaviour
 
         abriu = true;
     }
-
 }

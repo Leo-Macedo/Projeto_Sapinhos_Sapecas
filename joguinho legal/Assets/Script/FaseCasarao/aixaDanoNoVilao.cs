@@ -21,6 +21,9 @@ public class CaixaDanoNoVilao : MonoBehaviour
         {
             vidaVilao.ReceberDanoVilao(1);
             jaColidiu = true;
+            GameObject prefab = Resources.Load<GameObject>("Bombadedinehirobow");
+            Instantiate(prefab, other.transform.position, Quaternion.identity);
+            Destroy(gameObject);
 
             // Para a caixa ao colidir com o jogador
         }

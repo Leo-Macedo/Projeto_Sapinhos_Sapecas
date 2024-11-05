@@ -88,6 +88,7 @@ public class VidaVilao : MonoBehaviour
         animatorvilao.SetBool("nocaute", true);
         }
         rb.constraints = RigidbodyConstraints.FreezeAll;
+        morreuvilao = true;
     }
 
     public void Resetou()

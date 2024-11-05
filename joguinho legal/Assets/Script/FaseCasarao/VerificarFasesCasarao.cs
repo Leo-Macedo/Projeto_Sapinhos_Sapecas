@@ -10,6 +10,7 @@ public class VerificarFasesCasarao : MonoBehaviour
 {
     public int controladorFases = 0;
     public GameObject cubo;
+    public LançarObjetoEMoverOlivia lançarObjeto;
 
     [Header("Hud")]
     public GameObject gameOverCanvas;
@@ -93,16 +94,16 @@ public class VerificarFasesCasarao : MonoBehaviour
         }
     }
 
-   /* private void VerificarMorteJogador()
-    {
-        if (vidaPersonagem.vidaAtual <= 0)
-        {
-            Time.timeScale = 0f; // Pausa o jogo
-            gameOverCanvas.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-    } */
+    /* private void VerificarMorteJogador()
+     {
+         if (vidaPersonagem.vidaAtual <= 0)
+         {
+             Time.timeScale = 0f; // Pausa o jogo
+             gameOverCanvas.SetActive(true);
+             Cursor.lockState = CursorLockMode.None;
+             Cursor.visible = true;
+         }
+     } */
 
     public IEnumerator Porao()
     {
@@ -110,7 +111,7 @@ public class VerificarFasesCasarao : MonoBehaviour
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         yield return new WaitForSeconds((float)cutscenePorao.duration);
         cubo.SetActive(false);
-         somNoti.Play();
+        somNoti.Play();
         mensagem[0].SetActive(true);
         yield return new WaitForSeconds(5);
         animatorMSG[0].SetTrigger("fechou");
@@ -118,48 +119,10 @@ public class VerificarFasesCasarao : MonoBehaviour
         mensagem[1].SetActive(true);
         yield return new WaitForSeconds(5);
         animatorMSG[1].SetTrigger("fechou");
-        
     }
 
     public IEnumerator EntradaPrincipal()
     {
-        cutsceneEntradaPrincipal.Play();
-        StartCoroutine(ControlarMovimentoDuranteCutscene());
-        yield return new WaitForSeconds((float)cutsceneEntradaPrincipal.duration);
-         somNoti.Play();
-        mensagem[2].SetActive(true);
-        yield return new WaitForSeconds(5);
-        animatorMSG[2].SetTrigger("fechou");
-        somNoti.Play();
-        mensagem[3].SetActive(true);
-        yield return new WaitForSeconds(5);
-        animatorMSG[3].SetTrigger("fechou");
-        
-    }
-
-    public IEnumerator SegundoAndar()
-    {
-        cutsceneSegundoAndar.Play();
-        StartCoroutine(ControlarMovimentoDuranteCutscene());
-        yield return new WaitForSeconds((float)cutsceneSegundoAndar.duration);
-    }
-
-    public IEnumerator Sotao()
-    {
-        cutsceneSotao.Play();
-        StartCoroutine(ControlarMovimentoDuranteCutscene());
-        yield return new WaitForSeconds((float)cutsceneSotao.duration);
-    }
-
-    public IEnumerator PassouFasePorao()
-    {
-        if (animatorFade != null)
-        {
-            animatorFade.SetTrigger("fechar");
-        }
-
-        yield return new WaitForSeconds(2);
-
         if (canvas != null && canvas.Length > 1)
         {
             if (canvas[0] != null)
@@ -172,29 +135,73 @@ public class VerificarFasesCasarao : MonoBehaviour
         {
             rivaldo.SetActive(true);
         }
-
-        if (freeLookCamera != null && rivaldo != null)
-        {
-            freeLookCamera.Follow = rivaldo.transform;
-            freeLookCamera.LookAt = rivaldo.transform;
-        }
-
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(EntradaPrincipal());
-        if (animatorFade != null)
-        {
-            animatorFade.SetTrigger("abrir");
-        }
-
-        Debug.Log("funcionouuuuuuuuuuuuuuuuuuuuuuu");
-
         if (romario != null)
         {
             romario.SetActive(false);
         }
+
+        yield return new WaitForSeconds(1f);
+        if (animatorFade != null)
+        {
+            animatorFade.SetTrigger("abrir");
+        }
+        cutsceneEntradaPrincipal.Play();
+        StartCoroutine(ControlarMovimentoDuranteCutscene());
+        yield return new WaitForSeconds((float)cutsceneEntradaPrincipal.duration);
+        somNoti.Play();
+        mensagem[2].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[2].SetTrigger("fechou");
+        somNoti.Play();
+        mensagem[3].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[3].SetTrigger("fechou");
     }
 
-    public IEnumerator PassouFaseSegundoAndar()
+    public IEnumerator SegundoAndar()
+    {
+       
+        cutsceneSegundoAndar.Play();
+        StartCoroutine(ControlarMovimentoDuranteCutscene());
+        yield return new WaitForSeconds((float)cutsceneSegundoAndar.duration);
+        somNoti.Play();
+        mensagem[5].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[5].SetTrigger("fechou");
+        somNoti.Play();
+        mensagem[8].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[8].SetTrigger("fechou");
+    }
+
+    public IEnumerator Sotao()
+    {
+        if (ronaldo != null && waiPoint != null)
+        {
+            ronaldo.transform.position = waiPoint.position;
+            ronaldo.transform.rotation = waiPoint.rotation;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+        if (animatorFade != null)
+        {
+            animatorFade.SetTrigger("abrir");
+        }
+        cutsceneSotao.Play();
+        StartCoroutine(ControlarMovimentoDuranteCutscene());
+        yield return new WaitForSeconds((float)cutsceneSotao.duration);
+        lançarObjeto.podeLancar = true;
+        somNoti.Play();
+        mensagem[6].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[6].SetTrigger("fechou");
+        somNoti.Play();
+        mensagem[7].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[7].SetTrigger("fechou");
+    }
+
+    public IEnumerator PassouFasePorao()
     {
         if (animatorFade != null)
         {
@@ -203,18 +210,9 @@ public class VerificarFasesCasarao : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
-        if (ronaldo != null && waiPoint != null)
-        {
-            ronaldo.transform.position = waiPoint.position;
-            ronaldo.transform.rotation = waiPoint.rotation;
-        }
+        StartCoroutine(EntradaPrincipal());
 
-        yield return new WaitForSeconds(0.1f);
-
-        if (animatorFade != null)
-        {
-            animatorFade.SetTrigger("abrir");
-        }
+        Debug.Log("funcionouuuuuuuuuuuuuuuuuuuuuuu");
     }
 
     public IEnumerator PassouFaseEntradaPrincipal()
@@ -226,6 +224,18 @@ public class VerificarFasesCasarao : MonoBehaviour
 
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene("Casarao2");
+    }
+
+    public IEnumerator PassouFaseSegundoAndar()
+    {
+        if (animatorFade != null)
+        {
+            animatorFade.SetTrigger("fechar");
+        }
+
+        yield return new WaitForSeconds(2);
+
+        StartCoroutine(Sotao());
     }
 
     private IEnumerator ControlarMovimentoDuranteCutscene()
@@ -248,7 +258,7 @@ public class VerificarFasesCasarao : MonoBehaviour
     public void AtualizarControladorFases()
     {
         controladorFases += 1;
-        PlayerPrefs.SetInt("ControladorFasesTaverna", controladorFases);
+        PlayerPrefs.SetInt("ControladorFasesCasarao", controladorFases);
         PlayerPrefs.Save(); // Garante que as mudanças sejam salvas imediatamente
         Debug.Log("PlayerPrefs + 1 = " + controladorFases);
     }

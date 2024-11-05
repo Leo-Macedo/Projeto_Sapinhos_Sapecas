@@ -27,7 +27,7 @@ public class CaixaDanoNoPlayer : MonoBehaviour
 
             // Para a caixa ao colidir com o jogador
         }
-        if (other.gameObject.CompareTag("outroobj"))
+        if (other.gameObject.CompareTag("outroobj") || other.gameObject.CompareTag("bomba"))
         {
             
             jaColidiu = true;

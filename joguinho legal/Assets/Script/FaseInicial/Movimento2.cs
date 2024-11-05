@@ -98,26 +98,29 @@ public class Movimento2 : MonoBehaviour
         inputX = Input.GetAxis("Horizontal");
         inputZ = Input.GetAxis("Vertical");
 
-        // Pega a posição da câmera principal
-        Vector3 forward = Camera.main.transform.forward;
-        forward.y = 0; // Mantém o movimento apenas no plano XZ
-        forward.Normalize();
-
-        Vector3 right = Camera.main.transform.right;
-        right.y = 0; // Mantém o movimento apenas no plano XZ
-        right.Normalize();
-
-        // Calcula a direção do movimento em relação à câmera
-        direcao = (forward * inputZ + right * inputX).normalized;
-
-        // Atualiza os parâmetros do Animator para a BlendTree
-        anim.SetFloat("inputX", inputX);
-        anim.SetFloat("inputY", inputZ);
-
-        // Movimenta o personagem na direção calculada, se houver input
-        if (direcao.magnitude >= 0.1f)
+        if (Camera.main != null)
         {
-            transform.Translate(direcao * velocidade * Time.deltaTime, Space.World);
+            Vector3 forward = Camera.main.transform.forward;
+            forward.y = 0;
+            forward.Normalize();
+
+            Vector3 right = Camera.main.transform.right;
+            right.y = 0;
+            right.Normalize();
+
+            direcao = (forward * inputZ + right * inputX).normalized;
+
+            anim.SetFloat("inputX", inputX);
+            anim.SetFloat("inputY", inputZ);
+
+            if (direcao.magnitude >= 0.1f)
+            {
+                transform.Translate(direcao * velocidade * Time.deltaTime, Space.World);
+            }
+        }
+        else
+        {
+            Debug.Log("Camera.main não foi encontrada.");
         }
     }
 
@@ -129,13 +132,14 @@ public class Movimento2 : MonoBehaviour
 
     private void Correr()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && direcao != Vector3.zero)
+        // Verifica se o shift está pressionado e se o inputZ (frente) é positivo
+        if (Input.GetKey(KeyCode.LeftShift) && inputZ > 0)
         {
             velocidade = veloCorrendo;
             anim.SetBool("correndo", true);
             anim.SetBool("andando", false);
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift) || direcao == Vector3.zero)
+        else
         {
             velocidade = veloAndando;
             anim.SetBool("correndo", false);

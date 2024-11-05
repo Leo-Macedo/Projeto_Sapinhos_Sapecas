@@ -97,8 +97,8 @@ GameObject:
   - component: {fileID: 3807085741604217903}
   - component: {fileID: 5541077760582290269}
   - component: {fileID: 1728020084670369936}
-  - component: {fileID: 7918936223588827531}
   - component: {fileID: 4933206248838249045}
+  - component: {fileID: 7197685914130620827}
   m_Layer: 0
   m_Name: bombadinheiro
   m_TagString: bomba
@@ -203,29 +203,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &7918936223588827531
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850468322433794090}
-  m_Material: {fileID: 13400000, guid: 963de06342f6f9b49bd4ead298524ad4, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.02114745
-  m_Height: 0
-  m_Direction: 0
-  m_Center: {x: -0.000175355, y: -9.313226e-10, z: 0.005346775}
 --- !u!65 &4933206248838249045
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -247,3 +224,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.025068631, y: 0.02996708, z: 0.04195988}
   m_Center: {x: 0.00040091632, y: -0.0000000011920929, z: 0.0055142734}
+--- !u!135 &7197685914130620827
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850468322433794090}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.03
+  m_Center: {x: -0.000175355, y: -9.313226e-10, z: 0.005346775}
