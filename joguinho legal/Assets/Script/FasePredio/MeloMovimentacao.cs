@@ -14,15 +14,22 @@ public class MeloMovimentacao : MonoBehaviour
     public bool podeReceberDano = false;
     private Rigidbody rb;
     private NavMeshAgent agent; // Referência ao NavMeshAgent
+    private Animator animator;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
 
         rb.useGravity = false; // Desativa a gravidade ao começar voando
         agent.enabled = true; // Ativa o NavMeshAgent para começar a seguir o player
         StartCoroutine(CicloMosca());
+    }
+
+    void Update()
+    {
+        animator.SetBool("voando", voando);
     }
 
     IEnumerator CicloMosca()
@@ -39,7 +46,9 @@ public class MeloMovimentacao : MonoBehaviour
                     tempoVooRestante -= Time.deltaTime;
                     yield return null;
                 }
-                
+                animator.SetTrigger("cair");
+                yield return new WaitForSeconds(1f);
+
                 // Quando o tempo de voo acaba, ela pousa
                 Pousar();
             }
@@ -77,6 +86,8 @@ public class MeloMovimentacao : MonoBehaviour
 
     IEnumerator VoltarAVoarSuave()
     {
+        animator.SetTrigger("levantar");
+
         voando = true;
         pousado = false;
         podeReceberDano = false;

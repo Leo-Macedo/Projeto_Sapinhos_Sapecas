@@ -30,7 +30,7 @@ public class CapangaSegueEMorre : MonoBehaviour
             Debug.Log("Vida do Vilão: " + _vidaVilao);
         }
     }
-
+    public float danoNoPlayer = 0.1f;
     // Vida e o slider dela
     public Slider slidervidavilao;
     private Animator animatorvilao;
@@ -138,7 +138,7 @@ public class CapangaSegueEMorre : MonoBehaviour
             // Verifica se o jogador está na mesma faixa de altura (ajuste o valor de 1.0f conforme necessário)
             if (Mathf.Abs(posicaoPlayer.y - posicaoCapanga.y) < 1.0f)
             {
-                vidaPersonagemMaisProxima.vidaAtual -= 0.1f;
+                vidaPersonagemMaisProxima.vidaAtual -= danoNoPlayer;
                 Debug.Log(
                     "Atacando o jogador! Vida restante: " + vidaPersonagemMaisProxima.vidaAtual
                 );

@@ -54,7 +54,6 @@ public class CapangaMovimentacao : MonoBehaviour
 
     IEnumerator IntervaloParado()
     {
-        anim.SetInteger("transition", 0);
         podeMover = false;
 
         yield return new WaitForSeconds(5f);
@@ -68,6 +67,5 @@ public class CapangaMovimentacao : MonoBehaviour
         transform.position += direction * speed * Time.deltaTime;
         var rotation = Quaternion.LookRotation(targetPoint.position - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2);
-        anim.SetInteger("transition", 1);
     }
 }
