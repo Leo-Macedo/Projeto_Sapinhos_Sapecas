@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class VerificarFasesTaverna : MonoBehaviour
 {
+    public ControleSensibilidadeCamera controleSensibilidadeCamera;
+
     public int controladorFases = 0;
     public EscudoFuncionando escudoFuncionando;
 
@@ -119,6 +121,8 @@ public class VerificarFasesTaverna : MonoBehaviour
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneBar.Play();
         yield return new WaitForSeconds((float)cutsceneBar.duration);
+        controleSensibilidadeCamera.podePausar = true;
+
         somNoti.Play();
         mensagem[0].SetActive(true);
         yield return new WaitForSeconds(5);
@@ -144,6 +148,8 @@ public class VerificarFasesTaverna : MonoBehaviour
         player.transform.position = pontoNascer1.position;
 
         yield return new WaitForSeconds((float)cutscenePorao.duration);
+        controleSensibilidadeCamera.podePausar = true;
+
         somNoti.Play();
         mensagem[3].SetActive(true);
         yield return new WaitForSeconds(5);
@@ -174,6 +180,8 @@ public class VerificarFasesTaverna : MonoBehaviour
         player.transform.position = pontoNascer2.position;
 
         yield return new WaitForSeconds((float)cutsceneSalaZida.duration);
+        controleSensibilidadeCamera.podePausar = true;
+
         somNoti.Play();
         mensagem[6].SetActive(true);
         yield return new WaitForSeconds(5);

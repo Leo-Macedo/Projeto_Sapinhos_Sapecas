@@ -12,9 +12,12 @@ public class ControleSensibilidadeCamera : MonoBehaviour
     public GameObject telapause;
     private List<Movimento2> movimento2List = new List<Movimento2>();
     private List<CameraFollow> camerasFollow = new List<CameraFollow>();
+    public bool podePausar = false;
 
     void Start()
     {
+                Time.timeScale = 1;
+
         // Encontra todos os objetos com a tag "Player", mesmo que desativados
         GameObject[] allPlayers = Resources.FindObjectsOfTypeAll<GameObject>();
         foreach (GameObject obj in allPlayers)
@@ -52,7 +55,7 @@ public class ControleSensibilidadeCamera : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && podePausar)
         {
             if (jogoPausado)
             {

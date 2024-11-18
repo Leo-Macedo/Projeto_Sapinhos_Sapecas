@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class AbrirComanda : MonoBehaviour
 {
+    public ControleSensibilidadeCamera controleSensibilidadeCamera;
+
     public GameObject comanda;
     public GameObject txtF;
     private bool podeAbrir;
 
-    void Start()
-    {
-        
-    }
+    void Start() { }
 
     void Update()
     {
@@ -28,7 +26,6 @@ public class AbrirComanda : MonoBehaviour
         {
             podeAbrir = true;
             txtF.SetActive(true);
-
         }
     }
 
@@ -39,15 +36,16 @@ public class AbrirComanda : MonoBehaviour
             podeAbrir = false;
             comanda.SetActive(false);
             txtF.SetActive(false);
-
         }
     }
 
     public IEnumerator Abrircomanda()
     {
+        controleSensibilidadeCamera.podePausar = false;
+
         comanda.SetActive(true);
         yield return new WaitForSeconds(3f);
         comanda.SetActive(false);
-
+        controleSensibilidadeCamera.podePausar = true;
     }
 }

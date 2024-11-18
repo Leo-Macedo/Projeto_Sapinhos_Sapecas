@@ -13,10 +13,14 @@ public class MatarVilaoFase1 : MonoBehaviour
     public float alturaColisaoCabeça = 1.5f; // Altura para verificar se o jogador pulou na cabeça
     public bool podeatacar = true;
 
+    private Rigidbody rbJogador; // Referência ao Rigidbody do jogador
+    public float forcaRecuo = 5f; // Força de recuo para trás
+
     void Start()
     {
         vidaVilao = melo.GetComponent<VidaVilao>();
         meloMovimentacao = melo.GetComponent<MeloMovimentacao>();
+        rbJogador = GetComponent<Rigidbody>(); // Obtém o Rigidbody do jogador
     }
 
     void LateUpdate()
@@ -29,24 +33,27 @@ public class MatarVilaoFase1 : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        // Verifica se colidiu com a mosca
         if (other.gameObject.CompareTag("melo"))
         {
             Debug.Log("colidiu com melo");
             if (vidaVilao != null && meloMovimentacao.podeReceberDano)
             {
-                // Verifica se o jogador está pulando na cabeça da mosca
                 float alturaJogador = transform.position.y;
                 float alturaMelo = melo.transform.position.y;
                 Debug.Log($"Altura do jogador: {alturaJogador}, Altura do melo: {alturaMelo}");
 
-                // Verifica se o jogador está pulando na cabeça da mosca
                 if (alturaJogador > alturaMelo + alturaColisaoCabeça && podeatacar)
                 {
-                    // Aplica dano à mosca
                     vidaVilao.ReceberDanoVilao(1);
+
+                    // Calcula a direção de recuo para trás
+                    Vector3 direcaoRecuo = (transform.position - melo.transform.position).normalized;
+                    direcaoRecuo.y = 0; // Mantém a força apenas no plano horizontal
+                    rbJogador.AddForce(direcaoRecuo * forcaRecuo, ForceMode.Impulse);
+
                     podeatacar = false;
                     Invoke("ResetaPodeAtacar", 2f);
+                    meloMovimentacao.TomarDano();
                 }
             }
         }
@@ -59,8 +66,7 @@ public class MatarVilaoFase1 : MonoBehaviour
 
     public void Vitoria()
     {
-        // Marca a fase como completa no PlayerPrefs
         portal.SetActive(true);
-        PlayerPrefs.SetInt("PredioCompletado", 1); // Define o progresso da fase
+        PlayerPrefs.SetInt("PredioCompletado", 1);
     }
 }

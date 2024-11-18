@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI; // Para usar NavMeshAgent
+using UnityEngine.AI;
 
 public class MeloMovimentacao : MonoBehaviour
 {
@@ -13,8 +13,10 @@ public class MeloMovimentacao : MonoBehaviour
     private bool pousado = false; // Define se a mosca está pousada
     public bool podeReceberDano = false;
     private Rigidbody rb;
-    private NavMeshAgent agent; // Referência ao NavMeshAgent
+    private NavMeshAgent agent;
     private Animator animator;
+    private float tempoVooRestante; // Armazena o tempo de voo restante
+    private float tempoPousoRestante; // Armazena o tempo de pouso restante
 
     void Start()
     {
@@ -24,6 +26,8 @@ public class MeloMovimentacao : MonoBehaviour
 
         rb.useGravity = false; // Desativa a gravidade ao começar voando
         agent.enabled = true; // Ativa o NavMeshAgent para começar a seguir o player
+        tempoVooRestante = tempoVoando; // Inicializa o tempo de voo restante
+        tempoPousoRestante = tempoPousado; // Inicializa o tempo de pouso restante
         StartCoroutine(CicloMosca());
     }
 
@@ -38,25 +42,30 @@ public class MeloMovimentacao : MonoBehaviour
         {
             if (voando)
             {
-                // A mosca voa por um período de tempo
-                float tempoVooRestante = tempoVoando;
+                // A mosca voa até que o tempo de voo restante acabe
                 while (tempoVooRestante > 0f)
                 {
-                    SeguirPlayer(); // Segue o jogador enquanto estiver voando
+                    SeguirPlayer();
                     tempoVooRestante -= Time.deltaTime;
                     yield return null;
                 }
-                animator.SetTrigger("cair");
-                yield return new WaitForSeconds(1f);
 
-                // Quando o tempo de voo acaba, ela pousa
                 Pousar();
             }
             else if (pousado)
             {
-                // A mosca espera pousada por um período de tempo antes de voltar a voar
-                yield return new WaitForSeconds(tempoPousado);
-                yield return StartCoroutine(VoltarAVoarSuave()); // Volta a voar suavemente
+                // Se a mosca foi danificada, o tempo de pouso é zerado
+                if (tempoPousoRestante > 0f)
+                {
+                    tempoPousoRestante -= Time.deltaTime;
+                }
+                else
+                {
+                    tempoPousoRestante = tempoPousado; // Reseta o tempo de pouso para o valor inicial
+                    yield return StartCoroutine(VoltarAVoarSuave()); // Volta a voar suavemente
+                }
+
+                yield return null;
             }
         }
     }
@@ -65,10 +74,8 @@ public class MeloMovimentacao : MonoBehaviour
     {
         if (player != null && agent.enabled)
         {
-            // Define o destino do NavMeshAgent como a posição do jogador no plano XZ (ignorando a altura)
             agent.SetDestination(player.position);
 
-            // Mantém a altura da mosca ajustada à altura de voo desejada
             Vector3 posicaoComAltura = new Vector3(transform.position.x, alturaVoo, transform.position.z);
             transform.position = posicaoComAltura;
         }
@@ -79,9 +86,16 @@ public class MeloMovimentacao : MonoBehaviour
         voando = false;
         pousado = true;
         podeReceberDano = true;
-        agent.enabled = false; // Desativa o NavMeshAgent ao pousar
-        rb.useGravity = true; // Ativa a gravidade ao pousar
-        rb.velocity = Vector3.zero; // Para o movimento da mosca
+        agent.enabled = false;
+        rb.useGravity = true;
+        rb.velocity = Vector3.zero;
+        tempoPousoRestante = tempoPousado; // Inicializa o tempo de pouso ao pousar
+    }
+
+    public void TomarDano()
+    {
+        // Zera o tempo de pouso, forçando a mosca a voltar a voar imediatamente
+        tempoPousoRestante = 0f;
     }
 
     IEnumerator VoltarAVoarSuave()
@@ -91,24 +105,22 @@ public class MeloMovimentacao : MonoBehaviour
         voando = true;
         pousado = false;
         podeReceberDano = false;
-        rb.useGravity = false; // Desativa a gravidade ao voltar a voar
-        agent.enabled = true; // Ativa novamente o NavMeshAgent
+        rb.useGravity = false;
+        agent.enabled = true;
+        tempoVooRestante = tempoVoando; // Reinicia o tempo de voo
 
-        // Transição suave de subida
         float alturaInicial = transform.position.y;
         float tempoInicio = Time.time;
-        float duracao = 1f; // Duração da transição suave
+        float duracao = 1f;
 
         while (Time.time - tempoInicio < duracao)
         {
             float t = (Time.time - tempoInicio) / duracao;
             Vector3 novaPosicao = new Vector3(transform.position.x, Mathf.Lerp(alturaInicial, alturaVoo, t), transform.position.z);
-            transform.position = novaPosicao; // Controla a altura durante a subida
+            transform.position = novaPosicao;
             yield return null;
         }
 
-        // Garante que a altura final seja alcançada
         transform.position = new Vector3(transform.position.x, alturaVoo, transform.position.z);
     }
-
 }

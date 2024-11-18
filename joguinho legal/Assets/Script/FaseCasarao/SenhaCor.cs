@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class SenhaCor : MonoBehaviour
 {
+    public ControleSensibilidadeCamera controleSensibilidadeCamera;
+
     [Header("som")]
     public AudioSource[] som;
     public PassarFasesCasarao passarFasesCasarao;
@@ -28,7 +30,6 @@ public class SenhaCor : MonoBehaviour
     public AudioSource somNoti;
     public GameObject mensagem;
     public Animator animatorMSG;
-    
 
     void Start()
     {
@@ -86,19 +87,23 @@ public class SenhaCor : MonoBehaviour
         painelsenha.SetActive(false); // Desativa o painel da senha
         Cursor.lockState = CursorLockMode.Locked; // Trava o cursor
         Cursor.visible = false; // Torna o cursor invisível
+        controleSensibilidadeCamera.podePausar = true;
     }
 
     // Ativa a mensagem de interagir com a senha e abre o painel quando a tecla F é pressionada
     public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
+        {
             cliqueaqui.SetActive(true); // Ativa a mensagem de interagir
 
-        if (Input.GetKeyDown(KeyCode.F)) // Verifica se a tecla F foi pressionada
-        {
-            Cursor.lockState = CursorLockMode.None; // Destrava o cursor
-            Cursor.visible = true; // Torna o cursor visível
-            painelsenha.SetActive(true); // Ativa o painel da senha
+            if (Input.GetKeyDown(KeyCode.F)) // Verifica se a tecla F foi pressionada
+            {
+                Cursor.lockState = CursorLockMode.None; // Destrava o cursor
+                Cursor.visible = true; // Torna o cursor visível
+                painelsenha.SetActive(true); // Ativa o painel da senha
+                controleSensibilidadeCamera.podePausar = false;
+            }
         }
     }
 
@@ -118,12 +123,12 @@ public class SenhaCor : MonoBehaviour
         yield return new WaitForSeconds(2);
         Fechar();
         passarFasesCasarao.completouSenha = true;
-        if(somNoti != null && mensagem != null && animatorMSG != null )
+        if (somNoti != null && mensagem != null && animatorMSG != null)
         {
-        somNoti.Play();
-        mensagem.SetActive(true);
-        yield return new WaitForSeconds(5);
-        animatorMSG.SetTrigger("fechou");
+            somNoti.Play();
+            mensagem.SetActive(true);
+            yield return new WaitForSeconds(5);
+            animatorMSG.SetTrigger("fechou");
         }
     }
 }

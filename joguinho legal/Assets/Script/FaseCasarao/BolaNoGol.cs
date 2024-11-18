@@ -5,7 +5,9 @@ using UnityEngine;
 public class BolaNoGol : MonoBehaviour
 {
     private InstanciadorDeBolas instanciador;
-     // Referência ao script de instanciamento
+    private bool jaColidiu;
+
+    // Referência ao script de instanciamento
 
     void Start()
     {
@@ -15,34 +17,52 @@ public class BolaNoGol : MonoBehaviour
     // Verifica a colisão com diferentes objetos para destruir a bola e permitir nova instância
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("gol"))
+        if (other.gameObject.CompareTag("gol") && !jaColidiu)
         {
             instanciador.SomarGols();
-            Debug.Log("GOOOOOLLLLL");
-            Destroy(gameObject);
-            instanciador.podeInstanciar = true; // Permite instanciar uma nova bola
+            jaColidiu = true;
+            StartCoroutine(ExplodirBolaGol());
+            instanciador.StartCoroutine(instanciador.DebugGol(0));
+
         }
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("naogol"))
+        if (other.gameObject.CompareTag("naogol") && !jaColidiu)
         {
-            Debug.Log("Pra fora!");
-            Destroy(gameObject);
-            instanciador.podeInstanciar = true; // Permite instanciar uma nova bola
+            StartCoroutine(ExplodirBola());
+            instanciador.StartCoroutine(instanciador.DebugGol(1));
+
         }
-        else if (other.gameObject.CompareTag("trave"))
+        else if (other.gameObject.CompareTag("trave") && !jaColidiu)
         {
-            Debug.Log("Na trave!");
-            Destroy(gameObject);
-            instanciador.podeInstanciar = true; // Permite instanciar uma nova bola
+            StartCoroutine(ExplodirBola());
+            instanciador.StartCoroutine(instanciador.DebugGol(2));
+
         }
-        else if (other.gameObject.CompareTag("goleiro"))
+        else if (other.gameObject.CompareTag("goleiro") && !jaColidiu)
         {
-            Debug.Log("Defendeu goleiro!");
-            Destroy(gameObject);
-            instanciador.podeInstanciar = true; // Permite instanciar uma nova bola
+            StartCoroutine(ExplodirBola());
+            instanciador.StartCoroutine(instanciador.DebugGol(3));
         }
+    }
+
+    public IEnumerator ExplodirBola()
+    {
+        jaColidiu = true;
+
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
+        GameObject prefab = Resources.Load<GameObject>("explosao");
+        Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
+    }
+
+    public IEnumerator ExplodirBolaGol()
+    {
+        Destroy(gameObject);
+        GameObject prefab = Resources.Load<GameObject>("explosao2");
+        Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(3f);
     }
 }

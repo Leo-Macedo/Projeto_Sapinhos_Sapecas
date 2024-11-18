@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Senha : MonoBehaviour
 {
+    public ControleSensibilidadeCamera controleSensibilidadeCamera;
+
     [Header("Senha")]
     public TextMeshProUGUI telasenha; // Texto que mostra a senha inserida
     public string senhacorreta = "1234"; // Senha correta
@@ -78,6 +80,7 @@ public class Senha : MonoBehaviour
         painelsenha.SetActive(false); // Desativa o painel da senha
         Cursor.lockState = CursorLockMode.Locked; // Trava o cursor
         Cursor.visible = false; // Torna o cursor invisível
+        controleSensibilidadeCamera.podePausar = true;
     }
 
     // Ativa a mensagem de interagir com a senha e abre o painel quando a tecla F é pressionada
@@ -91,6 +94,7 @@ public class Senha : MonoBehaviour
             Cursor.lockState = CursorLockMode.None; // Destrava o cursor
             Cursor.visible = true; // Torna o cursor visível
             painelsenha.SetActive(true); // Ativa o painel da senha
+            controleSensibilidadeCamera.podePausar = false;
         }
     }
 

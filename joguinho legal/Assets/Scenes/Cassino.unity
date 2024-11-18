@@ -758,6 +758,7 @@ MonoBehaviour:
   sliderSensibilidade: {fileID: 1623433352}
   textoSensibilidade: {fileID: 2069680881}
   telapause: {fileID: 931325921}
+  podePausar: 1
 --- !u!4 &84068765
 Transform:
   m_ObjectHideFlags: 0
@@ -1268,7 +1269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfa328e5d00fee84991e51317903d5f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.666403
+      value: -20.64
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfa328e5d00fee84991e51317903d5f3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1276,7 +1277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfa328e5d00fee84991e51317903d5f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.7664342
+      value: 2.964
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfa328e5d00fee84991e51317903d5f3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3928,6 +3929,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distAtaque: 1.5
   somSoco: {fileID: 1739093943}
+  layerParaVerificar:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &410629145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14275,6 +14279,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distAtaque: 1.5
   somSoco: {fileID: 1739093943}
+  layerParaVerificar:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1555243716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18359,6 +18366,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distAtaque: 1.5
   somSoco: {fileID: 1739093943}
+  layerParaVerificar:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1795253274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20154,6 +20164,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distAtaque: 1.5
   somSoco: {fileID: 1739093943}
+  layerParaVerificar:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &2018230879
 MonoBehaviour:
   m_ObjectHideFlags: 0

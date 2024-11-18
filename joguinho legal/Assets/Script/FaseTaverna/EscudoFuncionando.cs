@@ -6,7 +6,7 @@ using UnityEngine;
 public class EscudoFuncionando : MonoBehaviour
 {
     public int contadorEscudo;
-
+    public Animator animatoPorta;
     [Header("Referencias")]
     public AudioSource somPegou;
     public TextMeshProUGUI txtEscudosPegos;
@@ -18,6 +18,10 @@ public class EscudoFuncionando : MonoBehaviour
     void Update()
     {
         AtivarEscudo();
+        if( contadorEscudo == 3)
+        {
+            animatoPorta.SetTrigger("abrir");
+        }
     }
 
     private void OnTriggerEnter(Collider other)

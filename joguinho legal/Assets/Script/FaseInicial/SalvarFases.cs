@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class SalvarFases : MonoBehaviour
 {
+    public ControleSensibilidadeCamera controleSensibilidadeCamera;
+
     // Constantes para as chaves do PlayerPrefs
     private const string PredioCompletadoKey = "PredioCompletado";
     private const string TavernaCompletadaKey = "TavernaCompletada";
@@ -85,17 +87,17 @@ public class SalvarFases : MonoBehaviour
 
         if (PlayerPrefs.GetInt(TavernaCompletadaKey, 0) == 0)
         {
-            TavernaDesbloqueada();
+            StartCoroutine(TavernaDesbloqueada());
             return;
         }
 
         if (PlayerPrefs.GetInt(CassinoCompletadoKey, 0) == 0)
         {
-            CassinoDesbloqueado();
+            StartCoroutine(CassinoDesbloqueado());
             return;
         }
 
-        CasaraoDesbloqueado();
+        StartCoroutine(CasaraoDesbloqueado());
     }
 
     // Método para resetar o estado dos objetos
@@ -138,7 +140,7 @@ public class SalvarFases : MonoBehaviour
     }
 
     // Desbloqueia a Taverna
-    public void TavernaDesbloqueada()
+    public IEnumerator TavernaDesbloqueada()
     {
         Debug.Log("Metodo chamado TavernaDesbloqueada e fase1 predio completada");
         cutsceneTaverna.Play();
@@ -150,10 +152,13 @@ public class SalvarFases : MonoBehaviour
         GOCutsceneInicial.SetActive(false);
         freeLookCamera.Follow = rivaldinhoAnda.transform;
         freeLookCamera.LookAt = rivaldinhoAnda.transform;
+
+        yield return new WaitForSeconds((float)cutsceneTaverna.duration);
+        controleSensibilidadeCamera.podePausar = true;
     }
 
     // Desbloqueia o Cassino
-    public void CassinoDesbloqueado()
+    public IEnumerator CassinoDesbloqueado()
     {
         Debug.Log("Metodo chamado CassinoDesbloqueado e fase2 taverna completada");
 
@@ -167,10 +172,13 @@ public class SalvarFases : MonoBehaviour
         GOCutsceneInicial.SetActive(false);
         freeLookCamera.Follow = romarinhoAnda.transform;
         freeLookCamera.LookAt = romarinhoAnda.transform;
+
+        yield return new WaitForSeconds((float)cutsceneCassino.duration);
+        controleSensibilidadeCamera.podePausar = true;
     }
 
     // Desbloqueia o Casarão
-    public void CasaraoDesbloqueado()
+    public IEnumerator CasaraoDesbloqueado()
     {
         Debug.Log("Metodo chamado CasaraoDesbloqueado e fase3 taverna completada");
         cutsceneCasarao.Play();
@@ -184,6 +192,9 @@ public class SalvarFases : MonoBehaviour
         GOCutsceneInicial.SetActive(false);
         freeLookCamera.Follow = ronaldinhoAnda.transform;
         freeLookCamera.LookAt = ronaldinhoAnda.transform;
+
+        yield return new WaitForSeconds((float)cutsceneCasarao.duration);
+        controleSensibilidadeCamera.podePausar = true;
     }
 
     public void PodeAndar()
@@ -196,7 +207,7 @@ public class SalvarFases : MonoBehaviour
     public void Começar()
     {
         martinha1.SetActive(true);
-
+        controleSensibilidadeCamera.podePausar = true;
         PodeAndar();
         PlayerPrefs.SetInt("TutorialCompletado", 2);
     }

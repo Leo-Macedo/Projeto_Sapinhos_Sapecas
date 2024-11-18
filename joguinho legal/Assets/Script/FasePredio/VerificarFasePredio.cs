@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class VerificarFasePredio : MonoBehaviour
 {
+    public ControleSensibilidadeCamera controleSensibilidadeCamera;
+
     public int controladorFases = 0;
     public PassarFases passarFases;
 
@@ -157,6 +159,7 @@ public class VerificarFasePredio : MonoBehaviour
         vidaPersonagem.vidaAtual = 3;
         superRonaldinho.podeUtar = false;
         yield return new WaitForSeconds((float)cutsceneAndar1.duration);
+        controleSensibilidadeCamera.podePausar = true;
         somNoti.Play();
         mensagem1.SetActive(true);
         yield return new WaitForSeconds(5);
@@ -180,6 +183,8 @@ public class VerificarFasePredio : MonoBehaviour
         Super.SetActive(true);
 
         yield return new WaitForSeconds((float)cutsceneAndar2.duration);
+        controleSensibilidadeCamera.podePausar = true;
+
         cilindroCapanga.SetActive(false);
         somNoti.Play();
         mensagem3.SetActive(true);
@@ -209,6 +214,8 @@ public class VerificarFasePredio : MonoBehaviour
         Super.SetActive(true);
 
         yield return new WaitForSeconds((float)cutsceneAndar3.duration);
+        controleSensibilidadeCamera.podePausar = true;
+
         cilindroCapanga3.SetActive(false);
         somNoti.Play();
         mensagem6.SetActive(true);
@@ -228,6 +235,7 @@ public class VerificarFasePredio : MonoBehaviour
         superRonaldinho.podeUtar = true;
 
         yield return new WaitForSeconds((float)cutsceneAndar3.duration);
+        controleSensibilidadeCamera.podePausar = true;
 
         cilindroVilao.SetActive(false);
         somNoti.Play();

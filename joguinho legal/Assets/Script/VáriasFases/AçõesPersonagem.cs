@@ -10,8 +10,27 @@ public class AçõesPersonagem : MonoBehaviour
     private CapangaSegueEMorre capangaSegueEMorre;
     private bool podeMatarCapanga = false;
     public float distAtaque = 1f; // Distância máxima para atacar o capanga
-    
+
     public AudioSource somSoco;
+
+    public LayerMask layerParaVerificar;
+
+    bool PodeDarSoco()
+    {
+        
+        GameObject[] todosObjetos = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        foreach (GameObject objeto in todosObjetos)
+        {
+            
+            if (((1 << objeto.layer) & layerParaVerificar) != 0 && objeto.activeSelf)
+            {
+                
+                return false;
+            }
+        }
+
+        return true; 
+    }
 
     void Start()
     {
@@ -24,12 +43,14 @@ public class AçõesPersonagem : MonoBehaviour
 
     void Update()
     {
-      
         // Entrada do jogador para ações
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            somSoco.Play();
-            animator.SetTrigger("soco");
+            if (PodeDarSoco())
+            {
+                somSoco.Play();
+                animator.SetTrigger("soco");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -48,8 +69,6 @@ public class AçõesPersonagem : MonoBehaviour
             IniciarDesvio();
         }
     }
-
-   
 
     void IniciarDesvio()
     {
@@ -74,7 +93,10 @@ public class AçõesPersonagem : MonoBehaviour
         EncontrarCapangaMaisProximo();
         if (capangaSegueEMorre != null)
         {
-            float distancia = Vector3.Distance(transform.position, capangaSegueEMorre.transform.position);
+            float distancia = Vector3.Distance(
+                transform.position,
+                capangaSegueEMorre.transform.position
+            );
             if (podeMatarCapanga && distancia <= distAtaque)
             {
                 capangaSegueEMorre.ReceberDanoCapanga(1);

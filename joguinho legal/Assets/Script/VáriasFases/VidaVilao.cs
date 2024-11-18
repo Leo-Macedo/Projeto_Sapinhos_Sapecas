@@ -18,8 +18,8 @@ public class VidaVilao : MonoBehaviour
         get { return _vidaVilao; }
         set
         {
-            _vidaVilao = Mathf.Max(0, value); // Garante que a vida não seja negativa
-            slidervidavilao.value = _vidaVilao; // Atualiza o slider
+            _vidaVilao = Mathf.Max(0, value); 
+            slidervidavilao.value = _vidaVilao; 
             Debug.Log("Vida do Vilão: " + _vidaVilao);
 
             if (_vidaVilao <= 0)
