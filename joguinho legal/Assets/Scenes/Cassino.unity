@@ -1819,7 +1819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.99197686, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3757,6 +3757,8 @@ MonoBehaviour:
   chargeTime: 5
   superDuration: 5
   superSlider: {fileID: 99795477}
+  slider: {fileID: 2015420976}
+  corSuper: {r: 0.3882353, g: 0, b: 0, a: 1}
   romarinho: {fileID: 410629139}
   particulas: {fileID: 1078558275}
 --- !u!120 &410629142
@@ -6350,7 +6352,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 750, y: 750}
+  m_SizeDelta: {x: 10000, y: 10000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &622162144
 GameObject:
@@ -10519,7 +10521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.99197686, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -14213,6 +14215,8 @@ MonoBehaviour:
   chargeTime: 5
   superDuration: 5
   superSlider: {fileID: 1442100973}
+  slider: {fileID: 0}
+  corSuper: {r: 0, g: 0, b: 0, a: 0}
   romarinho: {fileID: 2018230877}
   particulas: {fileID: 1703643058}
 --- !u!114 &1555243714
@@ -18033,7 +18037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.99197686, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -18194,6 +18198,8 @@ MonoBehaviour:
   chargeTime: 5
   superDuration: 5
   superSlider: {fileID: 2132782887}
+  slider: {fileID: 929919828}
+  corSuper: {r: 0.3882353, g: 0, b: 0, a: 1}
   romarinho: {fileID: 1795253268}
   particulas: {fileID: 1158214986}
 --- !u!120 &1795253271
@@ -20499,6 +20505,8 @@ MonoBehaviour:
   chargeTime: 5
   superDuration: 5
   superSlider: {fileID: 1442100973}
+  slider: {fileID: 1782472328}
+  corSuper: {r: 0.3882353, g: 0, b: 0, a: 1}
   romarinho: {fileID: 2018230877}
   particulas: {fileID: 1703643058}
 --- !u!1 &2027282072

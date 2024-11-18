@@ -1,13 +1,16 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class SuperRonaldinho : MonoBehaviour
 {
     [Header("Super Settings")]
     public float chargeTime = 10f; // Tempo para carregar o super
     public Slider superSlider; // Referência ao Slider UI
+    public Image slider; // Imagem da barra do slider
+    public Color corSuper; // Cor do slider quando o super está pronto
+    private Color corInicial; // Cor inicial do slider
 
     [Header("Ronaldinho")]
     public GameObject ronaldinho; // Alterado de romarinho para ronaldinho
@@ -35,6 +38,7 @@ public class SuperRonaldinho : MonoBehaviour
     {
         rb = ronaldinho.GetComponent<Rigidbody>();
         transformRonaldinho = ronaldinho.GetComponent<Transform>();
+        corInicial = slider.color; // Guarda a cor inicial do slider
 
         StartChargingSuper();
 
@@ -59,6 +63,8 @@ public class SuperRonaldinho : MonoBehaviour
             {
                 isCharging = false;
                 isSuperReady = true;
+                slider.color = corSuper;
+                superSlider.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
                 Debug.Log("Super carregado e pronto para ativar!");
             }
         }
@@ -84,6 +90,7 @@ public class SuperRonaldinho : MonoBehaviour
         superSlider.value = currentChargeTime;
         isSuperReady = false;
         isSuperActive = false;
+        slider.color = corInicial;
     }
 
     private void ActivateSuper()
@@ -91,6 +98,8 @@ public class SuperRonaldinho : MonoBehaviour
         if (isSuperReady)
         {
             Debug.Log("Super ativado!");
+            slider.color = corInicial;
+            superSlider.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
             isSuperActive = true;
             isSuperReady = false;
@@ -135,7 +144,10 @@ public class SuperRonaldinho : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        Collider[] capangas = Physics.OverlapSphere(transformRonaldinho.position, raioDetectarCapangas);
+        Collider[] capangas = Physics.OverlapSphere(
+            transformRonaldinho.position,
+            raioDetectarCapangas
+        );
         foreach (var col in capangas)
         {
             if (col.CompareTag("capanga"))
@@ -150,8 +162,9 @@ public class SuperRonaldinho : MonoBehaviour
 
                 if (capangaRb != null)
                 {
-                    // Calcula a direção para trás com uma força vertical
-                    Vector3 direcaoParaTras = (col.transform.position - transformRonaldinho.position).normalized;
+                    Vector3 direcaoParaTras = (
+                        col.transform.position - transformRonaldinho.position
+                    ).normalized;
                     Vector3 forcaTotal = (direcaoParaTras * forcaTras) + (Vector3.up * forcaCima);
 
                     capangaRb.AddForce(forcaTotal, ForceMode.Impulse);

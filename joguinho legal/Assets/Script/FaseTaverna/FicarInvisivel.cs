@@ -10,6 +10,10 @@ public class FicarInvisivel : MonoBehaviour
     public float superDuration = 5f; // Duração do super
     public Slider superSlider; // Referência ao Slider UI
 
+    public Image slider;
+    public Color corSuper;
+    private Color corInicial;
+
     private float currentChargeTime = 0f;
     private bool isCharging = false;
     private bool isSuperReady = false;
@@ -21,17 +25,19 @@ public class FicarInvisivel : MonoBehaviour
 
     void Start()
     {
-         StartChargingSuper();
+        StartChargingSuper();
+        corInicial = slider.color;
 
         // Inicializa o slider
         superSlider.maxValue = chargeTime;
         superSlider.value = 0f;
-            }
+    }
+
     private void Update()
     {
         CarregarSuper();
-    
     }
+
     public void StartChargingSuper()
     {
         isCharging = true;
@@ -53,6 +59,9 @@ public class FicarInvisivel : MonoBehaviour
             {
                 isCharging = false;
                 isSuperReady = true;
+                slider.color = corSuper;
+                superSlider.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
+
                 Debug.Log("Super carregado e pronto para ativar!");
             }
         }
@@ -77,25 +86,28 @@ public class FicarInvisivel : MonoBehaviour
         }
     }
 
-     private void ActivateSuper()
+    private void ActivateSuper()
     {
         if (isSuperReady)
         {
             isInvisible = true;
             isSuperActive = true; // Super foi ativado
             isSuperReady = false; // Não pode ativar novamente até recarregar
-            SetVisibility(isInvisible);// Torna o objeto invisível
+            SetVisibility(isInvisible); // Torna o objeto invisível
         }
     }
 
     private void DeactivateSuper()
     {
         isInvisible = false;
-        isSuperActive = false; // Super foi desativado
+        isSuperActive = false;
+        slider.color = corInicial;
+        superSlider.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+        // Super foi desativado
         currentChargeTime = 0f;
         superSlider.value = 0f;
         StartChargingSuper();
-        SetVisibility(isInvisible); 
+        SetVisibility(isInvisible);
     }
 
     private void SetVisibility(bool invisible)

@@ -11,12 +11,15 @@ public class PegarPlayer : MonoBehaviour
     public float detectionRange;
     public GameObject player;
     public LayerMask LayersBloqueadas;
+    private FicarInvisivel ficarInvisivel;
 
 
     private bool pegou;
 
     void Start()
     {
+        ficarInvisivel = player.GetComponent<FicarInvisivel>();
+        
         if (enemySpotlight != null)
         {
             enemySpotlight.color = originalColor;
@@ -28,8 +31,8 @@ public class PegarPlayer : MonoBehaviour
         if (!pegou)
         {
 
-            // Verifica se o jogador está dentro do alcance da visão do inimigo
-            if (PlayerNaArea())
+            // Verifica se o jogador estï¿½ dentro do alcance da visï¿½o do inimigo
+            if (PlayerNaArea() && !ficarInvisivel.isInvisible)
             {
                 StartCoroutine(perseguirPlayer());
                 pegou = true;
@@ -63,21 +66,21 @@ public class PegarPlayer : MonoBehaviour
 
     bool PlayerNaArea()
     {
-        // Calcula a direção do inimigo para o jogador
+        // Calcula a direï¿½ï¿½o do inimigo para o jogador
         Vector3 directionToPlayer = player.GetComponent<Transform>().position - transform.position;
 
-        // Verifica se o jogador está dentro do cone de visão do Spot Light
+        // Verifica se o jogador estï¿½ dentro do cone de visï¿½o do Spot Light
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
         if (angleToPlayer < enemySpotlight.spotAngle / 2 && directionToPlayer.magnitude <= detectionRange)
         {
-            // Verifica se há algum objeto na linha de visão que está em uma layer que bloqueia a visão
+            // Verifica se hï¿½ algum objeto na linha de visï¿½o que estï¿½ em uma layer que bloqueia a visï¿½o
             if (!Physics.Linecast(transform.position, player.GetComponent<Transform>().position, LayersBloqueadas))
             {
-                return true; // Retorna verdadeiro se não houver bloqueio
+                return true; // Retorna verdadeiro se nï¿½o houver bloqueio
             }
         }
 
-        return false; // Retorna falso se o jogador estiver fora da visão ou bloqueado
+        return false; // Retorna falso se o jogador estiver fora da visï¿½o ou bloqueado
     }
 }

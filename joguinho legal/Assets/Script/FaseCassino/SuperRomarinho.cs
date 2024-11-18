@@ -10,6 +10,10 @@ public class SuperSystem : MonoBehaviour
     public float superDuration = 5f; // Duração do super
     public Slider superSlider; // Referência ao Slider UI
 
+    public Image slider;
+    public Color corSuper;
+    private Color corInicial;
+
     [Header("Romarinho")]
     public GameObject romarinho;
     public ParticleSystem particulas;
@@ -29,6 +33,7 @@ public class SuperSystem : MonoBehaviour
         movimento2 = GetComponent<Movimento2>();
         matarVilao = GetComponent<MatarVilao>();
         transformRomarinho = GetComponent<Transform>();
+        corInicial = slider.color;
 
         StartChargingSuper();
 
@@ -57,6 +62,9 @@ public class SuperSystem : MonoBehaviour
             {
                 isCharging = false;
                 isSuperReady = true;
+                slider.color = corSuper;
+                superSlider.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
+
                 Debug.Log("Super carregado e pronto para ativar!");
             }
         }
@@ -97,6 +105,7 @@ public class SuperSystem : MonoBehaviour
         {
             Debug.Log("Super ativado!");
             //referencias variaveis
+
             movimento2.veloAndando *= 4;
             movimento2.veloCorrendo *= 4;
             matarVilao.danoAtaque *= 2;
@@ -116,6 +125,9 @@ public class SuperSystem : MonoBehaviour
         isSuperActive = false;
         currentChargeTime = 0f;
         superSlider.value = 0f;
+        slider.color = corInicial;
+        superSlider.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
         matarVilao.distAtaque = originalDistAtaque;
         particulas.Stop();
 
