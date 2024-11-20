@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
@@ -38,9 +39,18 @@ public class VerificarFasesCasarao : MonoBehaviour
     public GameObject ronaldo;
     public GameObject[] canvas;
     public Transform waiPoint;
+    private NavMeshAgent[] allAgents;
 
     void Start()
     {
+        // Encontra e desativa todos os NavMeshAgents
+        allAgents = Object.FindObjectsByType<NavMeshAgent>(FindObjectsSortMode.None);
+        
+        foreach (NavMeshAgent agent in allAgents)
+        {
+            agent.enabled = false;
+        }
+
         vidaPersonagem = ronaldo.GetComponent<VidaPersonagem>();
         controladorFases = PlayerPrefs.GetInt("ControladorFasesCasarao", 0);
 
@@ -52,7 +62,6 @@ public class VerificarFasesCasarao : MonoBehaviour
 
         foreach (Movimento2 movimento in movimento2)
         {
-            // Aqui você pode acessar cada elemento
             Debug.Log(
                 $"Velocidade Andando: {movimento.veloAndando}, Velocidade Correndo: {movimento.veloCorrendo}"
             );
@@ -110,6 +119,11 @@ public class VerificarFasesCasarao : MonoBehaviour
         cutscenePorao.Play();
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         yield return new WaitForSeconds((float)cutscenePorao.duration);
+
+        foreach (NavMeshAgent agent in allAgents)
+        {
+            agent.enabled = true;
+        }
         cubo.SetActive(false);
         somNoti.Play();
         mensagem[0].SetActive(true);
@@ -160,7 +174,6 @@ public class VerificarFasesCasarao : MonoBehaviour
 
     public IEnumerator SegundoAndar()
     {
-       
         cutsceneSegundoAndar.Play();
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         yield return new WaitForSeconds((float)cutsceneSegundoAndar.duration);

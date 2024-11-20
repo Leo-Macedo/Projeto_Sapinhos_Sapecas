@@ -16,6 +16,7 @@ public class LançarObjetoEMoverOlivia : MonoBehaviour
     private int waypointAtual = -1;
     private Rigidbody rb;
     public bool podeLancar = false;
+    public bool andando = false; // Variável para indicar se está andando
     public VidaVilao vidaVilao;
 
     void Start()
@@ -42,10 +43,24 @@ public class LançarObjetoEMoverOlivia : MonoBehaviour
             waypointAtual = randomIndex;
             Transform targetWaypoint = waypoints[randomIndex];
 
-            while (Vector3.Distance(transform.position, targetWaypoint.position) > 0.1f)
+            andando = true; // Define como andando ao começar a mover
+            animator.SetBool("andando", true); // Atualiza o Animator
+
+            while (
+                Vector3.Distance(
+                    new Vector3(transform.position.x, 0, transform.position.z),
+                    new Vector3(targetWaypoint.position.x, 0, targetWaypoint.position.z)
+                ) > 0.1f
+            )
             {
-                Vector3 direcao = (targetWaypoint.position - transform.position).normalized;
+                Vector3 direcao = new Vector3(
+                    targetWaypoint.position.x - transform.position.x,
+                    0, // Ignora a altura
+                    targetWaypoint.position.z - transform.position.z
+                ).normalized;
+
                 transform.position += direcao * moveSpeed * Time.deltaTime;
+
                 Quaternion lookRotation = Quaternion.LookRotation(direcao);
                 lookRotation.x = 0;
                 lookRotation.z = 0;
@@ -57,6 +72,9 @@ public class LançarObjetoEMoverOlivia : MonoBehaviour
 
                 yield return null;
             }
+
+            andando = false; // Define como parado ao atingir o destino
+            animator.SetBool("andando", false); // Atualiza o Animator
 
             if (podeLancar)
             {

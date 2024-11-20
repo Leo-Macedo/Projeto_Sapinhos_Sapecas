@@ -15,14 +15,17 @@ public class MeloMovimentacao : MonoBehaviour
     private Rigidbody rb;
     private NavMeshAgent agent;
     private Animator animator;
-    private float tempoVooRestante; // Armazena o tempo de voo restante
-    private float tempoPousoRestante; // Armazena o tempo de pouso restante
+    private VidaVilao vidaVilao;
+    private float tempoVooRestante;
+    private float tempoPousoRestante;
+    private bool pousando = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        vidaVilao = GetComponent<VidaVilao>();
 
         rb.useGravity = false; // Desativa a gravidade ao começar voando
         agent.enabled = true; // Ativa o NavMeshAgent para começar a seguir o player
@@ -38,7 +41,7 @@ public class MeloMovimentacao : MonoBehaviour
 
     IEnumerator CicloMosca()
     {
-        while (true)
+        while (!vidaVilao.morreuvilao)
         {
             if (voando)
             {
@@ -50,11 +53,13 @@ public class MeloMovimentacao : MonoBehaviour
                     yield return null;
                 }
 
-                Pousar();
+                if (!pousando) // Verifica se já está pousando
+                {
+                    yield return StartCoroutine(Pousar()); // Aguarda a conclusão da corrotina
+                }
             }
             else if (pousado)
             {
-                // Se a mosca foi danificada, o tempo de pouso é zerado
                 if (tempoPousoRestante > 0f)
                 {
                     tempoPousoRestante -= Time.deltaTime;
@@ -76,20 +81,28 @@ public class MeloMovimentacao : MonoBehaviour
         {
             agent.SetDestination(player.position);
 
-            Vector3 posicaoComAltura = new Vector3(transform.position.x, alturaVoo, transform.position.z);
+            Vector3 posicaoComAltura = new Vector3(
+                transform.position.x,
+                alturaVoo,
+                transform.position.z
+            );
             transform.position = posicaoComAltura;
         }
     }
 
-    public void Pousar()
+    public IEnumerator Pousar()
     {
+        animator.SetTrigger("cair");
+        pousando = true;
+        yield return new WaitForSeconds(1f);
         voando = false;
         pousado = true;
         podeReceberDano = true;
         agent.enabled = false;
         rb.useGravity = true;
         rb.velocity = Vector3.zero;
-        tempoPousoRestante = tempoPousado; // Inicializa o tempo de pouso ao pousar
+        tempoPousoRestante = tempoPousado;
+        pousando = false;
     }
 
     public void TomarDano()
@@ -116,7 +129,11 @@ public class MeloMovimentacao : MonoBehaviour
         while (Time.time - tempoInicio < duracao)
         {
             float t = (Time.time - tempoInicio) / duracao;
-            Vector3 novaPosicao = new Vector3(transform.position.x, Mathf.Lerp(alturaInicial, alturaVoo, t), transform.position.z);
+            Vector3 novaPosicao = new Vector3(
+                transform.position.x,
+                Mathf.Lerp(alturaInicial, alturaVoo, t),
+                transform.position.z
+            );
             transform.position = novaPosicao;
             yield return null;
         }

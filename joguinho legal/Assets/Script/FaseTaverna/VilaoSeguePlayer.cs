@@ -84,7 +84,7 @@ private IEnumerator StopCharge()
 
     yield return new WaitForSeconds(3);
 
-    float lookDuration = 10f; // Duração de tempo que o vilão deve olhar para o jogador
+    float lookDuration = 3f; // Duração de tempo que o vilão deve olhar para o jogador
     float elapsedTime = 0f;
 
     while (elapsedTime < lookDuration)
