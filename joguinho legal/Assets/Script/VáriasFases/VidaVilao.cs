@@ -18,8 +18,8 @@ public class VidaVilao : MonoBehaviour
         get { return _vidaVilao; }
         set
         {
-            _vidaVilao = Mathf.Max(0, value); 
-            slidervidavilao.value = _vidaVilao; 
+            _vidaVilao = Mathf.Max(0, value);
+            slidervidavilao.value = _vidaVilao;
             Debug.Log("Vida do Vilão: " + _vidaVilao);
 
             if (_vidaVilao <= 0)
@@ -37,10 +37,12 @@ public class VidaVilao : MonoBehaviour
 
     // Script VidaPersonagem
     public GameObject player;
-    private VidaPersonagem vidaPersonagem;
+    public VidaPersonagem vidaPersonagem;
     public bool morreuvilao = false;
     public int VidaInicial;
 
+    public bool edmundo;
+    public Transform ponto;
 
     void Start()
     {
@@ -62,10 +64,16 @@ public class VidaVilao : MonoBehaviour
         Vida -= dano;
         if (animatorvilao != null)
         {
-        animatorvilao.SetBool("caiu", true);
+            animatorvilao.SetBool("caiu", true);
         }
         Invoke("Resetou", 2);
         somDor.Play();
+
+        if (edmundo)
+        {
+            GameObject prefab = Resources.Load<GameObject>("Gosma");
+            Instantiate(prefab, ponto.position, Quaternion.identity);
+        }
 
         if (vidaPersonagem.vidaAtual <= 0)
         {
@@ -84,8 +92,8 @@ public class VidaVilao : MonoBehaviour
 
         if (animatorvilao != null)
         {
-        animatorvilao.SetBool("caiu", false);
-        animatorvilao.SetBool("nocaute", true);
+            animatorvilao.SetBool("caiu", false);
+            animatorvilao.SetBool("nocaute", true);
         }
         rb.constraints = RigidbodyConstraints.FreezeAll;
         morreuvilao = true;
@@ -95,7 +103,7 @@ public class VidaVilao : MonoBehaviour
     {
         if (animatorvilao != null)
         {
-        animatorvilao.SetBool("caiu", false);
+            animatorvilao.SetBool("caiu", false);
         }
     }
 }

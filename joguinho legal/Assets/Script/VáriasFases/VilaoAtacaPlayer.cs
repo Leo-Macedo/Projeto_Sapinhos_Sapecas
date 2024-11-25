@@ -6,13 +6,14 @@ using UnityEngine.AI;
 public class VilaoAtacaPlayer : MonoBehaviour
 {
     [Header("Referências do Jogador")]
+    public SuperSystem superSystem;
     public Transform player; // Transform do jogador
-    private AçõesPersonagem açõesPersonagem; // Script de ações do jogador
+    public AçõesPersonagem açõesPersonagem; // Script de ações do jogador
     private MeloMovimentacao meloMovimentacao; // Script de movimentação (MeloMovimentacao)
 
     [Header("Scripts")]
     private VidaVilao vidaVilao; // Script de vida do vilão
-    private VidaPersonagem vidaPersonagemScript; // Script de vida do jogador
+    public VidaPersonagem vidaPersonagemScript; // Script de vida do jogador
 
     public Animator animator; // Animator do vilão
     public float distAtaque; // Distância do ataque
@@ -36,7 +37,7 @@ public class VilaoAtacaPlayer : MonoBehaviour
         if (!vidaPersonagemScript.acabouojogo)
         {
             // Se o script MeloMovimentacao existir, verifica se o jogador está voando
-            if (distancia <= distAtaque && (meloMovimentacao == null || meloMovimentacao.voando))
+            if (distancia <= distAtaque && (meloMovimentacao == null || meloMovimentacao.voando) && !superSystem.isSuperActive)
             {
                 animator.SetBool("ataque", true); // Inicia a animação de ataque
                 Invoke("NãoPodeAtacar", 1); // Reseta a animação de ataque após 1 segundo

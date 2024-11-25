@@ -17,22 +17,27 @@ public class SuperSystem : MonoBehaviour
     [Header("Romarinho")]
     public GameObject romarinho;
     public ParticleSystem particulas;
-    private Movimento2 movimento2;
     private MatarVilao matarVilao;
-    private Transform transformRomarinho;
 
     private float currentChargeTime = 0f;
     private bool isCharging = false;
     private bool isSuperReady = false;
-    private bool isSuperActive = false;
+    public bool isSuperActive = false;
 
     private float originalDistAtaque;
 
+    public GameObject romarioNormal;
+    public GameObject romarioSuper;
+
+    public VidaPersonagem vidaRomarioNormal;
+    public VidaPersonagem vidaRomarioSuper;
+    public VilaoSegueEAtaca vilaoSegueEAtaca;
+    public VidaVilao vidaVilao;
+    public VilaoAtacaPlayer vilaoAtacaPlayer;
+
     void Start()
     {
-        movimento2 = GetComponent<Movimento2>();
         matarVilao = GetComponent<MatarVilao>();
-        transformRomarinho = GetComponent<Transform>();
         corInicial = slider.color;
 
         StartChargingSuper();
@@ -41,7 +46,11 @@ public class SuperSystem : MonoBehaviour
         superSlider.maxValue = chargeTime;
         superSlider.value = 0f;
 
-        originalDistAtaque = matarVilao.distAtaque;
+        // Garante que apenas o romarioNormal esteja ativo no início
+        romarioNormal.SetActive(true);
+        romarioSuper.SetActive(false);
+
+        // Referência ao vilão
     }
 
     void Update()
@@ -69,7 +78,7 @@ public class SuperSystem : MonoBehaviour
             }
         }
 
-        // Verifica se o super está pronto e a tecla "I" foi pressionada
+        // Verifica se o super está pronto e a tecla "R" foi pressionada
         if (isSuperReady && Input.GetKeyDown(KeyCode.R))
         {
             ActivateSuper();
@@ -89,7 +98,6 @@ public class SuperSystem : MonoBehaviour
         }
     }
 
-    // Método para começar a carregar o super
     public void StartChargingSuper()
     {
         isCharging = true;
@@ -98,19 +106,35 @@ public class SuperSystem : MonoBehaviour
         isSuperActive = false;
     }
 
-    // Método para ativar o super
     private void ActivateSuper()
     {
         if (isSuperReady)
         {
             Debug.Log("Super ativado!");
-            //referencias variaveis
 
-            movimento2.veloAndando *= 4;
-            movimento2.veloCorrendo *= 4;
-            matarVilao.danoAtaque *= 2;
-            transformRomarinho.localScale *= 1.5f;
-            matarVilao.distAtaque = 4f;
+            // Sincroniza posição e rotação
+            Vector3 currentPosition = romarioNormal.transform.position;
+            Quaternion currentRotation = romarioNormal.transform.rotation;
+
+            romarioSuper.transform.position = currentPosition;
+            romarioSuper.transform.rotation = currentRotation;
+
+            // Sincroniza a vida
+            vidaRomarioSuper.vidaAtual = vidaRomarioNormal.vidaAtual;
+
+            romarioNormal.SetActive(false);
+            romarioSuper.SetActive(true);
+
+            vilaoSegueEAtaca.player = romarioSuper.transform;
+            vilaoSegueEAtaca.vidaPersonagemScript = romarioSuper.GetComponent<VidaPersonagem>();
+
+            vidaVilao.player = romarioSuper;
+            vidaVilao.vidaPersonagem = romarioSuper.GetComponent<VidaPersonagem>();
+
+            vilaoAtacaPlayer.player = romarioSuper.transform;
+            vilaoAtacaPlayer.vidaPersonagemScript = romarioSuper.GetComponent<VidaPersonagem>();
+            vilaoAtacaPlayer.açõesPersonagem = romarioSuper.GetComponent<AçõesPersonagem>();
+
             particulas.Play();
 
             isSuperActive = true;
@@ -118,7 +142,6 @@ public class SuperSystem : MonoBehaviour
         }
     }
 
-    // Método para desativar o super
     private void DeactivateSuper()
     {
         Debug.Log("Super desativado!");
@@ -128,14 +151,31 @@ public class SuperSystem : MonoBehaviour
         slider.color = corInicial;
         superSlider.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
-        matarVilao.distAtaque = originalDistAtaque;
+        // Sincroniza posição e rotação
+        Vector3 currentPosition = romarioSuper.transform.position;
+        Quaternion currentRotation = romarioSuper.transform.rotation;
+
+        romarioNormal.transform.position = currentPosition;
+        romarioNormal.transform.rotation = currentRotation;
+
+        // Sincroniza a vida
+        vidaRomarioNormal.vidaAtual = vidaRomarioSuper.vidaAtual;
+
+        romarioSuper.SetActive(false);
+        romarioNormal.SetActive(true);
+
+        vilaoSegueEAtaca.player = romarioNormal.transform;
+        vilaoSegueEAtaca.vidaPersonagemScript = romarioNormal.GetComponent<VidaPersonagem>();
+
+        vidaVilao.player = romarioNormal;
+        vidaVilao.vidaPersonagem = romarioNormal.GetComponent<VidaPersonagem>();
+
+        vilaoAtacaPlayer.player = romarioNormal.transform;
+        vilaoAtacaPlayer.vidaPersonagemScript = romarioNormal.GetComponent<VidaPersonagem>();
+        vilaoAtacaPlayer.açõesPersonagem = romarioNormal.GetComponent<AçõesPersonagem>();
+
         particulas.Stop();
 
-        // Resetando os valores ao desativar o super
-        movimento2.veloAndando /= 4;
-        movimento2.veloCorrendo /= 4;
-        matarVilao.danoAtaque /= 2;
-        transformRomarinho.localScale /= 1.5f;
         StartChargingSuper();
     }
 }

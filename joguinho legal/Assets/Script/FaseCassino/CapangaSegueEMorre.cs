@@ -13,11 +13,18 @@ public class CapangaSegueEMorre : MonoBehaviour
     private bool podeAtacar = true;
     public bool morreu = false;
     public GameObject CANVASVIDADOCARLAO;
+
     //VIDA E DANO
     // Vida do vilão (campo privado)
     [SerializeField]
     private int _vidaVilao;
     public AudioSource somDor;
+
+    [Header("Qual capanga?")]
+    public Transform ponto;
+    public bool melo;
+    public bool zida;
+    public bool edmundo;
 
     // Propriedade pública para acessar e modificar a vida do vilão
     public int Vida
@@ -31,6 +38,7 @@ public class CapangaSegueEMorre : MonoBehaviour
         }
     }
     public float danoNoPlayer = 0.1f;
+
     // Vida e o slider dela
     public Slider slidervidavilao;
     private Animator animatorvilao;
@@ -121,14 +129,13 @@ public class CapangaSegueEMorre : MonoBehaviour
 
             if (distanciaAtaque <= distAtaque && podeAtacar && !morreu)
             {
-                podeAtacar = false; // Impede novos ataques até o intervalo terminar
-                DanoNoPlayer();
-                Invoke("ResetarAtaque", 5f); // Permite o próximo ataque após 5 segundos
+                podeAtacar = false;
+                animatorvilao.SetTrigger("ataque"); // Impede novos ataques até o intervalo terminar
             }
         }
     }
 
-    private void DanoNoPlayer()
+    public void DanoNoPlayer()
     {
         if (vidaPersonagemMaisProxima != null)
         {
@@ -148,6 +155,7 @@ public class CapangaSegueEMorre : MonoBehaviour
                 Debug.Log("Jogador fora da faixa de altura para ataque.");
             }
         }
+        Invoke("ResetarAtaque", 5f); // Permite o próximo ataque após 5 segundos
     }
 
     private void SeguirEanimar()
@@ -180,7 +188,21 @@ public class CapangaSegueEMorre : MonoBehaviour
         Invoke("Resetou", 2);
         somDor.Play();
 
-        
+        if (melo)
+        {
+            GameObject prefab = Resources.Load<GameObject>("GosmaMelo");
+            Instantiate(prefab, ponto.position, Quaternion.identity);
+        }
+        else if (zida)
+        {
+            GameObject prefab = Resources.Load<GameObject>("GosmaZida");
+            Instantiate(prefab, ponto.position, Quaternion.identity);
+        }
+        else if (edmundo)
+        {
+            GameObject prefab = Resources.Load<GameObject>("GosmaEdmundo");
+            Instantiate(prefab, ponto.position, Quaternion.identity);
+        }
     }
 
     // Lógica quando o vilão morre

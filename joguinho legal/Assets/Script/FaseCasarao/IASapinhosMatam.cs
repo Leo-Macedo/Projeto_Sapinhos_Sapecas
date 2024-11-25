@@ -11,7 +11,7 @@ public class IASapinhosMatam : MonoBehaviour
 
     public float distAtaque;
     public bool podeatacar = true;
-    public GameObject porta;
+    public Animator animatorPorta;
 
     private Transform alvoAtual; // Capanga que o NPC está seguindo
     private List<Transform> capangas = new List<Transform>(); // Lista de capangas
@@ -30,7 +30,7 @@ public class IASapinhosMatam : MonoBehaviour
     {
         Seguiranimar();
         AtacarOCapanga();
-        AtualizarListaCapangas();   // Atualiza a lista de capangas a cada quadro
+        AtualizarListaCapangas(); // Atualiza a lista de capangas a cada quadro
         VerificarCapangasMortos(); // Verifica se todos os capangas estão mortos
     }
 
@@ -47,21 +47,26 @@ public class IASapinhosMatam : MonoBehaviour
     {
         if (alvoAtual != null)
         {
+            CapangaSegueEMorre capangaScript = alvoAtual.GetComponent<CapangaSegueEMorre>();
+            if (capangaScript != null && capangaScript.morreu)
+            {
+                Debug.Log("Alvo atual está morto, selecionando um novo.");
+                RemoveCapanga(alvoAtual); // Remove o capanga morto
+                SelecionarAlvo();         // Seleciona outro capanga
+                return;                   // Encerra o método para evitar erros
+            }
+
             float distancia = Vector3.Distance(transform.position, alvoAtual.position);
             if (distancia <= distAtaque)
             {
-                CapangaSegueEMorre capangaScript = alvoAtual.GetComponent<CapangaSegueEMorre>();
-                if (capangaScript != null && !capangaScript.morreu)
+                if (capangaScript != null && podeatacar)
                 {
-                    if (podeatacar)
-                    {
-                        podeatacar = false;
-                        animator.SetBool("soco", true);
-                        capangaScript.ReceberDanoCapanga(1);
-                        Invoke("VerificarCapangaMorto", 0.1f);
-                        Invoke("PodeAtacar", 1);
-                        Invoke("NãoPodeAtacar", 1);
-                    }
+                    podeatacar = false;
+                    animator.SetBool("soco", true);
+                    capangaScript.ReceberDanoCapanga(1);
+                    Invoke("VerificarCapangaMorto", 0.1f);
+                    Invoke("PodeAtacar", 1);
+                    Invoke("NãoPodeAtacar", 1);
                 }
             }
         }
@@ -78,8 +83,10 @@ public class IASapinhosMatam : MonoBehaviour
             CapangaSegueEMorre capangaScript = alvoAtual.GetComponent<CapangaSegueEMorre>();
             if (capangaScript != null && capangaScript.morreu)
             {
-                RemoveCapanga(alvoAtual);
-                SelecionarAlvo(); // Seleciona um novo alvo
+                Debug.Log("Capanga morto detectado: " + alvoAtual.name);
+                RemoveCapanga(alvoAtual); // Remove o capanga da lista
+                alvoAtual = null;         // Limpa o alvo atual
+                SelecionarAlvo();         // Seleciona um novo alvo
             }
         }
     }
@@ -103,8 +110,7 @@ public class IASapinhosMatam : MonoBehaviour
             navMeshAgent.isStopped = true;
             animator.SetBool("correndo", false);
             Debug.Log("Todos os capangas estão mortos. NPC parou.");
-            porta.SetActive(true);
-
+            animatorPorta.SetTrigger("abrir");
         }
     }
 
@@ -135,7 +141,7 @@ public class IASapinhosMatam : MonoBehaviour
             foreach (Transform capangaTransform in capangas)
             {
                 CapangaSegueEMorre capangaScript = capangaTransform.GetComponent<CapangaSegueEMorre>();
-                if (capangaScript != null && !capangaScript.morreu)
+                if (capangaScript != null && !capangaScript.morreu) // Apenas capangas vivos
                 {
                     float distance = Vector3.Distance(transform.position, capangaTransform.position);
                     if (distance < minDistance)

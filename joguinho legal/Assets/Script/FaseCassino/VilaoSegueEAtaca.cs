@@ -6,13 +6,11 @@ using UnityEngine.AI;
 public class VilaoSegueEAtaca : MonoBehaviour
 {
     [Header("Referências do Jogador")]
-    public Animator animatorPlayer; // Animator do jogador
     public Transform player; // Transform do jogador
-    private AçõesPersonagem açõesPersonagem; // Script de ações do jogador
     
     [Header("Scripts")]
     private VidaVilao vidaVilao; // Script de vida do vilão
-    private VidaPersonagem vidaPersonagemScript; // Script de vida do jogador
+    public VidaPersonagem vidaPersonagemScript; // Script de vida do jogador
 
     [Header("Configurações de Perseguição")]
     public float chaseInterval = 5f; // Intervalo de perseguição
@@ -33,7 +31,6 @@ public class VilaoSegueEAtaca : MonoBehaviour
         if (vidaPersonagemScript != null)
             vidaPersonagemScript.vidaAtual = 3; // Define a vida inicial do personagem
 
-        açõesPersonagem = player.GetComponent<AçõesPersonagem>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         // Inicia a corrotina para seguir o jogador

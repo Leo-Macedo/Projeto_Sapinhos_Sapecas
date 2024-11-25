@@ -17,19 +17,16 @@ public class AçõesPersonagem : MonoBehaviour
 
     bool PodeDarSoco()
     {
-        
         GameObject[] todosObjetos = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
         foreach (GameObject objeto in todosObjetos)
         {
-            
             if (((1 << objeto.layer) & layerParaVerificar) != 0 && objeto.activeSelf)
             {
-                
                 return false;
             }
         }
 
-        return true; 
+        return true;
     }
 
     void Start()
@@ -48,14 +45,12 @@ public class AçõesPersonagem : MonoBehaviour
         {
             if (PodeDarSoco())
             {
-                somSoco.Play();
                 animator.SetTrigger("soco");
             }
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            somSoco.Play();
             animator.SetTrigger("chute");
         }
 
@@ -130,5 +125,10 @@ public class AçõesPersonagem : MonoBehaviour
         {
             capangaSegueEMorre = capangaTransformMaisProximo.GetComponent<CapangaSegueEMorre>();
         }
+    }
+
+    public void SomSocoeChute()
+    {
+        somSoco.Play();
     }
 }

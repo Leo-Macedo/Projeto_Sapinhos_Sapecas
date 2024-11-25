@@ -45,7 +45,7 @@ public class VerificarFasesCasarao : MonoBehaviour
     {
         // Encontra e desativa todos os NavMeshAgents
         allAgents = Object.FindObjectsByType<NavMeshAgent>(FindObjectsSortMode.None);
-        
+
         foreach (NavMeshAgent agent in allAgents)
         {
             agent.enabled = false;
@@ -74,7 +74,21 @@ public class VerificarFasesCasarao : MonoBehaviour
 
     void Update()
     {
-        //VerificarMorteJogador();
+        VerificarMorteJogador();
+    }
+
+    public void ReiniciarRound()
+    {
+        Time.timeScale = 1f; 
+
+        // Desativa o canvas de Game Over
+        gameOverCanvas.SetActive(false);
+
+        // Recarrega a cena atual
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        // Atualiza o controlador de fases após recarregar a cena
+        controladorFases = PlayerPrefs.GetInt("ControladorFasesCasarao", 0);
     }
 
     void CarregarRound()
@@ -103,16 +117,16 @@ public class VerificarFasesCasarao : MonoBehaviour
         }
     }
 
-    /* private void VerificarMorteJogador()
-     {
-         if (vidaPersonagem.vidaAtual <= 0)
-         {
-             Time.timeScale = 0f; // Pausa o jogo
-             gameOverCanvas.SetActive(true);
-             Cursor.lockState = CursorLockMode.None;
-             Cursor.visible = true;
-         }
-     } */
+    private void VerificarMorteJogador()
+    {
+        if (vidaPersonagem.vidaAtual <= 0)
+        {
+            Time.timeScale = 0f; // Pausa o jogo
+            gameOverCanvas.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
 
     public IEnumerator Porao()
     {

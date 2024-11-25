@@ -12,6 +12,8 @@ public class MatarVilaoFase1 : MonoBehaviour
     private MeloMovimentacao meloMovimentacao;
     public float alturaColisaoCabeça = 1.5f; // Altura para verificar se o jogador pulou na cabeça
     public bool podeatacar = true;
+    public GameObject efeitoDanoPrefab;
+
 
     private Rigidbody rbJogador; // Referência ao Rigidbody do jogador
     public float forcaRecuo = 5f; // Força de recuo para trás
@@ -45,6 +47,7 @@ public class MatarVilaoFase1 : MonoBehaviour
                 if (alturaJogador > alturaMelo + alturaColisaoCabeça && podeatacar)
                 {
                     vidaVilao.ReceberDanoVilao(1);
+                    Instantiate(efeitoDanoPrefab, other.contacts[0].point, Quaternion.identity);
 
                     // Calcula a direção de recuo para trás
                     Vector3 direcaoRecuo = (transform.position - melo.transform.position).normalized;

@@ -227,6 +227,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
+--- !u!1 &7562870017056861771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6556148895318120821}
+  m_Layer: 9
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6556148895318120821
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7562870017056861771}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 9.62, z: 4.39}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2338916620734900242}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7964058817781479041
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,6 +772,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 34dbff95bb8c4ef4dbd9acffdaabd086, type: 3}
       insertIndex: 8
       addedObject: {fileID: 946722589554648583}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 34dbff95bb8c4ef4dbd9acffdaabd086, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6556148895318120821}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34dbff95bb8c4ef4dbd9acffdaabd086, type: 3}
       insertIndex: -1
@@ -879,6 +913,10 @@ MonoBehaviour:
   CANVASVIDADOCARLAO: {fileID: 6553656933117392162}
   _vidaVilao: 3
   somDor: {fileID: 432955667279677521}
+  ponto: {fileID: 6556148895318120821}
+  melo: 1
+  zida: 0
+  edmundo: 0
   danoNoPlayer: 0.1
   slidervidavilao: {fileID: 7353649416210564781}
   player: {fileID: 0}

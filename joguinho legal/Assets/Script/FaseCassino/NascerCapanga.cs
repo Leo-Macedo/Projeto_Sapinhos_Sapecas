@@ -18,7 +18,7 @@ public class NascerCapanga : MonoBehaviour
     {
         vidaVilao = vilao.GetComponent<VidaVilao>();
         vidaPersonagem = player.GetComponent<VidaPersonagem>();
-        InvokeRepeating("SpawnCapanga", 1, 7);
+        InvokeRepeating("SpawnCapanga", 1, 10);
     }
     
     public void SpawnCapanga()

@@ -203,7 +203,6 @@ public class VerificarFasesTaverna : MonoBehaviour
         movimento2.veloCorrendo = 0f;
         yield return new WaitForSeconds(0.5f);
 
-        freeLookCamera.enabled = false;
 
         // Espera pela duração da cutscene
         yield return new WaitForSeconds((float)cutsceneBar.duration);
@@ -211,7 +210,6 @@ public class VerificarFasesTaverna : MonoBehaviour
         // Restaura as velocidades iniciais
         movimento2.veloAndando = veloAndandoInicial;
         movimento2.veloCorrendo = veloCorrendoInicial;
-        freeLookCamera.enabled = true;
     }
 
     private void DesativarOBJ1()

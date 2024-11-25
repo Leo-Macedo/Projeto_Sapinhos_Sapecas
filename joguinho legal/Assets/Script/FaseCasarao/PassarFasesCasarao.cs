@@ -19,6 +19,9 @@ public class PassarFasesCasarao : MonoBehaviour
     public GameObject debugPortaobj;
     public AudioSource som;
     public AudioSource somChave;
+    private bool flag1;
+    private bool flag2;
+    private bool flag3;
 
     // Start is called before the first frame update
     void Start() { }
@@ -28,24 +31,29 @@ public class PassarFasesCasarao : MonoBehaviour
 
     public void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("portaporao"))
+        if (other.gameObject.CompareTag("portaporao") && !flag1)
         {
             if (VerificarFasesCasarao != null)
             {
+                flag1 = true;
                 StartCoroutine(VerificarFasesCasarao.PassouFasePorao());
                 VerificarFasesCasarao.AtualizarControladorFases();
             }
         }
 
-        if (other.gameObject.CompareTag("cabeca"))
+        if (other.gameObject.CompareTag("cabeca") && !flag2)
         {
+            flag2 = true;
+
             StartCoroutine(VerificarFasesCasarao.PassouFaseEntradaPrincipal());
             VerificarFasesCasarao.AtualizarControladorFases();
         }
-        if (other.gameObject.CompareTag("parede"))
+        if (other.gameObject.CompareTag("parede") && !flag3)
         {
             if (VerificarFasesCasarao != null)
             {
+                flag3 = true;
+
                 StartCoroutine(VerificarFasesCasarao.PassouFaseSegundoAndar());
                 VerificarFasesCasarao.AtualizarControladorFases();
             }

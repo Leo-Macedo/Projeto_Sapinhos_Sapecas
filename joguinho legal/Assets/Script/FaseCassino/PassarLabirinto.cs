@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class PassarLabirinto : MonoBehaviour
 {
+    public GameObject txtCorreto;
+    public GameObject txtErrado;
+    public AudioSource[] som;
     private int contador = 0;
     public Transform[] waypoints;
     private Transform player;
@@ -15,7 +18,8 @@ public class PassarLabirinto : MonoBehaviour
     private float veloAndandoInicial;
     private float veloCorrendoInicial;
     public PlayableDirector cutscene;
-     [Header("Mensagens")]
+
+    [Header("Mensagens")]
     public AudioSource somNoti;
     public GameObject[] mensagem;
     public Animator[] animatorMSG;
@@ -94,7 +98,24 @@ public class PassarLabirinto : MonoBehaviour
         {
             animatorFade.SetTrigger("abrir");
         }
+
         flag = false;
+        yield return new WaitForSeconds(0.5f);
+        if (num == 0)
+        {
+            txtErrado.SetActive(true);
+            som[1].Play();
+        }
+        else
+        {
+            txtCorreto.SetActive(true);
+            som[0].Play();
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        txtErrado.SetActive(false);
+        txtCorreto.SetActive(false);
     }
 
     public IEnumerator TrocarCena()

@@ -17,6 +17,7 @@ public class VerificarFaseCassino : MonoBehaviour
     [Header("Round1")]
     public GameObject romarinho1;
     private VidaPersonagem vidaPersonagem1;
+    public VidaPersonagem vida1;
     public GameObject round1;
     public GameObject melo1;
     private VidaVilao vidaVilao1;
@@ -28,7 +29,10 @@ public class VerificarFaseCassino : MonoBehaviour
 
     [Header("Round2")]
     public GameObject romarinho2;
+    public GameObject romarinho2Grande;
     private VidaPersonagem vidaPersonagem2;
+        public VidaPersonagem vida2;
+
     public GameObject round2;
     public GameObject melo2;
     private VidaVilao vidaVilao2;
@@ -39,7 +43,10 @@ public class VerificarFaseCassino : MonoBehaviour
 
     [Header("Round3")]
     public GameObject romarinho3;
+    public GameObject romarinho3Grande;
     private VidaPersonagem vidaPersonagem3;
+        public VidaPersonagem vida3;
+
     public GameObject round3;
     public GameObject melo3;
     private VidaVilao vidaVilao3;
@@ -177,19 +184,19 @@ public class VerificarFaseCassino : MonoBehaviour
         switch (controladorFases)
         {
             case 0:
-                if (vidaPersonagem1 != null && vidaPersonagem1.vidaAtual <= 0)
+                if (vida1.vidaAtual <= 0 || vidaPersonagem1.vidaAtual <= 0)
                 {
                     GameOver();
                 }
                 break;
             case 1:
-                if (vidaPersonagem2 != null && vidaPersonagem2.vidaAtual <= 0)
+                if (vida2.vidaAtual <= 0 ||vidaPersonagem2.vidaAtual <= 0)
                 {
                     GameOver();
                 }
                 break;
             case 2:
-                if (vidaPersonagem3 != null && vidaPersonagem3.vidaAtual <= 0)
+                if (vida3.vidaAtual <= 0 ||vidaPersonagem3.vidaAtual <= 0)
                 {
                     GameOver();
                 }
@@ -216,6 +223,10 @@ public class VerificarFaseCassino : MonoBehaviour
                 StartCoroutine(Round1());
                 break;
             case 1:
+                romarinho2.SetActive(true);
+                romarinho2Grande.SetActive(false);
+                        Time.timeScale = 1f; // Despausa o jogo
+
                 StartCoroutine(AtivarRound2());
                 gameOverCanvas.SetActive(false);
 
