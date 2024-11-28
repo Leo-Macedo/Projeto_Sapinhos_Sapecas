@@ -4074,13 +4074,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f763b63440f4384e8c512128437d03b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  somExplosao: {fileID: 0}
+  particula: {fileID: 0}
+  cadeado: {fileID: 0}
   VerificarFasesCasarao: {fileID: 793702381}
   DebugChave: {fileID: 0}
   estaComChave: 0
   completouSenha: 0
   abriu: 0
   porta: {fileID: 0}
-  animatoPorta: {fileID: 0}
+  animatorFade: {fileID: 0}
   debugPorta: {fileID: 0}
   debugPortaobj: {fileID: 0}
   som: {fileID: 0}
@@ -7181,6 +7184,8 @@ MonoBehaviour:
   vidaPersonagem: {fileID: 0}
   morreuvilao: 0
   VidaInicial: 10
+  edmundo: 0
+  ponto: {fileID: 0}
 --- !u!1 &865675070 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7136622550182105865, guid: 731fe7ae7e12ca44ea3814621e5e127c, type: 3}
@@ -9804,6 +9809,8 @@ MonoBehaviour:
   vidaPersonagem: {fileID: 0}
   morreuvilao: 0
   VidaInicial: 10
+  edmundo: 0
+  ponto: {fileID: 0}
 --- !u!114 &1263549105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11232,7 +11239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32cf6ae4387297c4c9b060f1127721d4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32cf6ae4387297c4c9b060f1127721d4, type: 3}
       propertyPath: m_LocalRotation.x
@@ -11240,7 +11247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32cf6ae4387297c4c9b060f1127721d4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32cf6ae4387297c4c9b060f1127721d4, type: 3}
       propertyPath: m_LocalRotation.z
@@ -11252,7 +11259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32cf6ae4387297c4c9b060f1127721d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32cf6ae4387297c4c9b060f1127721d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
