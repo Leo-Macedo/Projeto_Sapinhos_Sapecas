@@ -31,9 +31,21 @@ public class OrganizarCasa : MonoBehaviour
     public GameObject txtColetar;
     public GameObject txtColocar;
 
+    private float inicialAndando;
+    private float inicialCorrendo;
+    private Movimento2 movimento2;
+
+    public bool simGeladeira;
+    public bool simSofa;
+    public bool simPrivada;
+
     void Start()
     {
         animator = GetComponent<Animator>();    
+        movimento2 = GetComponent<Movimento2>();
+
+        inicialAndando = movimento2.veloAndando;
+        inicialCorrendo = movimento2.veloCorrendo;
     }
 
     void Update()
@@ -50,6 +62,20 @@ public class OrganizarCasa : MonoBehaviour
         {
             animator.SetBool("parou", false);
         }
+        if(estaComObjeto)
+        {
+            movimento2.veloAndando = 1;
+            movimento2.veloCorrendo = 1;
+
+        }
+        else if (!estaComObjeto)
+        {
+            movimento2.veloAndando = inicialAndando;
+            movimento2.veloCorrendo = inicialCorrendo;
+
+        }
+
+
 
 
         animator.SetBool("carregando", estaComObjeto);
@@ -59,7 +85,7 @@ public class OrganizarCasa : MonoBehaviour
     {
         //Coletar itens
 
-        if(other.gameObject.CompareTag("geladeira") && !pegouGeladeira)
+        if(other.gameObject.CompareTag("geladeira") && !pegouGeladeira && !simGeladeira)
         {
             txtColetar.SetActive(true);
 
@@ -74,7 +100,7 @@ public class OrganizarCasa : MonoBehaviour
 
         }
 
-        else if (other.gameObject.CompareTag("sofa") && !pegouSofa)
+        else if (other.gameObject.CompareTag("sofa") && !pegouSofa && !simSofa)
         {
             txtColetar.SetActive(true);
 
@@ -89,40 +115,112 @@ public class OrganizarCasa : MonoBehaviour
 
         }
 
-        else if (other.gameObject.CompareTag("privada") && !pegouPrivada)
+        else if (other.gameObject.CompareTag("privada") && !pegouPrivada && !simPrivada)
         {
             txtColetar.SetActive(true);
 
             if (Input.GetKeyDown(KeyCode.F) && !estaComObjeto)
             {
                 estaComObjeto = true;                                                              
-                pegouSofa = true;
-                sofa.transform.SetParent(transform);
-                sofa.transform.position = lugarMaoSofa.transform.position;
-                sofa.transform.rotation = lugarMaoSofa.transform.rotation;
+                pegouPrivada = true;
+                privada.transform.SetParent(transform);
+                privada.transform.position = lugarMaoPrivada.transform.position;
+                privada.transform.rotation = lugarMaoPrivada.transform.rotation;
             }
 
         }
+
+        // Deixar Itens
+
+        if (other.gameObject.CompareTag("geladeiralugar") && pegouGeladeira)
+        {
+            txtColocar.SetActive(true);
+
+            if (Input.GetKeyDown(KeyCode.F) && estaComObjeto && pegouGeladeira && !simGeladeira)
+            {
+                estaComObjeto = false;
+                simGeladeira = true;
+                txtColocar.SetActive(false);
+                geladeira.transform.SetParent(null); 
+                geladeira.transform.position = lugarGeladeira.transform.position;
+                geladeira.transform.rotation = lugarGeladeira.transform.rotation;
+            }
+
+        }
+
+        if (other.gameObject.CompareTag("geladeiralugar") && pegouGeladeira)
+        {
+            txtColocar.SetActive(true);
+
+            if (Input.GetKeyDown(KeyCode.F) && estaComObjeto && pegouGeladeira && !simGeladeira)
+            {
+                estaComObjeto = false;
+                simGeladeira = true;
+                txtColocar.SetActive(false);
+                geladeira.transform.SetParent(null);
+                geladeira.transform.position = lugarGeladeira.transform.position;
+                geladeira.transform.rotation = lugarGeladeira.transform.rotation;
+            }
+
+        }
+
+        if (other.gameObject.CompareTag("geladeiralugar") && pegouGeladeira)
+        {
+            txtColocar.SetActive(true);
+
+            if (Input.GetKeyDown(KeyCode.F) && estaComObjeto && pegouGeladeira && !simGeladeira)
+            {
+                estaComObjeto = false;
+                simGeladeira = true;
+                txtColocar.SetActive(false);
+                geladeira.transform.SetParent(null);
+                geladeira.transform.position = lugarGeladeira.transform.position;
+                geladeira.transform.rotation = lugarGeladeira.transform.rotation;
+            }
+
+        }
+
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("geladeira") && !pegouGeladeira)
+        if (other.gameObject.CompareTag("geladeira"))
         {
-            txtColetar.SetActive(true);
+            txtColetar.SetActive(false);
 
         }
 
-        else if (other.gameObject.CompareTag("sofa") && !pegouSofa)
+        else if (other.gameObject.CompareTag("sofa"))
         {
-            txtColetar.SetActive(true);
+            txtColetar.SetActive(false);
 
         }
 
-        else if (other.gameObject.CompareTag("privada") && !pegouPrivada)
+        else if (other.gameObject.CompareTag("privada"))
         {
-            txtColetar.SetActive(true);
+            txtColetar.SetActive(false);
+
+        }
+
+        if (other.gameObject.CompareTag("lugargeladeira"))
+        {
+            txtColocar.SetActive(false);
+
+        }
+
+        else if (other.gameObject.CompareTag("lugarsofa"))
+        {
+            txtColocar.SetActive(false);
+
+        }
+
+        else if (other.gameObject.CompareTag("lugarprivada"))
+        {
+            txtColocar.SetActive(false);
 
         }
     }
+
+    
 }
