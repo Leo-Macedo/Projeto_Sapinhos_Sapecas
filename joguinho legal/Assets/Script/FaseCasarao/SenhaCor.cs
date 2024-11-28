@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SenhaCor : MonoBehaviour
 {
+    public List<GameObject> objetos;
     public ControleSensibilidadeCamera controleSensibilidadeCamera;
 
     [Header("som")]
@@ -125,10 +126,18 @@ public class SenhaCor : MonoBehaviour
         passarFasesCasarao.completouSenha = true;
         if (somNoti != null && mensagem != null && animatorMSG != null)
         {
+            AtivarObjetoAleatorio();
             somNoti.Play();
             mensagem.SetActive(true);
             yield return new WaitForSeconds(5);
             animatorMSG.SetTrigger("fechou");
         }
+    }
+
+    public void AtivarObjetoAleatorio()
+    {
+        int indiceAleatorio = Random.Range(0, objetos.Count);
+        GameObject objetoSelecionado = objetos[indiceAleatorio];
+        objetoSelecionado.SetActive(true);
     }
 }

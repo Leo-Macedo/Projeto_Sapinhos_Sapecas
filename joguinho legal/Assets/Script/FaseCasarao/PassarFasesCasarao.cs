@@ -8,13 +8,16 @@ using UnityEngine.UI;
 
 public class PassarFasesCasarao : MonoBehaviour
 {
+    public AudioSource somExplosao;
+    public GameObject particula;
+    public GameObject cadeado;
     public VerificarFasesCasarao VerificarFasesCasarao;
     public GameObject DebugChave;
     public bool estaComChave;
     public bool completouSenha;
     public bool abriu;
     public GameObject porta; // Porta a ser desbloqueada
-    public Animator animatoPorta;
+    public Animator animatorFade;
     public TextMeshProUGUI debugPorta;
     public GameObject debugPortaobj;
     public AudioSource som;
@@ -44,9 +47,6 @@ public class PassarFasesCasarao : MonoBehaviour
         if (other.gameObject.CompareTag("cabeca") && !flag2)
         {
             flag2 = true;
-
-            StartCoroutine(VerificarFasesCasarao.PassouFaseEntradaPrincipal());
-            VerificarFasesCasarao.AtualizarControladorFases();
         }
         if (other.gameObject.CompareTag("parede") && !flag3)
         {
@@ -132,16 +132,22 @@ public class PassarFasesCasarao : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        if (porta != null)
+        if (particula != null)
         {
-            porta.SetActive(true); // Ativa a porta
+            particula.SetActive(true);
+            somExplosao.Play(); // Ativa a porta
         }
 
-        if (animatoPorta != null)
+        if (cadeado != null)
         {
-            animatoPorta.SetTrigger("abrir");
+            cadeado.SetActive(false);
         }
 
         abriu = true;
+
+        yield return new WaitForSeconds(2f);
+
+        StartCoroutine(VerificarFasesCasarao.PassouFaseEntradaPrincipal());
+        VerificarFasesCasarao.AtualizarControladorFases();
     }
 }
