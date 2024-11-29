@@ -11,10 +11,12 @@ public class SuperRonaldinho : MonoBehaviour
     public Image slider; // Imagem da barra do slider
     public Color corSuper; // Cor do slider quando o super está pronto
     private Color corInicial; // Cor inicial do slider
+    public Transform ponto;
+    public Transform ponto2;
+
 
     [Header("Ronaldinho")]
     public GameObject ronaldinho; // Alterado de romarinho para ronaldinho
-    public ParticleSystem particulas;
     public float multiplicadorSuper = 2f; // Multiplicador para o super pulo
     public float forçaEmpurraoCapanga = 5f; // Força aplicada aos capangas
     public float raioDetectarCapangas = 5f; // Raio para detectar capangas ao redor
@@ -108,10 +110,9 @@ public class SuperRonaldinho : MonoBehaviour
 
             Pular(multiplicadorSuper);
 
-            if (particulas != null)
-            {
-                particulas.Play();
-            }
+            GameObject prefab = Resources.Load<GameObject>("Sapulao2");
+            Instantiate(prefab, ponto2.position, ponto2.rotation);
+
         }
     }
 
@@ -119,7 +120,6 @@ public class SuperRonaldinho : MonoBehaviour
     {
         Debug.Log("Super desativado!");
         isSuperActive = false;
-        particulas.Stop();
 
         Physics.IgnoreLayerCollision(camadaRonaldinho, camadaCapangas, false);
 
@@ -142,6 +142,8 @@ public class SuperRonaldinho : MonoBehaviour
 
     private IEnumerator AplicarForcaCapangas()
     {
+        GameObject prefab = Resources.Load<GameObject>("Chao");
+        Instantiate(prefab, ponto.position, ponto.rotation);
         yield return new WaitForSeconds(0.1f);
 
         Collider[] capangas = Physics.OverlapSphere(
@@ -154,6 +156,7 @@ public class SuperRonaldinho : MonoBehaviour
             {
                 NavMeshAgent agent = col.GetComponent<NavMeshAgent>();
                 Rigidbody capangaRb = col.GetComponent<Rigidbody>();
+                CapangaSegueEMorre capangaSegueEMorre = col.GetComponent<CapangaSegueEMorre>();
 
                 if (agent != null)
                 {
@@ -168,6 +171,7 @@ public class SuperRonaldinho : MonoBehaviour
                     Vector3 forcaTotal = (direcaoParaTras * forcaTras) + (Vector3.up * forcaCima);
 
                     capangaRb.AddForce(forcaTotal, ForceMode.Impulse);
+                    capangaSegueEMorre.GetComponent<CapangaSegueEMorre>().ReceberDanoCapanga(2);
                     Debug.Log("Capanga empurrado para trás e para cima com força diagonal!");
                 }
 

@@ -37,7 +37,7 @@ public class VilaoAtacaPlayer : MonoBehaviour
         if (!vidaPersonagemScript.acabouojogo)
         {
             // Se o script MeloMovimentacao existir, verifica se o jogador está voando
-            if (distancia <= distAtaque && (meloMovimentacao == null || meloMovimentacao.voando) && !superSystem.isSuperActive)
+            if (distancia <= distAtaque && (meloMovimentacao == null || meloMovimentacao.voando) && (superSystem == null || !superSystem.isSuperActive))
             {
                 animator.SetBool("ataque", true); // Inicia a animação de ataque
                 Invoke("NãoPodeAtacar", 1); // Reseta a animação de ataque após 1 segundo

@@ -9,6 +9,7 @@ public class FicarInvisivel : MonoBehaviour
     public float chargeTime = 10f; // Tempo para carregar o super
     public float superDuration = 5f; // Duração do super
     public Slider superSlider; // Referência ao Slider UI
+    public Transform ponto;
 
     public Image slider;
     public Color corSuper;
@@ -93,7 +94,9 @@ public class FicarInvisivel : MonoBehaviour
             isInvisible = true;
             isSuperActive = true; // Super foi ativado
             isSuperReady = false; // Não pode ativar novamente até recarregar
-            SetVisibility(isInvisible); // Torna o objeto invisível
+            SetVisibility(isInvisible);
+            GameObject prefab = Resources.Load<GameObject>("anfibia");
+            Instantiate(prefab, ponto.position, ponto.rotation);// Torna o objeto invisível
         }
     }
 

@@ -16,7 +16,6 @@ public class SuperSystem : MonoBehaviour
 
     [Header("Romarinho")]
     public GameObject romarinho;
-    public ParticleSystem particulas;
     private MatarVilao matarVilao;
 
     private float currentChargeTime = 0f;
@@ -135,7 +134,6 @@ public class SuperSystem : MonoBehaviour
             vilaoAtacaPlayer.vidaPersonagemScript = romarioSuper.GetComponent<VidaPersonagem>();
             vilaoAtacaPlayer.açõesPersonagem = romarioSuper.GetComponent<AçõesPersonagem>();
 
-            particulas.Play();
 
             isSuperActive = true;
             isSuperReady = false;
@@ -174,7 +172,6 @@ public class SuperSystem : MonoBehaviour
         vilaoAtacaPlayer.vidaPersonagemScript = romarioNormal.GetComponent<VidaPersonagem>();
         vilaoAtacaPlayer.açõesPersonagem = romarioNormal.GetComponent<AçõesPersonagem>();
 
-        particulas.Stop();
 
         StartChargingSuper();
     }

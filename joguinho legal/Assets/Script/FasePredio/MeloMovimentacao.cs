@@ -8,6 +8,8 @@ public class MeloMovimentacao : MonoBehaviour
     public float alturaVoo = 5f; // Altura de voo da mosca
     public float tempoPousado = 3f; // Tempo que a mosca fica pousada
     public float tempoVoando = 5f; // Tempo que a mosca fica voando
+    public Transform ponto;
+    private bool jaColidiu;
 
     public bool voando = true; // Define se a mosca está voando
     private bool pousado = false; // Define se a mosca está pousada
@@ -125,6 +127,7 @@ public class MeloMovimentacao : MonoBehaviour
         float alturaInicial = transform.position.y;
         float tempoInicio = Time.time;
         float duracao = 1f;
+        jaColidiu = false;
 
         while (Time.time - tempoInicio < duracao)
         {
@@ -139,5 +142,15 @@ public class MeloMovimentacao : MonoBehaviour
         }
 
         transform.position = new Vector3(transform.position.x, alturaVoo, transform.position.z);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Chao") && (pousando || pousado) && !jaColidiu)
+        {
+            GameObject prefab = Resources.Load<GameObject>("Chao");
+            Instantiate(prefab, ponto.position, ponto.rotation);
+            jaColidiu = true;
+        }
     }
 }

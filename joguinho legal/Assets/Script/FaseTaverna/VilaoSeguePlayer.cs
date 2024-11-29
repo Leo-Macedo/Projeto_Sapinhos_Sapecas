@@ -6,6 +6,7 @@ using UnityEngine;
 public class VilaoSeguePlayer : MonoBehaviour
 {
     [Header("Referências")]
+    public GameObject fumaca;
     public Transform player; // Referência para o transform do jogador
     public float chargeForce = 10f; // Força da investida
     public float chargeDuration = 2f; // Duração da investida
@@ -13,6 +14,7 @@ public class VilaoSeguePlayer : MonoBehaviour
     public bool isCharging = false; // Flag para verificar se está na investida
     private Rigidbody rb; // Referência ao Rigidbody do vilão
     public float rotationSpeed = 2f; // Velocidade de rotação
+    public GameObject fumacaoreia;
 
     public VidaVilao vidaVilao; // Referência ao script de vida do vilão
     public VidaPersonagem vidaPersonagem; // Referência ao script de vida do jogador
@@ -41,7 +43,7 @@ public class VilaoSeguePlayer : MonoBehaviour
             Vector3 directionToPlayer = player.position - transform.position;
             directionToPlayer.y = 0; // Mantém o movimento no plano XZ
             direction = directionToPlayer.normalized;
-
+            fumaca.SetActive(true);
             // Aplica a força na direção do alvo
             rb.velocity = direction * chargeForce;
             isCharging = true;
@@ -75,9 +77,10 @@ private IEnumerator StopCharge()
 {
     // Congela a posição do Rigidbody, mas não a rotação
     rb.constraints = RigidbodyConstraints.FreezePosition;
+        fumaca.SetActive(false);
 
-    // Desabilita as restrições de rotação para permitir a rotação manual
-    rb.constraints &= ~RigidbodyConstraints.FreezeRotation;
+        // Desabilita as restrições de rotação para permitir a rotação manual
+        rb.constraints &= ~RigidbodyConstraints.FreezeRotation;
 
     animator.SetTrigger("bater");
     Debug.Log("Investida parada.");
@@ -98,7 +101,7 @@ private IEnumerator StopCharge()
 
             // Cria a rotação de forma suave
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-
+                fumacaoreia.SetActive(true);
             // Atualiza a rotação suavemente
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
@@ -111,7 +114,9 @@ private IEnumerator StopCharge()
     rb.constraints = RigidbodyConstraints.None;
     rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
 
-    Debug.Log("Investida retomada.");
+        fumacaoreia.SetActive(false);
+
+        Debug.Log("Investida retomada.");
     rb.WakeUp();
     isCharging = false;
     podeTomarDano = true;
@@ -147,6 +152,8 @@ private IEnumerator StopCharge()
             {
                 StartCoroutine(StopCharge());
                 escudoFuncionando.DesativarEscudo();
+                GameObject prefab = Resources.Load<GameObject>("escudo");
+                Instantiate(prefab, other.contacts[0].point, Quaternion.identity);
             }
         }
     }
