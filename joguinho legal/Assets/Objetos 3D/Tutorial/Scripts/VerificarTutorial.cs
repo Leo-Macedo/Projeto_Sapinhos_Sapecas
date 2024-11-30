@@ -16,6 +16,9 @@ public class VerificarTutorial : MonoBehaviour
         controleSensibilidadeCamera.podePausar = true;
         Time.timeScale = 1f;
 
+        Cursor.lockState = CursorLockMode.Locked; // Trava o cursor no meio da tela
+        Cursor.visible = false; // Torna o cursor invisível
+
     }
 
     void Update()
