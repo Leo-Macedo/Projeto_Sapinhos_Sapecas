@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class OrganizarCasa : MonoBehaviour
 {
     private Animator animator;
+    public GameObject canvasRN;
+    public GameObject canvasRM;
 
     [Header("Objetos")]
     public GameObject geladeira;
@@ -62,6 +65,21 @@ public class OrganizarCasa : MonoBehaviour
             StartCoroutine(OrganizouCasa());
             organizandoCasa = true;
         }
+
+        DesativarCanvas();
+    }
+
+    private void DesativarCanvas()
+    {
+        if (pegouPrivada)
+        {
+            canvasRN.SetActive(false);
+        }
+
+        if (pegouSofa)
+        {
+            canvasRM.SetActive(false);
+        }
     }
 
     private IEnumerator OrganizouCasa()
@@ -109,7 +127,7 @@ public class OrganizarCasa : MonoBehaviour
     {
         //Coletar itens
 
-        if (other.gameObject.CompareTag("geladeira") && !pegouGeladeira && !simGeladeira)
+        if (other.gameObject.CompareTag("geladeira") && !pegouGeladeira && !simGeladeira && !estaComObjeto)
         {
             txtColetar.SetActive(true);
 
@@ -122,7 +140,7 @@ public class OrganizarCasa : MonoBehaviour
                 geladeira.transform.rotation = lugarMaoGeladeira.transform.rotation;
             }
         }
-        else if (other.gameObject.CompareTag("sofa") && !pegouSofa && !simSofa)
+        else if (other.gameObject.CompareTag("sofa") && !pegouSofa && !simSofa && !estaComObjeto)
         {
             txtColetar.SetActive(true);
 
@@ -135,7 +153,7 @@ public class OrganizarCasa : MonoBehaviour
                 sofa.transform.rotation = lugarMaoSofa.transform.rotation;
             }
         }
-        else if (other.gameObject.CompareTag("privada") && !pegouPrivada && !simPrivada)
+        else if (other.gameObject.CompareTag("privada") && !pegouPrivada && !simPrivada && !estaComObjeto)
         {
             txtColetar.SetActive(true);
 
@@ -207,6 +225,7 @@ public class OrganizarCasa : MonoBehaviour
         )
         {
             txtColetar.SetActive(false);
+            txtColocar.SetActive(false);
         }
     }
 }

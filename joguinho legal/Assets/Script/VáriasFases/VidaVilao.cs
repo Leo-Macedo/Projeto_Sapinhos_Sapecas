@@ -71,7 +71,7 @@ public class VidaVilao : MonoBehaviour
 
         if (edmundo)
         {
-            GameObject prefab = Resources.Load<GameObject>("Gosma");
+            GameObject prefab = Resources.Load<GameObject>("GosmaEdmundo");
             Instantiate(prefab, ponto.position, Quaternion.identity);
         }
 
@@ -97,6 +97,19 @@ public class VidaVilao : MonoBehaviour
         }
         rb.constraints = RigidbodyConstraints.FreezeAll;
         morreuvilao = true;
+
+        if (!edmundo)
+        {
+            GameObject somChefeMorreu = GameObject.FindWithTag("somchefemorreu");
+            if (somChefeMorreu != null)
+            {
+                AudioSource audioSource = somChefeMorreu.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.Play();
+                }
+            }
+        }
     }
 
     public void Resetou()

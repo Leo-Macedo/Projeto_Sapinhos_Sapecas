@@ -31,7 +31,7 @@ public class VerificarFaseCassino : MonoBehaviour
     public GameObject romarinho2;
     public GameObject romarinho2Grande;
     private VidaPersonagem vidaPersonagem2;
-        public VidaPersonagem vida2;
+    public VidaPersonagem vida2;
 
     public GameObject round2;
     public GameObject melo2;
@@ -45,7 +45,7 @@ public class VerificarFaseCassino : MonoBehaviour
     public GameObject romarinho3;
     public GameObject romarinho3Grande;
     private VidaPersonagem vidaPersonagem3;
-        public VidaPersonagem vida3;
+    public VidaPersonagem vida3;
 
     public GameObject round3;
     public GameObject melo3;
@@ -102,9 +102,18 @@ public class VerificarFaseCassino : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked; // Trava o cursor no meio da tela
         Cursor.visible = false; // Torna o cursor invisível
+        controladorFases = PlayerPrefs.GetInt("ControladorFasesCassino", 0);
 
         DesativarMovimento();
-        VerificarProgresso();
+        if (controladorFases <= 0)
+        {
+            StartCoroutine(Round1());
+        }
+
+        if (controladorFases >= 1)
+        {
+            VerificarProgressoPrefs();
+        }
     }
 
     private void DesativarMovimento()
@@ -157,24 +166,50 @@ public class VerificarFaseCassino : MonoBehaviour
         }
     }
 
+    public void VerificarProgressoPrefs()
+    {
+        if (controladorFases == 0)
+        {
+            StartCoroutine(Round1());
+        }
+        else if (controladorFases == 1)
+        {
+            StartCoroutine(AtivarRound2());
+        }
+        else if (controladorFases == 2)
+        {
+            StartCoroutine(AtivarRound3());
+        }
+        else if (controladorFases == 3)
+        {
+            Vitoria();
+        }
+    }
+
     private void VerificarRodadas()
     {
         if (vidaVilao1 != null && vidaVilao1.Vida <= 0 && !round1Acabou)
         {
             round1Acabou = true;
             controladorFases += 1;
+            PlayerPrefs.SetInt("ControladorFasesCassino", controladorFases);
+            PlayerPrefs.Save();
             VerificarProgresso();
         }
         if (vidaVilao2 != null && vidaVilao2.Vida <= 0 && !round2Acabou)
         {
             round2Acabou = true;
             controladorFases += 1;
+            PlayerPrefs.SetInt("ControladorFasesCassino", controladorFases);
+            PlayerPrefs.Save();
             VerificarProgresso();
         }
         if (vidaVilao3 != null && vidaVilao3.Vida <= 0 && !round3Acabou)
         {
             round3Acabou = true;
             controladorFases += 1;
+            PlayerPrefs.SetInt("ControladorFasesCassino", controladorFases);
+            PlayerPrefs.Save();
             VerificarProgresso();
         }
     }
@@ -190,13 +225,13 @@ public class VerificarFaseCassino : MonoBehaviour
                 }
                 break;
             case 1:
-                if (vida2.vidaAtual <= 0 ||vidaPersonagem2.vidaAtual <= 0)
+                if (vida2.vidaAtual <= 0 || vidaPersonagem2.vidaAtual <= 0)
                 {
                     GameOver();
                 }
                 break;
             case 2:
-                if (vida3.vidaAtual <= 0 ||vidaPersonagem3.vidaAtual <= 0)
+                if (vida3.vidaAtual <= 0 || vidaPersonagem3.vidaAtual <= 0)
                 {
                     GameOver();
                 }
@@ -210,45 +245,28 @@ public class VerificarFaseCassino : MonoBehaviour
         Time.timeScale = 0f; // Pausa o jogo
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        // Encontra todos os objetos com a tag "musica" e para o AudioSource deles
+        GameObject[] objetosMusica = GameObject.FindGameObjectsWithTag("musica");
+        foreach (GameObject objeto in objetosMusica)
+        {
+            AudioSource audioSource = objeto.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.Stop();
+            }
+        }
     }
 
     public void ReiniciarRound()
     {
         Time.timeScale = 1f; // Despausa o jogo
-        switch (controladorFases)
-        {
-            case 0:
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reinicia no Round 1
-                gameOverCanvas.SetActive(false);
-                StartCoroutine(Round1());
-                break;
-            case 1:
-                romarinho2.SetActive(true);
-                romarinho2Grande.SetActive(false);
-                        Time.timeScale = 1f; // Despausa o jogo
 
-                StartCoroutine(AtivarRound2());
-                gameOverCanvas.SetActive(false);
+        // Desativa o canvas de Game Over
+        gameOverCanvas.SetActive(false);
 
-                vidaVilao2.Vida = vidaVilao2.VidaInicial;
-                vidaPersonagem2.vidaAtual = vidaPersonagem2.vidaInicial;
-
-                // Reseta as posições dos personagens e vilões no Round 2
-                romarinho2.transform.position = posInicialRomarinho2;
-                melo2.transform.position = posInicialMelo2;
-                break;
-            case 2:
-                StartCoroutine(AtivarRound3());
-                gameOverCanvas.SetActive(false);
-
-                vidaVilao3.Vida = vidaVilao3.VidaInicial;
-                vidaPersonagem3.vidaAtual = vidaPersonagem3.vidaInicial;
-
-                // Reseta as posições dos personagens e vilões no Round 3
-                romarinho3.transform.position = posInicialRomarinho3;
-                melo3.transform.position = posInicialMelo3;
-                break;
-        }
+        // Recarrega a cena atual
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private IEnumerator DespausarNoFinalDaCutscene(PlayableDirector cutscene)
@@ -328,6 +346,8 @@ public class VerificarFaseCassino : MonoBehaviour
         cutSceneRound3.Play();
         round3.SetActive(true);
         round2.SetActive(false);
+        round1.SetActive(false);
+
         StartCoroutine(DespausarNoFinalDaCutscene(cutSceneRound3));
 
         freeLookCamera.Follow = romarinho3.transform;
@@ -364,7 +384,15 @@ public class VerificarFaseCassino : MonoBehaviour
 
     public void Vitoria()
     {
-        cutSceneRound1Acabou.Play();
+        GameObject somChefeMorreu = GameObject.FindWithTag("somchefemorreu");
+        if (somChefeMorreu != null)
+        {
+            AudioSource audioSource = somChefeMorreu.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.Play();
+            }
+        }
         portalvoltar.SetActive(true);
         txtvaaoportal.SetActive(true);
         PlayerPrefs.SetInt("CassinoCompletado", 1);

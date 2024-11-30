@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SuperRonaldinho : MonoBehaviour
 {
+    public AudioSource sapulaoPulo;
+    public AudioSource sapulaoQueda;
     [Header("Super Settings")]
     public float chargeTime = 10f; // Tempo para carregar o super
     public Slider superSlider; // Referência ao Slider UI
@@ -100,6 +102,7 @@ public class SuperRonaldinho : MonoBehaviour
         if (isSuperReady)
         {
             Debug.Log("Super ativado!");
+            sapulaoPulo.Play();
             slider.color = corInicial;
             superSlider.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
@@ -144,6 +147,7 @@ public class SuperRonaldinho : MonoBehaviour
     {
         GameObject prefab = Resources.Load<GameObject>("Chao");
         Instantiate(prefab, ponto.position, ponto.rotation);
+        sapulaoQueda.Play();
         yield return new WaitForSeconds(0.1f);
 
         Collider[] capangas = Physics.OverlapSphere(

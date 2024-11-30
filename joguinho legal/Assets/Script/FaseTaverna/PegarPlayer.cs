@@ -51,16 +51,34 @@ public class PegarPlayer : MonoBehaviour
     }
 
     IEnumerator perseguirPlayer()
+{
+    gameObject.tag = "capanga";
+    GetComponent<CapangaSegueEMorre>().enabled = true;
+    GetComponent<NavMeshAgent>().enabled = true;
+    GetComponent<CapangaMovimentacao>().enabled = false;
+
+    GameObject sireneObj = GameObject.FindWithTag("sirene");
+    if (sireneObj != null)
     {
-        gameObject.tag = "capanga";
-        GetComponent<CapangaSegueEMorre>().enabled = true;
-        GetComponent<NavMeshAgent>().enabled = true;
-        GetComponent<CapangaMovimentacao>().enabled = false;
-
-
-        yield return new WaitForSeconds(0.5f);
-
+        AudioSource sireneAudio = sireneObj.GetComponent<AudioSource>();
+        if (sireneAudio != null)
+        {
+            sireneAudio.Play();
+        }
     }
+    yield return new WaitForSeconds(1f);
+
+    // Toca o som de perseguição, verificando antes se já não está tocando
+    GameObject perseguirObj = GameObject.FindWithTag("perseguir");
+    if (perseguirObj != null)
+    {
+        AudioSource perseguirAudio = perseguirObj.GetComponent<AudioSource>();
+        if (perseguirAudio != null && !perseguirAudio.isPlaying)
+        {
+            perseguirAudio.Play();
+        }
+    }
+}
 
     
 

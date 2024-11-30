@@ -142,15 +142,27 @@ public class VerificarFasePredio : MonoBehaviour
     }
 
     private void VerificarMorteJogador()
+{
+    if (vidaPersonagem.vidaAtual <= 0)
     {
-        if (vidaPersonagem.vidaAtual <= 0)
+        // Pausa o jogo
+        Time.timeScale = 0f;
+        gameOverCanvas.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        // Encontra todos os objetos com a tag "musica" e para o AudioSource deles
+        GameObject[] objetosMusica = GameObject.FindGameObjectsWithTag("musica");
+        foreach (GameObject objeto in objetosMusica)
         {
-            Time.timeScale = 0f; // Pausa o jogo
-            gameOverCanvas.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            AudioSource audioSource = objeto.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.Stop();
+            }
         }
     }
+}
 
     public IEnumerator Andar1()
     {

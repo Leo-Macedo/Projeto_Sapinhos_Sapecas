@@ -13,7 +13,7 @@ public class InstanciadorDeBolas : MonoBehaviour
     public TextMeshProUGUI textGols;
     public int contadorGols = 0;
     public GameObject porta;
-    public Animator animatorPorta;
+    public Animator animatorEscada;
     private bool acabou;
     public GameObject[] debug;
 
@@ -45,8 +45,9 @@ public class InstanciadorDeBolas : MonoBehaviour
 
     public void TerminouGols()
     {
+        textGols.text = " ";
         porta.SetActive(true); // Ativa a porta
-        animatorPorta.SetTrigger("abrir");
+        animatorEscada.SetTrigger("descer");
         acabou = true;
     }
 

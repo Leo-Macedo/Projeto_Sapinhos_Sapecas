@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CapangaSegueEMorre : MonoBehaviour
 {
     [Header("Referências")]
+    public AudioSource capangamorreu;
     private NavMeshAgent navMeshAgent; // Agente de navegação para o capanga
     public float distAtaque; // Distância para verificar o nocaute
     private VidaPersonagem vidaPersonagemMaisProxima;
@@ -87,7 +88,7 @@ public class CapangaSegueEMorre : MonoBehaviour
         }
         if (Vida <= 0)
         {
-            VilaoMorreu();
+            StartCoroutine(VilaoMorreu());
         }
     }
 
@@ -154,6 +155,19 @@ public class CapangaSegueEMorre : MonoBehaviour
             {
                 Debug.Log("Jogador fora da faixa de altura para ataque.");
             }
+
+            if (zida)
+            {
+                GameObject perseguirObj = GameObject.FindWithTag("perseguir");
+                if (perseguirObj != null)
+                {
+                    AudioSource perseguirAudio = perseguirObj.GetComponent<AudioSource>();
+                    if (perseguirAudio != null && perseguirAudio.isPlaying)
+                    {
+                        perseguirAudio.Stop();
+                    }
+                }
+            }
         }
         Invoke("ResetarAtaque", 5f); // Permite o próximo ataque após 5 segundos
     }
@@ -206,7 +220,7 @@ public class CapangaSegueEMorre : MonoBehaviour
     }
 
     // Lógica quando o vilão morre
-    public void VilaoMorreu()
+    public IEnumerator VilaoMorreu()
     {
         if (navMeshAgent != null)
         {
@@ -222,6 +236,12 @@ public class CapangaSegueEMorre : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeAll;
         morreu = true;
         CANVASVIDADOCARLAO.SetActive(false);
+        capangamorreu.Play();
+        yield return new WaitForSeconds(3f);
+        GameObject prefab = Resources.Load<GameObject>("capangamorreu");
+        Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0)); // Rotação de 90 graus no eixo Y
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
     }
 
     public void Resetou()

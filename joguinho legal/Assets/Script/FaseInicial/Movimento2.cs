@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Movimento2 : MonoBehaviour
 {
+    public AudioSource somPulo;
     public Animator animatorFade;
     public AudioSource somPassos;
     public AudioClip[] audiosPassos;
@@ -166,6 +167,15 @@ public class Movimento2 : MonoBehaviour
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
             rb.AddForce(transform.up * forcaPulo * multiplicador, ForceMode.Impulse);
+            GameObject somChefeMorreu = GameObject.FindWithTag("sompulo");
+            if (somChefeMorreu != null)
+            {
+                AudioSource audioSource = somChefeMorreu.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.Play();
+                }
+            }
         }
     }
 

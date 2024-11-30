@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ChutarBola : MonoBehaviour
 {
+    public GameObject txtChutar;
     public float forcaChute = 10f; // Força do chute
     public float distanciaChute = 3f; // Distância máxima para chutar a bomba
     private Animator animator;
@@ -34,7 +35,9 @@ public class ChutarBola : MonoBehaviour
         {
             animator.SetTrigger("chutar");
             EncontrarBombaMaisProxima();
-            lineRenderer.enabled = false; // Desativar a linha ao chutar
+            lineRenderer.enabled = false;
+            txtChutar.SetActive(false);
+            // Desativar a linha ao chutar
         }
 
         CriarMira();
@@ -101,6 +104,7 @@ public class ChutarBola : MonoBehaviour
             lineRenderer.enabled = false;
             other.transform.SetParent(null);
             podeGrudar = true;
+            txtChutar.SetActive(false);
         }
     }
 
@@ -108,7 +112,7 @@ public class ChutarBola : MonoBehaviour
     {
         CaixaDanoNoPlayer caixaDanoNoPlayer = other.GetComponent<CaixaDanoNoPlayer>();
         Rigidbody rb = other.GetComponent<Rigidbody>();
-
+        txtChutar.SetActive(true);
         rb.velocity = Vector3.zero; // Zera a velocidade
 
         if (caixaDanoNoPlayer != null)

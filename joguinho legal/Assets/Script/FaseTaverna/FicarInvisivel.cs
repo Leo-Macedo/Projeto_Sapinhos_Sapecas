@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class FicarInvisivel : MonoBehaviour
 {
+    public AudioSource somIA;
     [Header("Super Settings")]
     public float chargeTime = 10f; // Tempo para carregar o super
     public float superDuration = 5f; // Duração do super
@@ -91,6 +92,7 @@ public class FicarInvisivel : MonoBehaviour
     {
         if (isSuperReady)
         {
+            somIA.Play();
             isInvisible = true;
             isSuperActive = true; // Super foi ativado
             isSuperReady = false; // Não pode ativar novamente até recarregar

@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class MeloMovimentacao : MonoBehaviour
 {
+    public AudioSource queda;
+    public AudioSource somVoando;
     public Transform player; // Jogador a seguir
     public float alturaVoo = 5f; // Altura de voo da mosca
     public float tempoPousado = 3f; // Tempo que a mosca fica pousada
@@ -88,12 +90,14 @@ public class MeloMovimentacao : MonoBehaviour
                 alturaVoo,
                 transform.position.z
             );
+            somVoando.Play();
             transform.position = posicaoComAltura;
         }
     }
 
     public IEnumerator Pousar()
     {
+        somVoando.Stop();
         animator.SetTrigger("cair");
         pousando = true;
         yield return new WaitForSeconds(1f);
@@ -150,6 +154,7 @@ public class MeloMovimentacao : MonoBehaviour
         {
             GameObject prefab = Resources.Load<GameObject>("Chao");
             Instantiate(prefab, ponto.position, ponto.rotation);
+            queda.Play();
             jaColidiu = true;
         }
     }

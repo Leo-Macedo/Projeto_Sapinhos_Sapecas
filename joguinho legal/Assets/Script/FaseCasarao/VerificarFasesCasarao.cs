@@ -125,6 +125,17 @@ public class VerificarFasesCasarao : MonoBehaviour
             gameOverCanvas.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+             // Encontra todos os objetos com a tag "musica" e para o AudioSource deles
+        GameObject[] objetosMusica = GameObject.FindGameObjectsWithTag("musica");
+        foreach (GameObject objeto in objetosMusica)
+        {
+            AudioSource audioSource = objeto.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.Stop();
+            }
+        }
         }
     }
 

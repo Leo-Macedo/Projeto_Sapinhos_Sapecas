@@ -111,6 +111,16 @@ public class SuperSystem : MonoBehaviour
         {
             Debug.Log("Super ativado!");
 
+            GameObject somChefeMorreu = GameObject.FindWithTag("somsapocalipse");
+            if (somChefeMorreu != null)
+            {
+                AudioSource audioSource = somChefeMorreu.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.Play();
+                }
+            }
+
             // Sincroniza posição e rotação
             Vector3 currentPosition = romarioNormal.transform.position;
             Quaternion currentRotation = romarioNormal.transform.rotation;

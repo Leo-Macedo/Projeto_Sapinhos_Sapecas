@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class VilaoSeguePlayer : MonoBehaviour
 {
+    public AudioSource somInvestida;
+
     [Header("Referências")]
     public GameObject fumaca;
     public Transform player; // Referência para o transform do jogador
@@ -48,6 +50,7 @@ public class VilaoSeguePlayer : MonoBehaviour
             rb.velocity = direction * chargeForce;
             isCharging = true;
             animator.SetTrigger("investir");
+            somInvestida.Play();
             Debug.Log("Investida iniciada. Direção: " + direction + " Força: " + chargeForce);
         }
     }
@@ -73,58 +76,59 @@ public class VilaoSeguePlayer : MonoBehaviour
         Vitoria();
     }
 
-private IEnumerator StopCharge()
-{
-    // Congela a posição do Rigidbody, mas não a rotação
-    rb.constraints = RigidbodyConstraints.FreezePosition;
+    private IEnumerator StopCharge()
+    {
+        // Congela a posição do Rigidbody, mas não a rotação
+        rb.constraints = RigidbodyConstraints.FreezePosition;
         fumaca.SetActive(false);
 
         // Desabilita as restrições de rotação para permitir a rotação manual
         rb.constraints &= ~RigidbodyConstraints.FreezeRotation;
 
-    animator.SetTrigger("bater");
-    Debug.Log("Investida parada.");
+        animator.SetTrigger("bater");
+        Debug.Log("Investida parada.");
 
-    yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(3);
 
-    float lookDuration = 3f; // Duração de tempo que o vilão deve olhar para o jogador
-    float elapsedTime = 0f;
+        float lookDuration = 3f; // Duração de tempo que o vilão deve olhar para o jogador
+        float elapsedTime = 0f;
 
-    while (elapsedTime < lookDuration)
-    {
-        // Atualiza a rotação para olhar continuamente para o jogador
-        if (player != null)
+        while (elapsedTime < lookDuration)
         {
-            // Calcula a direção do vilão para o jogador
-            Vector3 directionToPlayer = player.position - transform.position;
-            directionToPlayer.y = 0; // Mantém no plano XZ
+            // Atualiza a rotação para olhar continuamente para o jogador
+            if (player != null)
+            {
+                // Calcula a direção do vilão para o jogador
+                Vector3 directionToPlayer = player.position - transform.position;
+                directionToPlayer.y = 0; // Mantém no plano XZ
 
-            // Cria a rotação de forma suave
-            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+                // Cria a rotação de forma suave
+                Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
                 fumacaoreia.SetActive(true);
-            // Atualiza a rotação suavemente
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                // Atualiza a rotação suavemente
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRotation,
+                    Time.deltaTime * rotationSpeed
+                );
+            }
+
+            elapsedTime += Time.deltaTime;
+            yield return null; // Espera até o próximo quadro
         }
 
-        elapsedTime += Time.deltaTime;
-        yield return null; // Espera até o próximo quadro
-    }
-
-    // Retoma as restrições de física do Rigidbody
-    rb.constraints = RigidbodyConstraints.None;
-    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+        // Retoma as restrições de física do Rigidbody
+        rb.constraints = RigidbodyConstraints.None;
+        rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
 
         fumacaoreia.SetActive(false);
 
         Debug.Log("Investida retomada.");
-    rb.WakeUp();
-    isCharging = false;
-    podeTomarDano = true;
-    podeDarDano = true;
-}
-
-
-
+        rb.WakeUp();
+        isCharging = false;
+        podeTomarDano = true;
+        podeDarDano = true;
+    }
 
     private void OnCollisionEnter(Collision other)
     {
