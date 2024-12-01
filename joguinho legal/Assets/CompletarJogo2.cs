@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class CompletarJogo2 : MonoBehaviour
 {
@@ -19,5 +20,8 @@ public class CompletarJogo2 : MonoBehaviour
         playableDirector.Play();
         yield return new WaitForSeconds(2f);
         dialogoFinal.StartDialogue();
+        yield return new WaitForSeconds((float) playableDirector.duration - 2);
+        SceneManager.LoadScene("Creditos");
+
     }
 }

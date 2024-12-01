@@ -24,7 +24,7 @@ public class NascerCapanga : MonoBehaviour
     
     public void SpawnCapanga()
     {
-     if(!vidaPersonagem.acabouojogo)  
+     if(!vidaVilao.morreuvilao)  
      {
         Quaternion valorRotacao = Quaternion.Euler(0f, 90f, 0f);
         int r = Random.Range(0, spawnpoints.Length);

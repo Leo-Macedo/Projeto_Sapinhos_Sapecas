@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class VerificarFasesCasarao : MonoBehaviour
 {
+
+    public GameObject musica;
     public GameObject olivia;
 
     public ControleSensibilidadeCamera controleSensibilidadeCamera;
