@@ -73,5 +73,14 @@ public class ResetarPlayerPrefs : MonoBehaviour
             Debug.LogWarning("Não foi possível encontrar o script SalvarFases na cena.");
         }
     }
+
+    [MenuItem("Tools/AtualizarControladorFasesCasarao")]
+
+    public static void AtualizarControladorFasesCasarao()
+    {
+        PlayerPrefs.SetInt("ControladorFasesCasarao", 3);
+        PlayerPrefs.Save(); // Garante que as mudanças sejam salvas imediatamente
+        Debug.Log("PlayerPrefs + 1 = ");
+    }
     #endif
 }

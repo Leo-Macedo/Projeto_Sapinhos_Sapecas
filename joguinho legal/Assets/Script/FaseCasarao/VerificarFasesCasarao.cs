@@ -114,13 +114,16 @@ public class VerificarFasesCasarao : MonoBehaviour
                 break;
 
             case 3:
-                int jaTocou = PlayerPrefs.GetInt("JaTocou", 0); 
+                int jaTocou = PlayerPrefs.GetInt("JaTocou", 0);
                 if (jaTocou == 0)
                 {
+                    PlayerPrefs.SetInt("JaTocou", 1); // Atualiza para evitar múltiplas execuções
+                    PlayerPrefs.Save();
                     StartCoroutine(Sotao());
                 }
-                else if (jaTocou == 1)
+                else if (jaTocou >= 1)
                 {
+                    
                     StartCoroutine(SimSotao());
                 }
                 break;
@@ -246,7 +249,8 @@ public class VerificarFasesCasarao : MonoBehaviour
         yield return new WaitForSeconds((float)cutsceneSotao.duration - 13f);
         controleSensibilidadeCamera.podePausar = true;
         PlayerPrefs.SetInt("JaTocou", 1);
-        lançarObjeto.podeLancar = true;
+        lançarObjeto.AtivarMovimentoEAção();
+
         somNoti.Play();
         mensagem[6].SetActive(true);
         yield return new WaitForSeconds(5);
@@ -259,6 +263,7 @@ public class VerificarFasesCasarao : MonoBehaviour
 
     public IEnumerator SimSotao()
     {
+        olivia.SetActive(true);
         if (ronaldo != null && waiPoint != null)
         {
             ronaldo.transform.position = waiPoint.position;
@@ -269,7 +274,7 @@ public class VerificarFasesCasarao : MonoBehaviour
 
         controleSensibilidadeCamera.podePausar = true;
 
-        lançarObjeto.podeLancar = true;
+        lançarObjeto.AtivarMovimentoEAção();
         somNoti.Play();
         mensagem[6].SetActive(true);
         yield return new WaitForSeconds(5);

@@ -25,6 +25,7 @@ public class PassarFasesCasarao : MonoBehaviour
     private bool flag1;
     private bool flag2;
     private bool flag3;
+    private bool portaAberta = false;
 
     // Start is called before the first frame update
     void Start() { }
@@ -94,10 +95,11 @@ public class PassarFasesCasarao : MonoBehaviour
     {
         if (other.gameObject.CompareTag("porta"))
         {
-            if (completouSenha && estaComChave)
+            if (completouSenha && estaComChave && !portaAberta)
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
+                    portaAberta = true;
                     StartCoroutine(AbrirPorta());
                 }
             }

@@ -11,7 +11,7 @@ public class LançarObjetoEMoverOlivia : MonoBehaviour
     public float moveSpeed = 3f;
     public List<Transform> waypoints;
     private GameObject caixa;
-    private Transform player;
+    public Transform player;
     private Animator animator;
     private int waypointAtual = -1;
     private Rigidbody rb;
@@ -23,13 +23,11 @@ public class LançarObjetoEMoverOlivia : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        StartCoroutine(MoverEntreWaypoints());
     }
 
     private IEnumerator MoverEntreWaypoints()
     {
-        while (!vidaVilao.morreuvilao && podeLancar) // Continua enquanto o vilão não estiver morto
+        while (!vidaVilao.morreuvilao) // Continua enquanto o vilão não estiver morto
         {
             if (waypoints.Count == 0)
                 yield break;
@@ -131,5 +129,11 @@ public class LançarObjetoEMoverOlivia : MonoBehaviour
         rb.AddForce(direcaoLançamento * throwForce, ForceMode.Impulse);
         caixa.AddComponent<CaixaDanoNoPlayer>();
         caixa = null;
+    }
+
+    public void AtivarMovimentoEAção()
+    {
+        podeLancar = true;  // Permite lançar caixas
+        StartCoroutine(MoverEntreWaypoints());  // Inicia o movimento entre os waypoints
     }
 }
