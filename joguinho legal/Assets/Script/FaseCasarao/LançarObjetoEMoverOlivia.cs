@@ -29,7 +29,7 @@ public class LançarObjetoEMoverOlivia : MonoBehaviour
 
     private IEnumerator MoverEntreWaypoints()
     {
-        while (!vidaVilao.morreuvilao) // Continua enquanto o vilão não estiver morto
+        while (!vidaVilao.morreuvilao && podeLancar) // Continua enquanto o vilão não estiver morto
         {
             if (waypoints.Count == 0)
                 yield break;

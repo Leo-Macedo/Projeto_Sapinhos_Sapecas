@@ -44,6 +44,15 @@ public class TeletransportePorta : MonoBehaviour
         // Teletransporta o jogador para a sala de trás
         verificarFasesTaverna.AtualizarControladorFases();
         StartCoroutine(verificarFasesTaverna.SalaZida());
+        GameObject perseguirObj = GameObject.FindWithTag("perseguir");
+    if (perseguirObj != null)
+    {
+        AudioSource perseguirAudio = perseguirObj.GetComponent<AudioSource>();
+        if (perseguirAudio != null && perseguirAudio.isPlaying)
+        {
+            perseguirAudio.Stop();
+        }
+    }
         player.transform.position = tpsalazida.position; // Atualiza a posição do jogador
     }
 }

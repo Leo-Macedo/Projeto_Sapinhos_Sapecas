@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class VerificarFasesCasarao : MonoBehaviour
 {
+    public DialogoFinal diaglogoFinal;
     public int controladorFases = 0;
     public GameObject cubo;
     public LançarObjetoEMoverOlivia lançarObjeto;
@@ -227,7 +228,9 @@ public class VerificarFasesCasarao : MonoBehaviour
         }
         cutsceneSotao.Play();
         StartCoroutine(ControlarMovimentoDuranteCutscene());
-        yield return new WaitForSeconds((float)cutsceneSotao.duration);
+        yield return new WaitForSeconds (13f);
+        diaglogoFinal.StartDialogue();
+        yield return new WaitForSeconds((float)cutsceneSotao.duration - 13f);
         lançarObjeto.podeLancar = true;
         somNoti.Play();
         mensagem[6].SetActive(true);

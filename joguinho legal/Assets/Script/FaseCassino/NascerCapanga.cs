@@ -13,12 +13,13 @@ public class NascerCapanga : MonoBehaviour
     public GameObject player;
     private VidaPersonagem vidaPersonagem;
     private VidaVilao vidaVilao;
+    public float tempo = 10;
 
     private void Start()
     {
         vidaVilao = vilao.GetComponent<VidaVilao>();
         vidaPersonagem = player.GetComponent<VidaPersonagem>();
-        InvokeRepeating("SpawnCapanga", 1, 10);
+        InvokeRepeating("SpawnCapanga", 1, tempo);
     }
     
     public void SpawnCapanga()
