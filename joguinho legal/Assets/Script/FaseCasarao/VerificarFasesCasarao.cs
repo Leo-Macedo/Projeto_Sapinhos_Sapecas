@@ -9,6 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class VerificarFasesCasarao : MonoBehaviour
 {
+    public GameObject olivia;
+
+    public ControleSensibilidadeCamera controleSensibilidadeCamera;
+
     public DialogoFinal diaglogoFinal;
     public int controladorFases = 0;
     public GameObject cubo;
@@ -80,7 +84,7 @@ public class VerificarFasesCasarao : MonoBehaviour
 
     public void ReiniciarRound()
     {
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
 
         // Desativa o canvas de Game Over
         gameOverCanvas.SetActive(false);
@@ -110,7 +114,15 @@ public class VerificarFasesCasarao : MonoBehaviour
                 break;
 
             case 3:
-                StartCoroutine(Sotao());
+                int jaTocou = PlayerPrefs.GetInt("JaTocou", 0); 
+                if (jaTocou == 0)
+                {
+                    StartCoroutine(Sotao());
+                }
+                else if (jaTocou == 1)
+                {
+                    StartCoroutine(SimSotao());
+                }
                 break;
             default:
                 Debug.LogWarning("Controlador de fases desconhecido: " + controladorFases);
@@ -127,16 +139,16 @@ public class VerificarFasesCasarao : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-             // Encontra todos os objetos com a tag "musica" e para o AudioSource deles
-        GameObject[] objetosMusica = GameObject.FindGameObjectsWithTag("musica");
-        foreach (GameObject objeto in objetosMusica)
-        {
-            AudioSource audioSource = objeto.GetComponent<AudioSource>();
-            if (audioSource != null)
+            // Encontra todos os objetos com a tag "musica" e para o AudioSource deles
+            GameObject[] objetosMusica = GameObject.FindGameObjectsWithTag("musica");
+            foreach (GameObject objeto in objetosMusica)
             {
-                audioSource.Stop();
+                AudioSource audioSource = objeto.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.Stop();
+                }
             }
-        }
         }
     }
 
@@ -215,6 +227,7 @@ public class VerificarFasesCasarao : MonoBehaviour
 
     public IEnumerator Sotao()
     {
+        controleSensibilidadeCamera.podePausar = false;
         if (ronaldo != null && waiPoint != null)
         {
             ronaldo.transform.position = waiPoint.position;
@@ -228,9 +241,34 @@ public class VerificarFasesCasarao : MonoBehaviour
         }
         cutsceneSotao.Play();
         StartCoroutine(ControlarMovimentoDuranteCutscene());
-        yield return new WaitForSeconds (13f);
+        yield return new WaitForSeconds(13f);
         diaglogoFinal.StartDialogue();
         yield return new WaitForSeconds((float)cutsceneSotao.duration - 13f);
+        controleSensibilidadeCamera.podePausar = true;
+        PlayerPrefs.SetInt("JaTocou", 1);
+        lançarObjeto.podeLancar = true;
+        somNoti.Play();
+        mensagem[6].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[6].SetTrigger("fechou");
+        somNoti.Play();
+        mensagem[7].SetActive(true);
+        yield return new WaitForSeconds(5);
+        animatorMSG[7].SetTrigger("fechou");
+    }
+
+    public IEnumerator SimSotao()
+    {
+        if (ronaldo != null && waiPoint != null)
+        {
+            ronaldo.transform.position = waiPoint.position;
+            ronaldo.transform.rotation = waiPoint.rotation;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        controleSensibilidadeCamera.podePausar = true;
+
         lançarObjeto.podeLancar = true;
         somNoti.Play();
         mensagem[6].SetActive(true);

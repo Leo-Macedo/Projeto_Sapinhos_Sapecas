@@ -2944,10 +2944,10 @@ MonoBehaviour:
   - Romarinho
   - Tio Luxo
   npcSprites:
-  - {fileID: 21300000, guid: e606441ba634fce4b87af7be0240d120, type: 3}
-  - {fileID: 21300000, guid: 8a3fd10ea261e7947bd97657ef748675, type: 3}
-  - {fileID: 21300000, guid: d94cfbf31cdeb1249a5281dd67087e42, type: 3}
-  - {fileID: 21300000, guid: 418096d37ef05ba4aad670c4400ebdc6, type: 3}
+  - {fileID: 21300000, guid: d6c911de1197d63479dac34ae15b1d90, type: 3}
+  - {fileID: 21300000, guid: 4bff40d51744139449bbe9c833cfe9d1, type: 3}
+  - {fileID: 21300000, guid: f9f53b427b67a6f4ab3d223ede09328c, type: 3}
+  - {fileID: 21300000, guid: f8410067c6de1f84688e4a8d68be8fc5, type: 3}
   dialogueLines:
   - "Acho que n\xE3o vou conseguir\u2026"
   - "O qu\xEA? O cara mais corajoso que conhe\xE7o est\xE1 com medo de uma louva-deus
@@ -3666,7 +3666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 74f178ff643eeac438be62ec383375eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.57
+      value: -0.57
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 74f178ff643eeac438be62ec383375eb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6112,7 +6112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7214,6 +7214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89aa3adc91d80a468a1aa274d1faeb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  olivia: {fileID: 0}
+  controleSensibilidadeCamera: {fileID: 1936232412}
   diaglogoFinal: {fileID: 415090597}
   controladorFases: 3
   cubo: {fileID: 0}
@@ -7489,7 +7491,7 @@ RectTransform:
   m_Father: {fileID: 1057538222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13631,7 +13633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1482971827
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13965,7 +13967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 32cf6ae4387297c4c9b060f1127721d4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 32cf6ae4387297c4c9b060f1127721d4, type: 3}
       propertyPath: m_TagString
@@ -14363,7 +14365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1537810587
 Transform:
   m_ObjectHideFlags: 0
