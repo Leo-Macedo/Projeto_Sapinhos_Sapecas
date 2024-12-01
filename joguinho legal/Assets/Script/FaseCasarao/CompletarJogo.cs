@@ -5,16 +5,15 @@ using UnityEngine.Playables;
 
 public class CompletarJogo : MonoBehaviour
 {
+    public CompletarJogo2 completarJogo2;
     public VidaVilao vidaVilao;
     private bool podeAbrir;
     private bool abrir;
     private bool abriu;
     public GameObject txtAbrir;
     public GameObject txtFAbrir;
-    public Animator porta;
-    public Animator fade;
-    public PlayableDirector playableDirector;
-
+    
+   
     void Start() { }
 
     // Update is called once per frame
@@ -26,27 +25,21 @@ public class CompletarJogo : MonoBehaviour
             txtAbrir.SetActive(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && abrir && !abriu) 
+        if (Input.GetKeyDown(KeyCode.F) && abrir && !abriu)
         {
+            txtFAbrir.SetActive(false);
             abriu = true;
-            StartCoroutine(ComeçarCutscene());
+            completarJogo2.StartCoroutine(completarJogo2.ComeçarCutscene());
         }
     }
 
-    public IEnumerator ComeçarCutscene()
-    {
-        txtFAbrir.SetActive(false);
-        porta.SetTrigger("abrir");
-        yield return new WaitForSeconds(2f);
-        fade.SetTrigger("fechar");
-        yield return new WaitForSeconds(2f);
-        playableDirector.Play();
-    }
+    
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("cadeia") && podeAbrir)
         {
+            txtAbrir.SetActive(false);
             txtFAbrir.SetActive(true);
             abrir = true;
         }
