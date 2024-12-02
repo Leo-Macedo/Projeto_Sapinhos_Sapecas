@@ -10,7 +10,7 @@ public class IASapinhosMatam : MonoBehaviour
     private NavMeshAgent navMeshAgent;
 
     public float distAtaque;
-    public bool podeatacar = true;
+    public bool podeAtacar = true;
     public Animator animatorPorta;
 
     private Transform alvoAtual; // Capanga que o NPC está seguindo
@@ -28,51 +28,57 @@ public class IASapinhosMatam : MonoBehaviour
 
     void Update()
     {
-        Seguiranimar();
-        AtacarOCapanga();
-        AtualizarListaCapangas(); // Atualiza a lista de capangas a cada quadro
+        SeguirEAnimar();
+        AtacarCapanga();
+        AtualizarListaCapangas(); // Atualiza a lista de capangas dinamicamente
         VerificarCapangasMortos(); // Verifica se todos os capangas estão mortos
     }
 
-    private void Seguiranimar()
+    private void SeguirEAnimar()
     {
         if (alvoAtual != null)
         {
             navMeshAgent.SetDestination(alvoAtual.position);
-            animator.SetBool("correndo", navMeshAgent.velocity != Vector3.zero);
+            animator.SetBool("correndo", navMeshAgent.velocity.sqrMagnitude > 0);
         }
     }
 
-    private void AtacarOCapanga()
+    private void AtacarCapanga()
     {
-        if (alvoAtual != null)
-        {
-            CapangaSegueEMorre capangaScript = alvoAtual.GetComponent<CapangaSegueEMorre>();
-            if (capangaScript != null && capangaScript.morreu)
-            {
-                Debug.Log("Alvo atual está morto, selecionando um novo.");
-                RemoveCapanga(alvoAtual); // Remove o capanga morto
-                SelecionarAlvo();         // Seleciona outro capanga
-                return;                   // Encerra o método para evitar erros
-            }
-
-            float distancia = Vector3.Distance(transform.position, alvoAtual.position);
-            if (distancia <= distAtaque)
-            {
-                if (capangaScript != null && podeatacar)
-                {
-                    podeatacar = false;
-                    animator.SetBool("soco", true);
-                    capangaScript.ReceberDanoCapanga(1);
-                    Invoke("VerificarCapangaMorto", 0.1f);
-                    Invoke("PodeAtacar", 1);
-                    Invoke("NãoPodeAtacar", 1);
-                }
-            }
-        }
-        else
+        if (alvoAtual == null)
         {
             SelecionarAlvo(); // Seleciona um novo alvo se não houver alvo atual
+            return;
+        }
+
+        if (alvoAtual == null || alvoAtual.GetComponent<CapangaSegueEMorre>() == null)
+        {
+            Debug.Log("Alvo atual inválido ou destruído. Selecionando um novo alvo.");
+            SelecionarAlvo();
+            return;
+        }
+
+        CapangaSegueEMorre capangaScript = alvoAtual.GetComponent<CapangaSegueEMorre>();
+        if (capangaScript != null && capangaScript.morreu)
+        {
+            Debug.Log("Alvo atual está morto. Selecionando um novo.");
+            RemoveCapanga(alvoAtual); // Remove o capanga morto
+            SelecionarAlvo(); // Seleciona outro capanga
+            return;
+        }
+
+        float distancia = Vector3.Distance(transform.position, alvoAtual.position);
+        if (distancia <= distAtaque && podeAtacar)
+        {
+            podeAtacar = false;
+            animator.SetBool("soco", true);
+            if (capangaScript != null)
+            {
+                capangaScript.ReceberDanoCapanga(1);
+            }
+            Invoke(nameof(VerificarCapangaMorto), 0.1f);
+            Invoke(nameof(PermitirAtaque), 1);
+            Invoke(nameof(ResetarAnimacaoSoco), 1);
         }
     }
 
@@ -85,8 +91,8 @@ public class IASapinhosMatam : MonoBehaviour
             {
                 Debug.Log("Capanga morto detectado: " + alvoAtual.name);
                 RemoveCapanga(alvoAtual); // Remove o capanga da lista
-                alvoAtual = null;         // Limpa o alvo atual
-                SelecionarAlvo();         // Seleciona um novo alvo
+                alvoAtual = null; // Limpa o alvo atual
+                SelecionarAlvo(); // Seleciona um novo alvo
             }
         }
     }
@@ -101,7 +107,7 @@ public class IASapinhosMatam : MonoBehaviour
             if (capangaScript != null && !capangaScript.morreu)
             {
                 todosMortos = false;
-                break; // Não precisamos continuar se encontramos um capanga vivo
+                break; // Interrompe a verificação se encontrar um capanga vivo
             }
         }
 
@@ -121,8 +127,8 @@ public class IASapinhosMatam : MonoBehaviour
 
         foreach (GameObject capanga in capangasArray)
         {
-            Transform capangaTransform = capanga.GetComponent<Transform>();
-            if (capangaTransform != null && !capangas.Contains(capangaTransform))
+            Transform capangaTransform = capanga.transform;
+            if (capangaTransform != null) // Garante que o objeto não está destruído
             {
                 capangas.Add(capangaTransform);
             }
@@ -135,24 +141,31 @@ public class IASapinhosMatam : MonoBehaviour
     {
         if (capangas.Count > 0)
         {
-            Transform closestCapanga = null;
-            float minDistance = Mathf.Infinity;
+            Transform capangaMaisProximo = null;
+            float menorDistancia = Mathf.Infinity;
 
             foreach (Transform capangaTransform in capangas)
             {
-                CapangaSegueEMorre capangaScript = capangaTransform.GetComponent<CapangaSegueEMorre>();
+                if (capangaTransform == null)
+                    continue; // Ignorar capangas destruídos
+
+                CapangaSegueEMorre capangaScript =
+                    capangaTransform.GetComponent<CapangaSegueEMorre>();
                 if (capangaScript != null && !capangaScript.morreu) // Apenas capangas vivos
                 {
-                    float distance = Vector3.Distance(transform.position, capangaTransform.position);
-                    if (distance < minDistance)
+                    float distancia = Vector3.Distance(
+                        transform.position,
+                        capangaTransform.position
+                    );
+                    if (distancia < menorDistancia)
                     {
-                        minDistance = distance;
-                        closestCapanga = capangaTransform;
+                        menorDistancia = distancia;
+                        capangaMaisProximo = capangaTransform;
                     }
                 }
             }
 
-            alvoAtual = closestCapanga;
+            alvoAtual = capangaMaisProximo;
 
             if (alvoAtual != null)
             {
@@ -179,13 +192,13 @@ public class IASapinhosMatam : MonoBehaviour
         }
     }
 
-    public void NãoPodeAtacar()
+    private void PermitirAtaque()
     {
-        animator.SetBool("soco", false);
+        podeAtacar = true;
     }
 
-    public void PodeAtacar()
+    private void ResetarAnimacaoSoco()
     {
-        podeatacar = true;
+        animator.SetBool("soco", false);
     }
 }

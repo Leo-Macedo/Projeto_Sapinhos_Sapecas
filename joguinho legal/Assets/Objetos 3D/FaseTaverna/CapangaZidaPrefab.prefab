@@ -77,7 +77,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -881,7 +881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da47345126f85b745a3bdb773a457da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distAtaque: 1.5
+  capangamorreu: {fileID: 0}
+  distAtaque: 3
   morreu: 0
   CANVASVIDADOCARLAO: {fileID: 3982020033083045468}
   _vidaVilao: 3

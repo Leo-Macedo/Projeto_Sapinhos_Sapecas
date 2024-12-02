@@ -23,13 +23,23 @@ public class CaixaDanoNoPlayer : MonoBehaviour
             jaColidiu = true;
             GameObject prefab = Resources.Load<GameObject>("Bombadedinehirobow");
             Instantiate(prefab, other.transform.position, Quaternion.identity);
+
+            GameObject somDin = GameObject.FindWithTag("somdin");
+            if (somDin != null)
+            {
+                AudioSource perseguirAudio = somDin.GetComponent<AudioSource>();
+                if (perseguirAudio != null)
+                {
+                    perseguirAudio.Play();
+                }
+            }
+
             Destroy(gameObject);
 
             // Para a caixa ao colidir com o jogador
         }
         if (other.gameObject.CompareTag("outroobj") || other.gameObject.CompareTag("bomba"))
         {
-            
             jaColidiu = true;
         }
     }

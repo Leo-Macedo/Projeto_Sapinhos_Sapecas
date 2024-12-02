@@ -26,9 +26,7 @@ public class VerificarFasePredio : MonoBehaviour
     public Transform pontoNascer1;
     public Transform pontoNascer2;
     public Transform pontoNascer3;
-    public GameObject cilindroCapanga;
-    public GameObject cilindroVilao;
-    public GameObject cilindroCapanga3;
+
 
     [Header("CutScenes")]
     public PlayableDirector cutsceneAndar1;
@@ -76,8 +74,6 @@ public class VerificarFasePredio : MonoBehaviour
         {
             agent.enabled = false;
         }
-
-       
 
         animMensagem1 = mensagem1.GetComponent<Animator>();
         animMensagem2 = mensagem2.GetComponent<Animator>();
@@ -153,27 +149,27 @@ public class VerificarFasePredio : MonoBehaviour
     }
 
     private void VerificarMorteJogador()
-{
-    if (vidaPersonagem.vidaAtual <= 0)
     {
-        // Pausa o jogo
-        Time.timeScale = 0f;
-        gameOverCanvas.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        // Encontra todos os objetos com a tag "musica" e para o AudioSource deles
-        GameObject[] objetosMusica = GameObject.FindGameObjectsWithTag("musica");
-        foreach (GameObject objeto in objetosMusica)
+        if (vidaPersonagem.vidaAtual <= 0)
         {
-            AudioSource audioSource = objeto.GetComponent<AudioSource>();
-            if (audioSource != null)
+            // Pausa o jogo
+            Time.timeScale = 0f;
+            gameOverCanvas.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            // Encontra todos os objetos com a tag "musica" e para o AudioSource deles
+            GameObject[] objetosMusica = GameObject.FindGameObjectsWithTag("musica");
+            foreach (GameObject objeto in objetosMusica)
             {
-                audioSource.Stop();
+                AudioSource audioSource = objeto.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.Stop();
+                }
             }
         }
     }
-}
 
     public IEnumerator Andar1()
     {
@@ -213,7 +209,6 @@ public class VerificarFasePredio : MonoBehaviour
         }
         controleSensibilidadeCamera.podePausar = true;
 
-        cilindroCapanga.SetActive(false);
         somNoti.Play();
         mensagem3.SetActive(true);
         yield return new WaitForSeconds(5);
@@ -230,11 +225,6 @@ public class VerificarFasePredio : MonoBehaviour
 
     public IEnumerator Andar3()
     {
-        foreach (NavMeshAgent agent in allAgents)
-        {
-            agent.enabled = false;
-        }
-
         vidaPersonagem.vidaAtual = 3;
         superRonaldinho.podeUtar = true;
         StartCoroutine(ControlarMovimentoDuranteCutscene());
@@ -249,11 +239,13 @@ public class VerificarFasePredio : MonoBehaviour
         yield return new WaitForSeconds((float)cutsceneAndar3.duration);
         foreach (NavMeshAgent agent in allAgents)
         {
-            agent.enabled = true;
+            if (agent != null && agent.gameObject != null) // Verifica se o agente ainda existe
+            {
+                agent.enabled = true;
+            }
         }
         controleSensibilidadeCamera.podePausar = true;
 
-        cilindroCapanga3.SetActive(false);
         somNoti.Play();
         mensagem6.SetActive(true);
         yield return new WaitForSeconds(5);
@@ -264,7 +256,10 @@ public class VerificarFasePredio : MonoBehaviour
     {
         foreach (NavMeshAgent agent in allAgents)
         {
-            agent.enabled = false;
+            if (agent != null && agent.gameObject != null) // Verifica se o agente ainda existe
+            {
+                agent.enabled = false;
+            }
         }
         vidaPersonagem.vidaAtual = 3;
         StartCoroutine(ControlarMovimentoDuranteCutscene());
@@ -278,11 +273,13 @@ public class VerificarFasePredio : MonoBehaviour
         yield return new WaitForSeconds((float)cutsceneAndar3.duration);
         foreach (NavMeshAgent agent in allAgents)
         {
-            agent.enabled = true;
+            if (agent != null && agent.gameObject != null) // Verifica se o agente ainda existe
+            {
+                agent.enabled = true;
+            }
         }
         controleSensibilidadeCamera.podePausar = true;
 
-        cilindroVilao.SetActive(false);
         somNoti.Play();
         mensagem11.SetActive(true);
         yield return new WaitForSeconds(5);

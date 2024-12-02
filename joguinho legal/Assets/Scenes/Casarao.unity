@@ -4335,6 +4335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distAtaque: 2
   somSoco: {fileID: 2106139572}
+  dano: 1
   layerParaVerificar:
     serializedVersion: 2
     m_Bits: 1024
@@ -5826,7 +5827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distAtaque: 2
-  podeatacar: 1
+  podeAtacar: 1
   animatorPorta: {fileID: 2035149634}
 --- !u!4 &408773455 stripped
 Transform:
@@ -10974,6 +10975,8 @@ PlayableDirector:
     value: {fileID: 364624655}
   - key: {fileID: 3651134451476444116, guid: 3bfb10f2d0e64854cb9e20e1f48d377b, type: 2}
     value: {fileID: 1914128488}
+  - key: {fileID: 221757023700000804, guid: 3bfb10f2d0e64854cb9e20e1f48d377b, type: 2}
+    value: {fileID: 2137088943}
   m_ExposedReferences:
     m_References:
     - c2576c7dc796a3143933ee8f3247b381: {fileID: 1914128489}
@@ -17487,6 +17490,8 @@ PlayableDirector:
     value: {fileID: 1960434197}
   - key: {fileID: 499613360293652984, guid: dbc8dd8314ff48f4c9b2167151a7266b, type: 2}
     value: {fileID: 2076430581}
+  - key: {fileID: -9175905658639487750, guid: dbc8dd8314ff48f4c9b2167151a7266b, type: 2}
+    value: {fileID: 2137088943}
   m_ExposedReferences:
     m_References:
     - 64844f922af21264686e8587d88808cb: {fileID: 1566445034}
@@ -21431,7 +21436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distAtaque: 2
-  podeatacar: 1
+  podeAtacar: 1
   animatorPorta: {fileID: 2035149634}
 --- !u!4 &1656831743 stripped
 Transform:
@@ -26846,6 +26851,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Efeitos Sonoros
       objectReference: {fileID: 0}
+    - target: {fileID: 7286625515479829192, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+      propertyPath: m_Volume
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 8002070892622864626, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -27102,6 +27111,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126889848}
   m_CullTransparentMesh: 1
+--- !u!1 &2137088943 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9219683365581450028, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+  m_PrefabInstance: {fileID: 2106139570}
+  m_PrefabAsset: {fileID: 0}
 --- !u!64 &2143943301
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class AçõesPersonagem : MonoBehaviour
     public float distAtaque = 1f; // Distância máxima para atacar o capanga
 
     public AudioSource somSoco;
+    public int dano = 1;
 
     public LayerMask layerParaVerificar;
 
@@ -94,7 +95,7 @@ public class AçõesPersonagem : MonoBehaviour
             );
             if (podeMatarCapanga && distancia <= distAtaque)
             {
-                capangaSegueEMorre.ReceberDanoCapanga(1);
+                capangaSegueEMorre.ReceberDanoCapanga(dano);
                 podeMatarCapanga = false;
             }
         }
