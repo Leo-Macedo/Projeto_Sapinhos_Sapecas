@@ -67,7 +67,7 @@ public class MatarVilao : MonoBehaviour
                 vidaVilao.ReceberDanoVilao(danoAtaque);
                 
                 podeatacar = false;
-                Invoke("PodeAtacar", 3);
+                Invoke("PodeAtacar", 1);
             }
 
             socoExecutado = false; // Reseta o trigger do soco
