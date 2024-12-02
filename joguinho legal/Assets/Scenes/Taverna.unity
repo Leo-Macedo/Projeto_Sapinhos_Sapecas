@@ -8522,7 +8522,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 50
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -8548,7 +8548,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595339510}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.097525425, y: -0.72626674, z: 0.10536068, w: 0.67225343}
+  m_LocalRotation: {x: 0.0975242, y: -0.7262669, z: 0.10535946, w: 0.6722536}
   m_LocalPosition: {x: -76.430756, y: 25.08491, z: -18.232273}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -26226,6 +26226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdad76a9dff822647899134e652d496a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  somCerto: {fileID: 1858089739732612770}
+  somErrado: {fileID: 1858089739732612769}
   controleSensibilidadeCamera: {fileID: 857067125}
   telasenha: {fileID: 510854792}
   senhacorreta: 8691
@@ -33231,7 +33233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddaae50a2319d7b4b87b99509bddbc48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vidaVilao: 2
+  _vidaVilao: 5
   somDor: {fileID: 1354580826}
   slidervidavilao: {fileID: 621256633}
   player: {fileID: 1836821603}
@@ -34560,6 +34562,16 @@ AudioSource:
 --- !u!1 &1858089739732612768 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8002070892622864626, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+  m_PrefabInstance: {fileID: 1858089739732612766}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1858089739732612769 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 441985976749878144, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
+  m_PrefabInstance: {fileID: 1858089739732612766}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1858089739732612770 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1682410371580792380, guid: 6e5d0742b64736c4cbb0ead81a061cfd, type: 3}
   m_PrefabInstance: {fileID: 1858089739732612766}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4368083792534612204

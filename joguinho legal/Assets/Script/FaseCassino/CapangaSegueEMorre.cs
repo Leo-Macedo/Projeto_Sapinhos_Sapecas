@@ -242,6 +242,27 @@ public class CapangaSegueEMorre : MonoBehaviour
         Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0)); // Rotação de 90 graus no eixo Y
         yield return new WaitForSeconds(0.1f);
         Destroy(gameObject);
+        TentarInstanciarPrefab();
+    }
+
+    private void TentarInstanciarPrefab()
+    {
+        
+        float chance = Random.Range(0f, 1f);
+
+        
+        if (chance <= 0.25f)
+        {
+            GameObject prefab = Resources.Load<GameObject>("vida");
+
+            float diferençaY = 27.37f - 26.76837f;
+
+            Instantiate(prefab, new Vector3(transform.position.x, transform.position.y + diferençaY, transform.position.z), Quaternion.identity);
+            Debug.Log("Prefab instanciado com sucesso!");
+            
+            
+        }
+       
     }
 
     public void Resetou()

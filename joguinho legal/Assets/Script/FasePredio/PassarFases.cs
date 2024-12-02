@@ -46,6 +46,7 @@ public class PassarFases : MonoBehaviour
     private Animator animMensagem10;
     public SuperRonaldinho superRonaldinho;
 
+
     void Start()
     {
         animMensagem7 = mensagem7.GetComponent<Animator>();

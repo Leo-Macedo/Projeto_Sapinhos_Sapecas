@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Senha : MonoBehaviour
 {
+    public AudioSource somCerto;
+    public AudioSource somErrado;
     public ControleSensibilidadeCamera controleSensibilidadeCamera;
 
     [Header("Senha")]
@@ -57,6 +59,7 @@ public class Senha : MonoBehaviour
             telasenha.text = senhainserida; // Atualiza o texto da senha
             porta.SetActive(true); // Ativa a porta
             animatoPorta.SetTrigger("abrir");
+            somCerto.Play();
         }
         else
         {
@@ -65,6 +68,7 @@ public class Senha : MonoBehaviour
             telasenha.text = senhainserida; // Atualiza o texto da senha
             txtsenhaincorreta.SetActive(true); // Ativa a mensagem de senha incorreta
             Invoke("TxtSenhaDesativar", 2); // Desativa a mensagem de senha incorreta após 2 segundos
+            somErrado.Play();
         }
     }
 

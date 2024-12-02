@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class VerificarFasePredio : MonoBehaviour
 {
+    private NavMeshAgent[] allAgents;
     public ControleSensibilidadeCamera controleSensibilidadeCamera;
 
     public int controladorFases = 0;
@@ -68,6 +70,15 @@ public class VerificarFasePredio : MonoBehaviour
 
     void Start()
     {
+        allAgents = Object.FindObjectsByType<NavMeshAgent>(FindObjectsSortMode.None);
+
+        foreach (NavMeshAgent agent in allAgents)
+        {
+            agent.enabled = false;
+        }
+
+       
+
         animMensagem1 = mensagem1.GetComponent<Animator>();
         animMensagem2 = mensagem2.GetComponent<Animator>();
         animMensagem3 = mensagem3.GetComponent<Animator>();
@@ -171,6 +182,7 @@ public class VerificarFasePredio : MonoBehaviour
         vidaPersonagem.vidaAtual = 3;
         superRonaldinho.podeUtar = false;
         yield return new WaitForSeconds((float)cutsceneAndar1.duration);
+
         controleSensibilidadeCamera.podePausar = true;
         somNoti.Play();
         mensagem1.SetActive(true);
@@ -195,6 +207,10 @@ public class VerificarFasePredio : MonoBehaviour
         Super.SetActive(true);
 
         yield return new WaitForSeconds((float)cutsceneAndar2.duration);
+        foreach (NavMeshAgent agent in allAgents)
+        {
+            agent.enabled = true;
+        }
         controleSensibilidadeCamera.podePausar = true;
 
         cilindroCapanga.SetActive(false);
@@ -214,6 +230,11 @@ public class VerificarFasePredio : MonoBehaviour
 
     public IEnumerator Andar3()
     {
+        foreach (NavMeshAgent agent in allAgents)
+        {
+            agent.enabled = false;
+        }
+
         vidaPersonagem.vidaAtual = 3;
         superRonaldinho.podeUtar = true;
         StartCoroutine(ControlarMovimentoDuranteCutscene());
@@ -226,6 +247,10 @@ public class VerificarFasePredio : MonoBehaviour
         Super.SetActive(true);
 
         yield return new WaitForSeconds((float)cutsceneAndar3.duration);
+        foreach (NavMeshAgent agent in allAgents)
+        {
+            agent.enabled = true;
+        }
         controleSensibilidadeCamera.podePausar = true;
 
         cilindroCapanga3.SetActive(false);
@@ -237,6 +262,10 @@ public class VerificarFasePredio : MonoBehaviour
 
     public IEnumerator Andar4()
     {
+        foreach (NavMeshAgent agent in allAgents)
+        {
+            agent.enabled = false;
+        }
         vidaPersonagem.vidaAtual = 3;
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar4.Play();
@@ -247,6 +276,10 @@ public class VerificarFasePredio : MonoBehaviour
         superRonaldinho.podeUtar = true;
 
         yield return new WaitForSeconds((float)cutsceneAndar3.duration);
+        foreach (NavMeshAgent agent in allAgents)
+        {
+            agent.enabled = true;
+        }
         controleSensibilidadeCamera.podePausar = true;
 
         cilindroVilao.SetActive(false);

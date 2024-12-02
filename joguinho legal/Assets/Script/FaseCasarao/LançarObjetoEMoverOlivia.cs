@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LançarObjetoEMoverOlivia : MonoBehaviour
 {
+    public AudioSource somInvestida;
+    public GameObject FUMACA;
     public GameObject caixaPrefab;
     public Transform spawnPoint;
     public float throwForce = 10f;
@@ -43,6 +45,8 @@ public class LançarObjetoEMoverOlivia : MonoBehaviour
 
             andando = true; // Define como andando ao começar a mover
             animator.SetBool("andando", true); // Atualiza o Animator
+            FUMACA.SetActive(true);
+            somInvestida.Play();
 
             while (
                 Vector3.Distance(
@@ -73,6 +77,7 @@ public class LançarObjetoEMoverOlivia : MonoBehaviour
 
             andando = false; // Define como parado ao atingir o destino
             animator.SetBool("andando", false); // Atualiza o Animator
+            FUMACA.SetActive(false);
 
             if (podeLancar)
             {

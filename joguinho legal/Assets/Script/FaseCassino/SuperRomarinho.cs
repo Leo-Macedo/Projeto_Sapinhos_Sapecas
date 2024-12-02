@@ -134,16 +134,24 @@ public class SuperSystem : MonoBehaviour
             romarioNormal.SetActive(false);
             romarioSuper.SetActive(true);
 
-            vilaoSegueEAtaca.player = romarioSuper.transform;
-            vilaoSegueEAtaca.vidaPersonagemScript = romarioSuper.GetComponent<VidaPersonagem>();
+            if (vilaoSegueEAtaca != null)
+            {
+                vilaoSegueEAtaca.player = romarioSuper.transform;
+                vilaoSegueEAtaca.vidaPersonagemScript = romarioSuper.GetComponent<VidaPersonagem>();
+            }
 
-            vidaVilao.player = romarioSuper;
-            vidaVilao.vidaPersonagem = romarioSuper.GetComponent<VidaPersonagem>();
+            if (vidaVilao != null)
+            {
+                vidaVilao.player = romarioSuper;
+                vidaVilao.vidaPersonagem = romarioSuper.GetComponent<VidaPersonagem>();
+            }
 
-            vilaoAtacaPlayer.player = romarioSuper.transform;
-            vilaoAtacaPlayer.vidaPersonagemScript = romarioSuper.GetComponent<VidaPersonagem>();
-            vilaoAtacaPlayer.açõesPersonagem = romarioSuper.GetComponent<AçõesPersonagem>();
-
+            if (vilaoAtacaPlayer != null)
+            {
+                vilaoAtacaPlayer.player = romarioSuper.transform;
+                vilaoAtacaPlayer.vidaPersonagemScript = romarioSuper.GetComponent<VidaPersonagem>();
+                vilaoAtacaPlayer.açõesPersonagem = romarioSuper.GetComponent<AçõesPersonagem>();
+            }
 
             isSuperActive = true;
             isSuperReady = false;
@@ -172,16 +180,24 @@ public class SuperSystem : MonoBehaviour
         romarioSuper.SetActive(false);
         romarioNormal.SetActive(true);
 
-        vilaoSegueEAtaca.player = romarioNormal.transform;
-        vilaoSegueEAtaca.vidaPersonagemScript = romarioNormal.GetComponent<VidaPersonagem>();
+        if (vilaoSegueEAtaca != null)
+        {
+            vilaoSegueEAtaca.player = romarioNormal.transform;
+            vilaoSegueEAtaca.vidaPersonagemScript = romarioNormal.GetComponent<VidaPersonagem>();
+        }
 
-        vidaVilao.player = romarioNormal;
-        vidaVilao.vidaPersonagem = romarioNormal.GetComponent<VidaPersonagem>();
+        if (vidaVilao != null)
+        {
+            vidaVilao.player = romarioNormal;
+            vidaVilao.vidaPersonagem = romarioNormal.GetComponent<VidaPersonagem>();
+        }
 
-        vilaoAtacaPlayer.player = romarioNormal.transform;
-        vilaoAtacaPlayer.vidaPersonagemScript = romarioNormal.GetComponent<VidaPersonagem>();
-        vilaoAtacaPlayer.açõesPersonagem = romarioNormal.GetComponent<AçõesPersonagem>();
-
+        if (vilaoAtacaPlayer != null)
+        {
+            vilaoAtacaPlayer.player = romarioNormal.transform;
+            vilaoAtacaPlayer.vidaPersonagemScript = romarioNormal.GetComponent<VidaPersonagem>();
+            vilaoAtacaPlayer.açõesPersonagem = romarioNormal.GetComponent<AçõesPersonagem>();
+        }
 
         StartChargingSuper();
     }
