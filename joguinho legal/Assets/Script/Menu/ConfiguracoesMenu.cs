@@ -101,9 +101,9 @@ public class MenuController : MonoBehaviour
 
     public void Cassino()
     {
-        SceneManager.LoadScene("Cassino1");
-        PlayerPrefs.SetInt("PredioCompletado", 1);
-        PlayerPrefs.SetInt("TavernaCompletada", 1);
+        SceneManager.LoadScene("Casarao2");
+         PlayerPrefs.SetInt("JaTocou", 1);
+        PlayerPrefs.GetInt("ControladorFasesCasarao", 2);
     }
     
 }
