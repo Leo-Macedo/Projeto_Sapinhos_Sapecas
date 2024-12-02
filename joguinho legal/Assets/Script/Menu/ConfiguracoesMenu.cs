@@ -99,5 +99,11 @@ public class MenuController : MonoBehaviour
         TrocarTela(telaPrincipalCanvasGroup);
     }
 
+    public void Cassino()
+    {
+        SceneManager.LoadScene("Cassino1");
+        PlayerPrefs.SetInt("PredioCompletado", 1);
+        PlayerPrefs.SetInt("TavernaCompletada", 1);
+    }
     
 }
