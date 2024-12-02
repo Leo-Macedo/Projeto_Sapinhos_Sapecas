@@ -12,6 +12,7 @@ public class VerificarFasesCasarao : MonoBehaviour
 
     public GameObject musica;
     public GameObject olivia;
+    public GameObject HUDolivia;
 
     public ControleSensibilidadeCamera controleSensibilidadeCamera;
 
@@ -249,6 +250,7 @@ public class VerificarFasesCasarao : MonoBehaviour
         yield return new WaitForSeconds(13f);
         diaglogoFinal.StartDialogue();
         yield return new WaitForSeconds((float)cutsceneSotao.duration - 13f);
+        HUDolivia.SetActive(true);
         controleSensibilidadeCamera.podePausar = true;
         PlayerPrefs.SetInt("JaTocou", 1);
         lançarObjeto.AtivarMovimentoEAção();
@@ -273,6 +275,7 @@ public class VerificarFasesCasarao : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.1f);
+        HUDolivia.SetActive(true);
 
         controleSensibilidadeCamera.podePausar = true;
 

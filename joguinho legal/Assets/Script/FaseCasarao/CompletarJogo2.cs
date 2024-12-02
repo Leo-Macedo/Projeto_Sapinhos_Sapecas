@@ -6,13 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class CompletarJogo2 : MonoBehaviour
 {
+    public AudioSource somChave;
     public Animator porta;
     public Animator fade;
     public PlayableDirector playableDirector;
     public DialogoFinal dialogoFinal;
 
     public IEnumerator ComeçarCutscene()
-    {
+    {   somChave.Play();
         porta.SetTrigger("abrir");
         yield return new WaitForSeconds(2f);
         fade.SetTrigger("fechar");
