@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class QuadrinhosFinais : MonoBehaviour
 {
+    public GameObject animator;
+    public GameObject sair;
     public List<CanvasGroup> quadrinhosCanvasGroups; // Lista de CanvasGroups dos quadrinhos
     public float fadeDuration = 1.0f; // Duração do fade
     private int indiceAtual = 0; // Índice do quadrinho atual
@@ -95,6 +97,8 @@ public class QuadrinhosFinais : MonoBehaviour
         quadrinhos.SetActive(false);
         animatorFade.SetTrigger("abrir");
         creditos.SetTrigger("comecar");
+        animator.SetActive(false);
+        sair.SetActive(true);
     }
 
     public void Quit()
