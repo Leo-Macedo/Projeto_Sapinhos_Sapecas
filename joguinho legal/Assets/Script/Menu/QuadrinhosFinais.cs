@@ -23,6 +23,9 @@ public class QuadrinhosFinais : MonoBehaviour
             quadrinhosCanvasGroups[i].interactable = (i == 0);
             quadrinhosCanvasGroups[i].blocksRaycasts = (i == 0);
         }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true; 
     }
 
     // Método para iniciar a história em quadrinhos

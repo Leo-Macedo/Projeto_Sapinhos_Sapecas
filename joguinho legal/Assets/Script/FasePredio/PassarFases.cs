@@ -52,10 +52,7 @@ public class PassarFases : MonoBehaviour
     {
         allAgents = Object.FindObjectsByType<NavMeshAgent>(FindObjectsSortMode.None);
 
-        foreach (NavMeshAgent agent in allAgents)
-        {
-            agent.enabled = false;
-        }
+        
         animMensagem7 = mensagem7.GetComponent<Animator>();
         animMensagem8 = mensagem8.GetComponent<Animator>();
         animMensagem9 = mensagem9.GetComponent<Animator>();
@@ -166,13 +163,7 @@ public class PassarFases : MonoBehaviour
     // Função que será chamada quando todos os capangas estiverem mortos
     void AcaoQuandoSemCapangas()
     {
-        foreach (NavMeshAgent agent in allAgents)
-        {
-            if (agent != null && agent.gameObject != null) // Verifica se o agente ainda existe
-            {
-                agent.enabled = false;
-            }
-        }
+        
 
         animatorEscada.SetTrigger("desceu");
         Debug.Log("Todos os capangas estão mortos!");

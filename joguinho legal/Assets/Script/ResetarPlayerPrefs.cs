@@ -82,5 +82,15 @@ public class ResetarPlayerPrefs : MonoBehaviour
         PlayerPrefs.Save(); // Garante que as mudanças sejam salvas imediatamente
         Debug.Log("PlayerPrefs + 1 = ");
     }
+
+
+    [MenuItem("Tools/AtualizarControladorFasesPredio")]
+
+    public static void AtualizarControladorFasesPredio()
+    {
+        PlayerPrefs.SetInt("ControladorFasesPredio", 2);
+        PlayerPrefs.Save(); // Garante que as mudanças sejam salvas imediatamente
+        Debug.Log("PlayerPrefs + 1 = ");
+    }
     #endif
 }

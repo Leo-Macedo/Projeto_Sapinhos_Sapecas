@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class VerificarFasePredio : MonoBehaviour
 {
+    public NavMeshAgent melo;
     private NavMeshAgent[] allAgents;
     public ControleSensibilidadeCamera controleSensibilidadeCamera;
 
@@ -70,10 +71,7 @@ public class VerificarFasePredio : MonoBehaviour
     {
         allAgents = Object.FindObjectsByType<NavMeshAgent>(FindObjectsSortMode.None);
 
-        foreach (NavMeshAgent agent in allAgents)
-        {
-            agent.enabled = false;
-        }
+        
 
         animMensagem1 = mensagem1.GetComponent<Animator>();
         animMensagem2 = mensagem2.GetComponent<Animator>();
@@ -254,13 +252,7 @@ public class VerificarFasePredio : MonoBehaviour
 
     public IEnumerator Andar4()
     {
-        foreach (NavMeshAgent agent in allAgents)
-        {
-            if (agent != null && agent.gameObject != null) // Verifica se o agente ainda existe
-            {
-                agent.enabled = false;
-            }
-        }
+        
         vidaPersonagem.vidaAtual = 3;
         StartCoroutine(ControlarMovimentoDuranteCutscene());
         cutsceneAndar4.Play();
@@ -271,13 +263,7 @@ public class VerificarFasePredio : MonoBehaviour
         superRonaldinho.podeUtar = true;
 
         yield return new WaitForSeconds((float)cutsceneAndar3.duration);
-        foreach (NavMeshAgent agent in allAgents)
-        {
-            if (agent != null && agent.gameObject != null) // Verifica se o agente ainda existe
-            {
-                agent.enabled = true;
-            }
-        }
+        melo.enabled = true;
         controleSensibilidadeCamera.podePausar = true;
 
         somNoti.Play();

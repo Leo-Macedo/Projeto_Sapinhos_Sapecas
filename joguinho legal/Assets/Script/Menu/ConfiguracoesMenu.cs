@@ -101,7 +101,7 @@ public class MenuController : MonoBehaviour
 
     public void Cassino()
     {
-        SceneManager.LoadScene("Casarao2");
+        SceneManager.LoadScene("Predio");
          PlayerPrefs.SetInt("JaTocou", 1);
         PlayerPrefs.GetInt("ControladorFasesCasarao", 2);
     }
