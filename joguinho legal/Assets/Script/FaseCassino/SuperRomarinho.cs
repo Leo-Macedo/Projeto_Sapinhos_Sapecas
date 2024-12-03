@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SuperSystem : MonoBehaviour
 {
+    public bool podeUtar;
     [Header("Super Settings")]
     public float chargeTime = 10f; // Tempo para carregar o super
     public float superDuration = 5f; // Duração do super
@@ -78,7 +79,7 @@ public class SuperSystem : MonoBehaviour
         }
 
         // Verifica se o super está pronto e a tecla "R" foi pressionada
-        if (isSuperReady && Input.GetKeyDown(KeyCode.R))
+        if (isSuperReady && Input.GetKeyDown(KeyCode.R) && !podeUtar)
         {
             ActivateSuper();
         }

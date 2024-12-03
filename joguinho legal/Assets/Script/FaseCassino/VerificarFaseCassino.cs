@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement; // Importante para reiniciar a cena
 
 public class VerificarFaseCassino : MonoBehaviour
 {
+    public SuperSystem superSystem;
+
     private int controladorFases = 0;
     public CinemachineFreeLook freeLookCamera;
     public GameObject portalvoltar;
@@ -162,7 +164,7 @@ public class VerificarFaseCassino : MonoBehaviour
         }
         else if (controladorFases == 3)
         {
-            Vitoria();
+            StartCoroutine(Vitoria());
         }
     }
 
@@ -182,7 +184,7 @@ public class VerificarFaseCassino : MonoBehaviour
         }
         else if (controladorFases == 3)
         {
-            Vitoria();
+            StartCoroutine(Vitoria());
         }
     }
 
@@ -382,8 +384,9 @@ public class VerificarFaseCassino : MonoBehaviour
         Debug.Log("Todos os capangas foram destruídos.");
     }
 
-    public void Vitoria()
+    public IEnumerator Vitoria()
     {
+        superSystem.podeUtar = true;
         GameObject somChefeMorreu = GameObject.FindWithTag("somchefemorreu");
         if (somChefeMorreu != null)
         {
@@ -393,6 +396,8 @@ public class VerificarFaseCassino : MonoBehaviour
                 audioSource.Play();
             }
         }
+
+        yield return new WaitForSeconds(10f);
         portalvoltar.SetActive(true);
         txtvaaoportal.SetActive(true);
         PlayerPrefs.SetInt("CassinoCompletado", 1);
