@@ -20,6 +20,7 @@ public class Movimento2 : MonoBehaviour
     [SerializeField]
     public float veloCorrendo;
     private Animator anim;
+    private bool correndo = false;
 
     private float inputX;
     private float inputZ;
@@ -145,21 +146,46 @@ public class Movimento2 : MonoBehaviour
         }
     }
 
-    private void Correr()
+
+private void Correr()
+{
+    // Verifica se o botão de correr foi pressionado.
+    if (Input.GetButtonDown("Correr"))
     {
-        // Verifica se o shift está pressionado e se o inputZ (frente) é positivo
-        if (Input.GetButton("Correr") && inputZ > 0)
+        // Alterna o estado de corrida.
+        correndo = !correndo;
+
+        if (correndo)
         {
+            // Se for para correr, define a velocidade para correr e ativa a animação de corrida.
             velocidade = veloCorrendo;
+            inputZ = 1f; // Movimento para frente
             anim.SetBool("correndo", true);
             anim.SetBool("andando", false);
         }
         else
         {
+            // Se for para parar de correr, define a velocidade para andar e para a animação de corrida.
             velocidade = veloAndando;
+            inputZ = 0f; // Para de se mover
             anim.SetBool("correndo", false);
+            anim.SetBool("andando", true);
         }
     }
+
+
+    // Se o personagem estiver parado, para de correr.
+    if (inputZ == 0 && Mathf.Abs(inputX) < 0.1f)
+    {
+        if (correndo) 
+        {
+            correndo = false;
+            velocidade = veloAndando;
+            anim.SetBool("correndo", false);
+            anim.SetBool("andando", true);
+        }
+    }
+}
 
     public void Pular(float multiplicador = 1f)
     {
