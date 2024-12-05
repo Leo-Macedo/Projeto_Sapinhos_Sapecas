@@ -49,11 +49,21 @@ public class CameraFollow : MonoBehaviour
     }
 
     private void RotacionarCamera()
+{
+    // Captura o movimento vertical do mouse
+    float mouseYInput = Input.GetAxis("CameraY");
+    
+    // Ignorar pequenas entradas
+    if (Mathf.Abs(mouseYInput) > 0.01f)
     {
-        float mouseYInput = Input.GetAxis("Mouse Y");
+        // Acumula a rotação vertical
         rotacaoVertical -= mouseYInput * rotationSpeed;
-        rotacaoVertical = Mathf.Clamp(rotacaoVertical, -20f, 20f); // Limita a rotação vertical
 
-        transform.localRotation = Quaternion.Euler(rotacaoVertical, transform.localEulerAngles.y, 0f);
+        // Limita a rotação vertical para evitar que a câmera "vire de cabeça para baixo"
+        rotacaoVertical = Mathf.Clamp(rotacaoVertical, -20f, 20f);
+
+        // Aplica a rotação apenas no eixo X
+        transform.localRotation = Quaternion.Euler(rotacaoVertical, 0f, 0f);
     }
+}
 }

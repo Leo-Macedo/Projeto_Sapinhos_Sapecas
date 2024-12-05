@@ -32,6 +32,7 @@ public class BalançarLinguada : MonoBehaviour
     [Header("Line Settings")]
     public AnimationCurve tongueWidthCurve;
     public float tongueWidthMultiplier = 0.1f;
+    private bool isSwinging;
 
     void Start()
     {
@@ -50,10 +51,34 @@ public class BalançarLinguada : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(swingKey))
+        float r2Input = Input.GetAxis("Linguar");
+
+        // Detecta se está segurando o botão direito do mouse ou o gatilho
+        if ((Input.GetMouseButton(1) || r2Input > 0.5f) && !isSwinging)
+        {
             StartSwing();
-        if (Input.GetKeyUp(swingKey))
+            isSwinging = true;
+        }
+
+        // Detecta se soltou o botão direito do mouse ou o gatilho
+        if ((!Input.GetMouseButton(1) && r2Input <= 0.1f) && isSwinging)
+        {
             StopSwing();
+            isSwinging = false;
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            Debug.Log("Botão direito do mouse segurado!");
+        }
+        if (r2Input > 0.5f)
+        {
+            Debug.Log("Gatilho R2 segurado!");
+        }
+        if (!Input.GetMouseButton(1) && r2Input <= 0.1f)
+        {
+            Debug.Log("Botão e gatilho soltos!");
+        }
 
         if (isPulling)
         {

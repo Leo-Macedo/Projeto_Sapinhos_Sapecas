@@ -15,6 +15,7 @@ public class AçõesPersonagem : MonoBehaviour
     public int dano = 1;
 
     public LayerMask layerParaVerificar;
+    public bool isL2Pressed;
 
     bool PodeDarSoco()
     {
@@ -41,15 +42,21 @@ public class AçõesPersonagem : MonoBehaviour
 
     void Update()
     {
+        float l2Input = Input.GetAxis("Atirar");
+
         // Entrada do jogador para ações
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if ((Input.GetButtonDown("Atirar") || l2Input > 0.1f) && !isL2Pressed )
         {
             if (PodeDarSoco())
-            {
+            { isL2Pressed = true;
                 animator.SetTrigger("soco");
             }
         }
-
+        else if (l2Input <= 0.1f && isL2Pressed)  
+        {
+            isL2Pressed = false;  
+            
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             animator.SetTrigger("chute");

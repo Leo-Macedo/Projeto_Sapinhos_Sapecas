@@ -64,6 +64,7 @@ public class Movimento2 : MonoBehaviour
         HandleMovement();
         HandleActions();
         HandleSavingAndDeleting();
+
     }
 
     private void HandleMovement()
@@ -71,7 +72,7 @@ public class Movimento2 : MonoBehaviour
         Andar();
         Correr();
         Pular();
-        Rotacao();
+         Rotacao();
     }
 
     private void HandleActions()
@@ -127,14 +128,20 @@ public class Movimento2 : MonoBehaviour
 
     private void Rotacao()
     {
-        float mouseXInput = Input.GetAxis("Mouse X");
-        transform.Rotate(0f, mouseXInput * rotationSpeed, 0f);
+        // Captura o movimento horizontal do mouse
+        float mouseXInput = Input.GetAxis("CameraX");
+
+        // Ignorar pequenas entradas
+        if (Mathf.Abs(mouseXInput) > 0.01f)
+        {
+            transform.Rotate(0f, mouseXInput * rotationSpeed, 0f);
+        }
     }
 
     private void Correr()
     {
         // Verifica se o shift está pressionado e se o inputZ (frente) é positivo
-        if (Input.GetKey(KeyCode.LeftShift) && inputZ > 0)
+        if (Input.GetButton("Correr") && inputZ > 0)
         {
             velocidade = veloCorrendo;
             anim.SetBool("correndo", true);
