@@ -65,6 +65,13 @@ public class Movimento2 : MonoBehaviour
         HandleActions();
         HandleSavingAndDeleting();
 
+        for (int i = 0; i <= 20; i++) // Verifica até 20 botões (ajuste se necessário)
+    {
+        if (Input.GetKeyDown("joystick button " + i))
+        {
+            Debug.Log("Botão pressionado: " + i);
+        }
+    }
     }
 
     private void HandleMovement()

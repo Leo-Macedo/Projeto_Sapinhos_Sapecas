@@ -27,7 +27,7 @@ public class Dancar : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetButtonDown("Dancar"))
         {
             painel.SetActive(true);
             Cursor.lockState = CursorLockMode.None;

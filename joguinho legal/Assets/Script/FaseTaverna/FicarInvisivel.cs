@@ -69,7 +69,7 @@ public class FicarInvisivel : MonoBehaviour
         }
 
         // Verifica se o super está pronto e a tecla "I" foi pressionada
-        if (isSuperReady && Input.GetKeyDown(KeyCode.R))
+        if (isSuperReady && Input.GetButtonDown("Super"))
         {
             ActivateSuper();
         }

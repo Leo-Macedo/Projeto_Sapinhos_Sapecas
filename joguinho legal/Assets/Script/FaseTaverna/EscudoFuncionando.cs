@@ -42,7 +42,7 @@ public class EscudoFuncionando : MonoBehaviour
 
     public void AtivarEscudo()
     {
-        if (Input.GetKeyDown(KeyCode.F) && contadorEscudo > 0)
+        if (Input.GetButtonDown("Interagir") && contadorEscudo > 0)
         {
             escudo.SetActive(true);
             escudoAtivo = true;

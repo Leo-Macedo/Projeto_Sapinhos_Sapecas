@@ -57,7 +57,7 @@ public class AçõesPersonagem : MonoBehaviour
             isL2Pressed = false;  
             
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("Chutar"))
         {
             animator.SetTrigger("chute");
         }
@@ -67,7 +67,7 @@ public class AçõesPersonagem : MonoBehaviour
             animator.SetTrigger("emote1");
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetButtonDown("Desviar"))
         {
             IniciarDesvio();
         }

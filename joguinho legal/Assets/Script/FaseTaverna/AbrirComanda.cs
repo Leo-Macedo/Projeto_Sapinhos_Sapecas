@@ -14,7 +14,7 @@ public class AbrirComanda : MonoBehaviour
 
     void Update()
     {
-        if (podeAbrir && Input.GetKeyDown(KeyCode.F))
+        if (podeAbrir && Input.GetButtonDown("Interagir"))
         {
             StartCoroutine(Abrircomanda());
         }

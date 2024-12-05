@@ -31,7 +31,7 @@ public class ChutarBola : MonoBehaviour
     void Update()
     {
         // Verifica se o jogador pressionou um botão para buscar a bomba mais próxima
-        if (Input.GetKeyDown(KeyCode.F)) // Por exemplo, botão esquerdo do mouse
+        if (Input.GetButtonDown("Interagir")) // Por exemplo, botão esquerdo do mouse
         {
             animator.SetTrigger("chutar");
             EncontrarBombaMaisProxima();

@@ -36,7 +36,7 @@ public class DialogosNPC : MonoBehaviour
     void Update()
     {
         // Verifica se a tecla F é pressionada e se o NPC está pronto para falar
-        if (Input.GetKeyDown(KeyCode.F) && readyToSpeak)
+        if (Input.GetButtonDown("Interagir") && readyToSpeak)
         {
             if (!startDialogue)
             {

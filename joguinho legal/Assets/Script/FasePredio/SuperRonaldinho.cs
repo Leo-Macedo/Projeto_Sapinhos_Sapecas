@@ -73,7 +73,7 @@ public class SuperRonaldinho : MonoBehaviour
             }
         }
 
-        if (isSuperReady && Input.GetKeyDown(KeyCode.R) && podeUtar)
+        if (isSuperReady && Input.GetButtonDown("Super") && podeUtar)
         {
             ActivateSuper();
         }

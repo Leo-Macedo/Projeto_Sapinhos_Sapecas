@@ -98,7 +98,7 @@ public class SenhaCor : MonoBehaviour
         {
             cliqueaqui.SetActive(true); // Ativa a mensagem de interagir
 
-            if (Input.GetKeyDown(KeyCode.F)) // Verifica se a tecla F foi pressionada
+            if (Input.GetButtonDown("Interagir")) // Verifica se a tecla F foi pressionada
             {
                 Cursor.lockState = CursorLockMode.None; // Destrava o cursor
                 Cursor.visible = true; // Torna o cursor visível

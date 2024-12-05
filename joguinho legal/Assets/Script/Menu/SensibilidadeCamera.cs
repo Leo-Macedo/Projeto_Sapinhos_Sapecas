@@ -55,7 +55,7 @@ public class ControleSensibilidadeCamera : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && podePausar)
+        if (Input.GetButtonDown("Pause") && podePausar)
         {
             if (jogoPausado)
             {

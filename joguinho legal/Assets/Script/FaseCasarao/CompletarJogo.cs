@@ -25,7 +25,7 @@ public class CompletarJogo : MonoBehaviour
             txtAbrir.SetActive(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && abrir && !abriu)
+        if (Input.GetButtonDown("Interagir") && abrir && !abriu)
         {
             txtFAbrir.SetActive(false);
             abriu = true;

@@ -79,7 +79,7 @@ public class SuperSystem : MonoBehaviour
         }
 
         // Verifica se o super está pronto e a tecla "R" foi pressionada
-        if (isSuperReady && Input.GetKeyDown(KeyCode.R) && !podeUtar)
+        if (isSuperReady && Input.GetButtonDown("Super") && !podeUtar)
         {
             ActivateSuper();
         }

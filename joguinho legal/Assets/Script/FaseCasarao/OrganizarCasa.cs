@@ -131,7 +131,7 @@ public class OrganizarCasa : MonoBehaviour
         {
             txtColetar.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.F) && !estaComObjeto)
+            if (Input.GetButtonDown("Interagir") && !estaComObjeto)
             {
                 estaComObjeto = true;
                 pegouGeladeira = true;
@@ -144,7 +144,7 @@ public class OrganizarCasa : MonoBehaviour
         {
             txtColetar.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.F) && !estaComObjeto)
+            if (Input.GetButtonDown("Interagir") && !estaComObjeto)
             {
                 estaComObjeto = true;
                 pegouSofa = true;
@@ -157,7 +157,7 @@ public class OrganizarCasa : MonoBehaviour
         {
             txtColetar.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.F) && !estaComObjeto)
+            if (Input.GetButtonDown("Interagir") && !estaComObjeto)
             {
                 estaComObjeto = true;
                 pegouPrivada = true;
@@ -173,7 +173,7 @@ public class OrganizarCasa : MonoBehaviour
         {
             txtColocar.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.F) && estaComObjeto && pegouGeladeira && !simGeladeira)
+            if (Input.GetButtonDown("Interagir") && estaComObjeto && pegouGeladeira && !simGeladeira)
             {
                 estaComObjeto = false;
                 simGeladeira = true;
@@ -187,7 +187,7 @@ public class OrganizarCasa : MonoBehaviour
         {
             txtColocar.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.F) && estaComObjeto && pegouSofa && !simSofa)
+            if (Input.GetButtonDown("Interagir") && estaComObjeto && pegouSofa && !simSofa)
             {
                 estaComObjeto = false;
                 simSofa = true;
@@ -201,7 +201,7 @@ public class OrganizarCasa : MonoBehaviour
         {
             txtColocar.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.F) && estaComObjeto && pegouPrivada && !simPrivada)
+            if (Input.GetButtonDown("Interagir") && estaComObjeto && pegouPrivada && !simPrivada)
             {
                 estaComObjeto = false;
                 simPrivada = true;

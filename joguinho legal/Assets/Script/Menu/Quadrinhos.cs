@@ -48,7 +48,7 @@ public class Quadrinhos : MonoBehaviour
     private void Update()
     {
         // Avança para o próximo quadrinho ao pressionar a tecla F
-        if (Input.GetKeyDown(KeyCode.F) && indiceAtual < quadrinhosCanvasGroups.Count - 1)
+        if (Input.GetButtonDown("Interagir") && indiceAtual < quadrinhosCanvasGroups.Count - 1)
         {
             StartCoroutine(
                 FadeOutIn(
@@ -59,7 +59,7 @@ public class Quadrinhos : MonoBehaviour
             indiceAtual++;
         }
         // Ao chegar no último, troca para a próxima cena
-        else if (Input.GetKeyDown(KeyCode.F) && indiceAtual == quadrinhosCanvasGroups.Count - 1)
+        else if (Input.GetButtonDown("Interagir") && indiceAtual == quadrinhosCanvasGroups.Count - 1)
         {
             StartCoroutine(TrocarCena());
         }

@@ -97,7 +97,7 @@ public class PassarFasesCasarao : MonoBehaviour
         {
             if (completouSenha && estaComChave && !portaAberta)
             {
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetButtonDown("Interagir"))
                 {
                     portaAberta = true;
                     StartCoroutine(AbrirPorta());
