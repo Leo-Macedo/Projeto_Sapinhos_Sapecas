@@ -33,40 +33,20 @@ public class VilaoSegueEAtaca : MonoBehaviour
 
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        // Inicia a corrotina para seguir o jogador
-        StartCoroutine(ChasePlayer());
-    }
-
-    // Corrotina para seguir o jogador e pausar periodicamente
-    IEnumerator ChasePlayer()
-    {
-        while (true)
-        {
-            if (isChasing)
-            {
-                navMeshAgent.SetDestination(player.position); // Define o destino do vilão
-                yield return new WaitForSeconds(chaseInterval);
-                isChasing = false; // Para de perseguir
-                navMeshAgent.isStopped = true;
-                yield return new WaitForSeconds(stopDuration);
-                isChasing = true; // Retoma a perseguição
-                navMeshAgent.isStopped = false;
-            }
-        }
     }
 
     void Update()
     {
-        Seguiranimar(); // Atualiza a animação com base no movimento
-
+        Seguiranimar(); 
         
     }
 
   
-
     private void Seguiranimar()
     {
-        // Atualiza a animação de andar/parar com base na velocidade do NavMeshAgent
+        navMeshAgent.SetDestination(player.position);
+
+
         if (navMeshAgent.velocity != Vector3.zero)
         {
             animator.SetBool("andando", true);
