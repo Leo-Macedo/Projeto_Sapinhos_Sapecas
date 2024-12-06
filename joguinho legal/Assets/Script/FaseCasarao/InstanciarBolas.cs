@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class InstanciadorDeBolas : MonoBehaviour
 {
+    public GameObject cubo;
     public MovimentoGoleirao movimentoGoleirao;
     public GameObject bolaPrefab;
     public Transform spawnPoint;
@@ -45,6 +46,7 @@ public class InstanciadorDeBolas : MonoBehaviour
 
     public void TerminouGols()
     {
+        cubo.SetActive(true);
         textGols.text = " ";
         porta.SetActive(true); // Ativa a porta
         animatorEscada.SetTrigger("descer");

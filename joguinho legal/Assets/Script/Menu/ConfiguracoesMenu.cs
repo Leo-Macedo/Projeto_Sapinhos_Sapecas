@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
+    public AudioSource somclick;
     public Animator animatorFade;
     public CanvasGroup telaInicialCanvasGroup;
     public CanvasGroup telaPrincipalCanvasGroup;
@@ -17,7 +18,9 @@ public class MenuController : MonoBehaviour
     private CanvasGroup telaAtual;
 
     private void Start()
+    
     {
+        
         // Define a tela inicial e as opacidades
         telaAtual = telaInicialCanvasGroup;
         //telaInicialCanvasGroup.alpha = 1.0f; // Totalmente visível
@@ -81,22 +84,29 @@ public class MenuController : MonoBehaviour
     public void AbrirConfiguracoes()
     {
         TrocarTela(telaConfiguracoesCanvasGroup);
+        somclick.Play();
     }
 
     public void AbrirCreditos()
     {
         TrocarTela(telaCreditosCanvasGroup);
+                somclick.Play();
+
     }
 
     public void VoltarParaMenuPrincipal()
     {
         TrocarTela(telaPrincipalCanvasGroup);
+                somclick.Play();
+
     }
 
     // Novo método para o botão Jogar
     public void Jogar()
     {
         TrocarTela(telaPrincipalCanvasGroup);
+                somclick.Play();
+
     }
 
     public void Cassino()

@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class Senha : MonoBehaviour
 {
+        private AudioSource somclick;
+
+    public GameObject cubo;
     public AudioSource somCerto;
     public AudioSource somErrado;
     public ControleSensibilidadeCamera controleSensibilidadeCamera;
@@ -34,6 +37,13 @@ public class Senha : MonoBehaviour
             int number = i + 1; // Define o número correspondente ao botão
             numberButtons[i].onClick.AddListener(() => OnNumberButtonClick(number));
         }
+
+        GameObject sireneObj = GameObject.FindWithTag("somclick");
+        if (sireneObj != null)
+        {
+            somclick = sireneObj.GetComponent<AudioSource>();
+           
+        }
     }
 
     void Update() { }
@@ -44,7 +54,8 @@ public class Senha : MonoBehaviour
         if (senhainserida.Length < 4) // Verifica se a senha inserida tem menos de 4 dígitos
         {
             senhainserida += number.ToString(); // Adiciona o número à senha inserida
-            telasenha.text = senhainserida; // Atualiza o texto da senha
+            telasenha.text = senhainserida;
+            somclick.Play(); // Atualiza o texto da senha
         }
     }
 
@@ -60,6 +71,7 @@ public class Senha : MonoBehaviour
             porta.SetActive(true); // Ativa a porta
             animatoPorta.SetTrigger("abrir");
             somCerto.Play();
+            cubo.SetActive(true);
         }
         else
         {

@@ -6,6 +6,10 @@ using UnityEngine.Playables;
 
 public class PassarFases : MonoBehaviour
 {
+    public GameObject cuboAndar2;
+    public GameObject cuboAndar3;
+    public GameObject cuboAndar4;
+
     private List<GameObject> capangasAndar2 = new List<GameObject>(); // Lista para armazenar os capangas do andar 2
     private List<GameObject> capangasAndar3 = new List<GameObject>(); // Lista para armazenar os capangas do andar 3
     private List<GameObject> capangasAndar4 = new List<GameObject>(); // Lista para armazenar os capangas do andar 4
@@ -52,7 +56,6 @@ public class PassarFases : MonoBehaviour
     {
         allAgents = Object.FindObjectsByType<NavMeshAgent>(FindObjectsSortMode.None);
 
-        
         animMensagem7 = mensagem7.GetComponent<Animator>();
         animMensagem8 = mensagem8.GetComponent<Animator>();
         animMensagem9 = mensagem9.GetComponent<Animator>();
@@ -163,16 +166,19 @@ public class PassarFases : MonoBehaviour
     // Função que será chamada quando todos os capangas estiverem mortos
     void AcaoQuandoSemCapangas()
     {
-        
-
+        cuboAndar2.SetActive(true);
         animatorEscada.SetTrigger("desceu");
         Debug.Log("Todos os capangas estão mortos!");
     }
 
     public IEnumerator AcaoQuandoCapangasAndar3Morreram()
     {
+        player.position = andar3.position;
+        player.rotation = Quaternion.Euler(0, andar3.rotation.eulerAngles.y, 0);
         Debug.Log("Todos os capangas estão mortos do andar 3!");
         superRonaldinho.podeUtar = false;
+        yield return new WaitForSeconds(2);
+        cuboAndar3.SetActive(true);
 
         cutsceneSubiuParkour1.Play();
         tocouCutScene3 = true;
@@ -180,14 +186,22 @@ public class PassarFases : MonoBehaviour
         Super.SetActive(false);
         somNoti.Play();
         mensagem7.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         animMensagem7.SetTrigger("fechou");
     }
 
     public IEnumerator AcaoQuandoCapangasAndar4Morreram()
     {
+        Movimento2 movimento2 = player.GetComponent<Movimento2>();
+        movimento2.veloAndando = 0f;
+        movimento2.veloCorrendo = 0f;
+        player.position = andar3.position;
+        player.rotation = Quaternion.Euler(0, andar3.rotation.eulerAngles.y, 0);
         Debug.Log("Todos os capangas estão mortos do andar 4!");
         superRonaldinho.podeUtar = false;
+
+        yield return new WaitForSeconds(2);
+        cuboAndar4.SetActive(true);
 
         cutsceneSubiuParkour2.Play();
         tocouCutScene4 = true;
@@ -195,7 +209,9 @@ public class PassarFases : MonoBehaviour
         Super.SetActive(false);
         somNoti.Play();
         mensagem10.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
+        movimento2.veloAndando = 2f;
+        movimento2.veloCorrendo = 4f;
         animMensagem10.SetTrigger("fechou");
     }
 

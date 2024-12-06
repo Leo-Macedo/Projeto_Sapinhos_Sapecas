@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ControleSensibilidadeCamera : MonoBehaviour
 {
+    private AudioSource somclick;
     public Slider sliderSensibilidade;
     public TextMeshProUGUI textoSensibilidade;
     private bool jogoPausado = false;
@@ -16,7 +17,14 @@ public class ControleSensibilidadeCamera : MonoBehaviour
 
     void Start()
     {
-                Time.timeScale = 1;
+        GameObject sireneObj = GameObject.FindWithTag("somclick");
+        if (sireneObj != null)
+        {
+            somclick = sireneObj.GetComponent<AudioSource>();
+           
+        }
+
+        Time.timeScale = 1;
 
         // Encontra todos os objetos com a tag "Player", mesmo que desativados
         GameObject[] allPlayers = Resources.FindObjectsOfTypeAll<GameObject>();
@@ -76,6 +84,8 @@ public class ControleSensibilidadeCamera : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+                somclick.Play();
+
     }
 
     public void DespausarJogo()
@@ -86,6 +96,8 @@ public class ControleSensibilidadeCamera : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+                somclick.Play();
+
     }
 
     void AtualizarSensibilidadeCamera(float valor)

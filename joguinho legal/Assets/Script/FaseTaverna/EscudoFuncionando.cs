@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EscudoFuncionando : MonoBehaviour
 {
+    public GameObject cubo;
     public int contadorEscudo;
     public Animator animatoPorta;
     [Header("Referencias")]
@@ -21,6 +22,7 @@ public class EscudoFuncionando : MonoBehaviour
         if( contadorEscudo == 3)
         {
             animatoPorta.SetTrigger("abrir");
+            cubo.SetActive(true);
         }
     }
 

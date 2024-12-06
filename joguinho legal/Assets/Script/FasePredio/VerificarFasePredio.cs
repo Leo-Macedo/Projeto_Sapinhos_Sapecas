@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class VerificarFasePredio : MonoBehaviour
 {
+    public GameObject capangas2;
+    public GameObject capangas3;
     public NavMeshAgent melo;
     private NavMeshAgent[] allAgents;
     public ControleSensibilidadeCamera controleSensibilidadeCamera;
@@ -206,7 +208,7 @@ public class VerificarFasePredio : MonoBehaviour
             agent.enabled = true;
         }
         controleSensibilidadeCamera.podePausar = true;
-
+        capangas2.SetActive(true);
         somNoti.Play();
         mensagem3.SetActive(true);
         yield return new WaitForSeconds(5);
@@ -242,6 +244,7 @@ public class VerificarFasePredio : MonoBehaviour
                 agent.enabled = true;
             }
         }
+        capangas3.SetActive(true);
         controleSensibilidadeCamera.podePausar = true;
 
         somNoti.Play();

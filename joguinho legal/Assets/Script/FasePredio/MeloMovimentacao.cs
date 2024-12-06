@@ -4,6 +4,10 @@ using UnityEngine.AI;
 
 public class MeloMovimentacao : MonoBehaviour
 {
+    public Rigidbody playerRb;
+    public float raio;
+    public float forca;
+
     public AudioSource queda;
     public AudioSource somVoando;
     public Transform player; // Jogador a seguir
@@ -156,6 +160,11 @@ public class MeloMovimentacao : MonoBehaviour
             Instantiate(prefab, ponto.position, ponto.rotation);
             queda.Play();
             jaColidiu = true;
+
+            if (Vector3.Distance(transform.position, player.position) <= raio)
+            {
+                playerRb.AddForce(Vector3.up * forca, ForceMode.Impulse);
+            }
         }
     }
 }
