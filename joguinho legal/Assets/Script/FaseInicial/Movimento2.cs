@@ -67,12 +67,12 @@ public class Movimento2 : MonoBehaviour
         HandleSavingAndDeleting();
 
         for (int i = 0; i <= 20; i++) // Verifica até 20 botões (ajuste se necessário)
-    {
-        if (Input.GetKeyDown("joystick button " + i))
         {
-            Debug.Log("Botão pressionado: " + i);
+            if (Input.GetKeyDown("joystick button " + i))
+            {
+                Debug.Log("Botão pressionado: " + i);
+            }
         }
-    }
     }
 
     private void HandleMovement()
@@ -80,7 +80,7 @@ public class Movimento2 : MonoBehaviour
         Andar();
         Correr();
         Pular();
-         Rotacao();
+        Rotacao();
     }
 
     private void HandleActions()
@@ -146,46 +146,44 @@ public class Movimento2 : MonoBehaviour
         }
     }
 
-
-private void Correr()
-{
-    // Verifica se o botão de correr foi pressionado.
-    if (Input.GetButtonDown("Correr"))
+    private void Correr()
     {
-        // Alterna o estado de corrida.
-        correndo = !correndo;
+        // Verifica se o botão de correr foi pressionado.
+        if (Input.GetButtonDown("Correr"))
+        {
+            // Alterna o estado de corrida.
+            correndo = !correndo;
 
-        if (correndo)
-        {
-            // Se for para correr, define a velocidade para correr e ativa a animação de corrida.
-            velocidade = veloCorrendo;
-            inputZ = 1f; // Movimento para frente
-            anim.SetBool("correndo", true);
-            anim.SetBool("andando", false);
+            if (correndo)
+            {
+                // Se for para correr, define a velocidade para correr e ativa a animação de corrida.
+                velocidade = veloCorrendo;
+                inputZ = 1f; // Movimento para frente
+                anim.SetBool("correndo", true);
+                anim.SetBool("andando", false);
+            }
+            else
+            {
+                // Se for para parar de correr, define a velocidade para andar e para a animação de corrida.
+                velocidade = veloAndando;
+                inputZ = 0f; // Para de se mover
+                anim.SetBool("correndo", false);
+                anim.SetBool("andando", true);
+            }
         }
-        else
+
+        // Se o personagem estiver parado, para de correr.
+        if (inputZ == 0 && Mathf.Abs(inputX) < 0.1f)
         {
-            // Se for para parar de correr, define a velocidade para andar e para a animação de corrida.
-            velocidade = veloAndando;
-            inputZ = 0f; // Para de se mover
-            anim.SetBool("correndo", false);
-            anim.SetBool("andando", true);
+            if (correndo)
+            {
+                correndo = false;
+                velocidade = veloAndando;
+                anim.SetBool("correndo", false);
+                anim.SetBool("andando", true);
+            }
         }
     }
-
-
-    // Se o personagem estiver parado, para de correr.
-    if (inputZ == 0 && Mathf.Abs(inputX) < 0.1f)
-    {
-        if (correndo) 
-        {
-            correndo = false;
-            velocidade = veloAndando;
-            anim.SetBool("correndo", false);
-            anim.SetBool("andando", true);
-        }
-    }
-}
 
     public void Pular(float multiplicador = 1f)
     {
